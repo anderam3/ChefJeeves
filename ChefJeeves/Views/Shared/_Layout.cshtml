@@ -8,19 +8,26 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div style="width: auto; background-color: #728ea7;">
-        @if (Request.IsAuthenticated)
-        {
-            <strong>@Html.Encode(User.Identity.Name)</strong>
-            @Html.ActionLink("Sign Out", "Logout", "Home")
-        }
-        else
-        {
-            @Html.ActionLink("Register", "Register", "Home")
-            <span> | </span>
-            @Html.ActionLink("Sign In", "Login", "Home")
-        }
-    </div>
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="navbar-form navbar-left">
+                <img src="../Images/ChefJeevesLogo.png" style="height:100px;" />
+            </div>
+            <div class="nav navbar-nav navbar-right">
+                @if (Request.IsAuthenticated)
+                {
+                    <strong>@Html.Encode(User.Identity.Name)</strong>
+                    @Html.ActionLink("Sign Out", "Logout", "Home")
+                }
+                else
+                {
+                    @Html.ActionLink("Register", "Register", "Home")
+                    <span> | </span>
+                    @Html.ActionLink("Sign In", "Login", "Home")
+                }
+            </div>
+        </nav>
+    </header>
     
     @RenderBody()
 
