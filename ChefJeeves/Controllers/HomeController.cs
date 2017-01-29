@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace ChefJeeves.Controllers
 {
@@ -13,19 +14,36 @@ namespace ChefJeeves.Controllers
             return View();
         }
 
-        public ActionResult About()
+        [HttpGet]
+        public ActionResult Login()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
-        public ActionResult Contact()
+        [HttpPost]
+        public ActionResult Login(Models.User user)
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            if (ModelState.IsValid)
+            {
+                if (user.IsAuthenicated(user.Email, user.Passcode))
+                {
+                    FormsAuthentication.SetAuthCookie(user.Email, user.RememberMe);
+                    return RedirectToAction("Index", "Home/Inventory");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Login data is incorrect!");
+                }
+            }
+            return View(user);
         }
+
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Home");
+        }
+
         public ActionResult Inventory()
         {
             ViewBag.Message = "Your Inventory page.";
