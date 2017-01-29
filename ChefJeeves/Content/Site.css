@@ -22,3 +22,27 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/**inventory page**/
+#ingLeft, #ingRight{
+    width:50%;
+    float:left;
+}
+
+/**shared page**/
+.navbar-inverse{
+    background-color:#3ec4af;
+}
+
+img#logo{
+    width:70px;
+}
+
+a.logo
+{
+    background: url(../Images/ChefJeevesLogo3.png) no-repeat top left;
+    background-size:contain;
+     display: block;
+     width: 70px;
+     height: 70px;
+}
