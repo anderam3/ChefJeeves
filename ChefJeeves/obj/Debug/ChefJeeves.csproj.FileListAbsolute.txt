@@ -65,6 +65,16 @@ C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\Microsoft.AI.Web.xml
 C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\obj\Debug\ChefJeeves.csprojResolveAssemblyReference.cache
 C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\obj\Debug\ChefJeeves.dll
 C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\obj\Debug\ChefJeeves.pdb
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\MySql.Data.dll
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\EntityFramework.dll
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\EntityFramework.SqlServer.dll
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\mysql.data.entity.EF6.dll
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\EntityFramework.xml
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\EntityFramework.SqlServer.xml
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\Microsoft.AspNet.Identity.EntityFramework.xml
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\ApplicationInsights.config
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\roslyn\csc.exe
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\roslyn\csc.exe.config
@@ -96,6 +106,8 @@ C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\ChefJeeves.dll
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\ChefJeeves.pdb
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\Antlr3.Runtime.dll
+C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\EntityFramework.dll
+C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\EntityFramework.SqlServer.dll
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\Microsoft.AI.Agent.Intercept.dll
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\Microsoft.AI.DependencyCollector.dll
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\Microsoft.AI.PerfCounterCollector.dll
@@ -103,8 +115,12 @@ C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\Microsoft.AI.Web.dll
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\Microsoft.AI.WindowsServer.dll
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\Microsoft.ApplicationInsights.dll
+C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\MySql.Data.dll
+C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\mysql.data.entity.EF6.dll
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\Newtonsoft.Json.dll
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\System.Web.Helpers.dll
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\System.Web.Mvc.dll
@@ -114,6 +130,10 @@ C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\System.Web.WebPages.dll
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\System.Web.WebPages.Razor.dll
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\WebGrease.dll
+C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\EntityFramework.xml
+C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\EntityFramework.SqlServer.xml
+C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\Microsoft.AspNet.Identity.EntityFramework.xml
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\System.Web.Helpers.xml
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\System.Web.Mvc.xml
@@ -132,14 +152,3 @@ C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\obj\Debug\ChefJeeves.csprojResolveAssemblyReference.cache
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\obj\Debug\ChefJeeves.dll
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\obj\Debug\ChefJeeves.pdb
-C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\MySql.Data.dll
-C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\MySql.Data.dll
-C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\EntityFramework.dll
-C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\EntityFramework.SqlServer.dll
-C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\Microsoft.AspNet.Identity.Core.dll
-C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\Microsoft.AspNet.Identity.EntityFramework.dll
-C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\mysql.data.entity.EF6.dll
-C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\EntityFramework.xml
-C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\EntityFramework.SqlServer.xml
-C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\Microsoft.AspNet.Identity.Core.xml
-C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\Microsoft.AspNet.Identity.EntityFramework.xml

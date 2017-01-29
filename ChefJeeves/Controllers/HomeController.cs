@@ -15,7 +15,7 @@ namespace ChefJeeves.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Index(Models.User user)
+        public ActionResult Index(Models.AccountModel user)
         {
             if (ModelState.IsValid)
             {
@@ -38,7 +38,7 @@ namespace ChefJeeves.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(Models.User user)
+        public ActionResult Login(Models.AccountModel user)
         {
             if (ModelState.IsValid)
             {
