@@ -26,5 +26,11 @@ namespace ChefJeeves.Controllers
 
             return View();
         }
+        public ActionResult Inventory()
+        {
+            ViewBag.Message = "Your Inventory page.";
+
+            return View();
+        }
     }
 }
