@@ -6,8 +6,30 @@
     <div>
         <div id="ingLeft">
             <h2>My ingredients</h2>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $("#userIngInInv tr td button").click(function () {
+                        $(this).parent().parent().remove();
+                    });
 
-            <table>
+                    var numItems = 1;
+                    $("button#addIng").click(function () {
+                        $("#divIng" + $('#counter').get(0).value++).after('<div id="divIng' + $('#counter').get(0).value + '" class="item">Ingredients: <input type="text" name="ingredients' + $('#counter').get(0).value + '"></div>');
+                        numItems = $('#divIngList div.item').length;
+                    });
+
+                    var numItems = $('.item').length;
+                    $("button#addToInv").click(function () {
+                        for (i = 0; i < numItems; i++) {
+                            $("#userIngInInv tr:last").after("<tr><td>" + $("#divIng" + i + " input").val() + "</td><td><button>-</button></td></tr>");
+                        }
+                        $("#divIngList").html('<div id="divIng0" class="item">Ingredients: <input type="text" name="ingredients"></div>');
+
+                    });
+                });
+            </script>
+            <table id="userIngInInv">
                 <tr>
                     <td>butter</td>
                     <td><button>-</button></td>
@@ -40,18 +62,10 @@
         </div>
         <div id="ingRight">
             <h2>Add ingredients<button id="addIng">+</button></h2>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-            <script>
-                $(document).ready(function () {
-                    $("button#addIng").click(function () {
-                        $("#divIng" + $('#counter').get(0).value++).after('<div id="divIng' + $('#counter').get(0).value + '">Ingredients: <input type="text" name="ingredients' + $('#counter').get(0).value + '"></div>');
-
-                    });
-                });
-            </script>
-
-            <div id="divIng0">
-                Ingredients: <input type="text" name="ingredients">
+            <div id="divIngList">
+                <div id="divIng0" class="item">
+                    Ingredients: <input type="text" name="ingredients">
+                </div>
             </div>
 
             <button id="addToInv">Add to inventory</button>
