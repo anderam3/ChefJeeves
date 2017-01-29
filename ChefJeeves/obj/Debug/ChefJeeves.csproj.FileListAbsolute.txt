@@ -133,3 +133,13 @@ C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\obj\Debug\ChefJeeves.dll
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\obj\Debug\ChefJeeves.pdb
 C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\Assignments\ChefJeeves\ChefJeeves\bin\MySql.Data.dll
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\MySql.Data.dll
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\EntityFramework.dll
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\EntityFramework.SqlServer.dll
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\mysql.data.entity.EF6.dll
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\EntityFramework.xml
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\EntityFramework.SqlServer.xml
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\Microsoft.AspNet.Identity.EntityFramework.xml

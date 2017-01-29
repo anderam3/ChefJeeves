@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    /*padding-top: 50px;*/
     padding-bottom: 20px;
 }
 
@@ -33,14 +33,20 @@ textarea {
 }
 
 /**inventory page**/
+
 #ingLeft, #ingRight{
-    width:50%;
+    margin-left:20px;
+    width:47%;
     float:left;
 }
 
 /**shared page**/
 .navbar-inverse{
     background-color:#3ec4af;
+}
+.navbar{
+    margin-bottom:0;
+    height:120px;
 }
 
 img#logo{
@@ -49,9 +55,74 @@ img#logo{
 
 a.logo
 {
-    background: url(../Images/ChefJeevesLogo3.png) no-repeat top left;
+    background: url(../Images/ChefJeevesLogo.png) no-repeat top left;
     background-size:contain;
      display: block;
-     width: 70px;
-     height: 70px;
+     width: 100px;
+     height: 100px;
+}
+
+/**CHEF JEEVES TEXT*/
+
+@font-face{
+	font-family: Techno_Hideo;
+	src: url(../fonts/techno_hideo_bold.ttf)
+}
+
+#nameText{
+	font-family: Techno_Hideo;
+    width:100%;
+	text-align:center;
+	z-index:2;
+	font-size:100px;
+	color:#f3e9e9;
+	white-space: nowrap;
+	overflow: hidden;
+	animation: type 2s steps(60, end);
+}  
+
+@keyframes type{ 
+  from { width: 0; } 
+}
+
+
+.modal-backdrop {
+    position: unset;
+}
+.modal-title {
+    font-size:24px;
+}
+.modalCenter{  
+	position:absolute;
+	height:50%;
+	width:50%;
+	margin:auto;
+	top:50%;
+	left:50%;
+	transform: translate(-50%,-50%);	
+} 
+
+#recipeLeft{
+    width:60%;
+    float:left;
+}
+#recipeLeft img{
+    width:98%;
+    float:left;
+}
+#recipeRight{
+    width:40%;
+    float:left;
+}
+#recipeTable tr td:first-child{
+    font-weight:bold;
+    padding-right:5px;
+}
+
+.navbar-nav li{
+    margin-top: 30px;
+    font-size: 30px;
+}
+userIngList{
+    list-style-type:none;
 }

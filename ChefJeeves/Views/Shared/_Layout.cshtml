@@ -11,9 +11,20 @@
     <header>
         <nav class="navbar navbar-default">
             <div class="navbar-form navbar-left">
-                <img src="../Images/ChefJeevesLogo.png" style="height:100px;" />
+                @Html.ActionLink(" ", "Index", null, new { @class="logo" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Inventory", "Inventory", "Home")</li>
+                    <li>@Html.ActionLink("Recipe", "Recipe", "Home")</li>
+                </ul>
             </div>
             <div class="nav navbar-nav navbar-right">
+
+                <script>
+     var isRequestAuthenticated=' @Request.IsAuthenticated';
+                </script>
+
                 @if (Request.IsAuthenticated)
                 {
                     <strong>@Html.Encode(User.Identity.Name)</strong>
@@ -23,7 +34,52 @@
                 {
                     @Html.ActionLink("Register", "Register", "Home")
                     <span> | </span>
-                    @Html.ActionLink("Sign In", "Login", "Home")
+                <button type="button" class="" id="work1" data-toggle="modal" data-target="#myModal1"><span id="technoText">Sign In</span></button>
+               <!-- <span> | </span>
+                @Html.ActionLink("Sign In", "Login", "Home", new{ id="work1", data_toggle="modal", data_target="#myModal1"})
+-->
+                <div class="modal fade " id="myModal1" role="dialog"  style="height:100%;width:100%;"> 
+					<div class="modal-dialog modalCenter" style="transform: translate(-50%,-50%);width:500px;">  
+						<!-- Modal content-->
+						<div class="modal-content" style="height:350px;">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">LOGIN</h4>
+							</div>
+							<div class="modal-body">
+                                @model ChefJeeves.Models.User
+                                @using (Html.BeginForm())
+                                {
+                                @Html.ValidationSummary(true, "Login failed. Check your login details.");
+                                <div>
+                                    <fieldset>
+                                        <div class="editor-label">
+                                            @Html.LabelFor(u => u.Email)
+                                        </div>
+                                        <div class="editor-field">
+                                            @Html.TextBoxFor(u => u.Email)
+                                            @Html.ValidationMessageFor(u => u.Email)
+                                        </div>
+                                        <div class="editor-label">
+                                            @Html.LabelFor(u => u.Passcode)
+                                        </div>
+                                        <div class="editor-field">
+                                            @Html.PasswordFor(u => u.Passcode)
+                                            @Html.ValidationMessageFor(u => u.Passcode)
+                                        </div>
+                                        <div class="editor-label">
+                                            @Html.CheckBoxFor(u => u.RememberMe)
+                                            @Html.LabelFor(u => u.RememberMe)
+                                        </div>
+                                        <input type="submit" value="Log In" />
+                                    </fieldset>
+                                </div>
+                                }
+							</div>							
+						</div>
+					</div>
+				</div>
+
                 }
             </div>
         </nav>
