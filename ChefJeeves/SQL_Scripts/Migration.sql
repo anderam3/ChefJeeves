@@ -23,6 +23,7 @@ CREATE TABLE `Recipe` (
 	`RECIPE_ID` int(11) NOT NULL AUTO_INCREMENT,
 	`RECIPE_NAME` varchar(64) NOT NULL,
 	`PREPARATION` text NOT NULL,
+	`SERVING` FLOAT NOT NULL,
 	`IS_VALID_RECIPE` tinyint(1) NOT NULL,
   PRIMARY KEY (`RECIPE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -77,3 +78,47 @@ INSERT INTO `ingredient`(`INGREDIENT_NAME`,`IS_VALID_INGREDIENT`) VALUES ('tomat
 INSERT INTO `ingredient`(`INGREDIENT_NAME`,`IS_VALID_INGREDIENT`) VALUES ('brown bean',1);
 INSERT INTO `ingredient`(`INGREDIENT_NAME`,`IS_VALID_INGREDIENT`) VALUES ('strawberry',1);
 INSERT INTO `ingredient`(`INGREDIENT_NAME`,`IS_VALID_INGREDIENT`) VALUES ('orange',1);
+
+
+
+INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('tsp', 'teaspoon');
+INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('tbsp', 'tablespoon');
+INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('cup', 'cup');
+INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('oz', 'ounce');
+INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('fl.oz', 'fluid ounce');
+INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('pt', 'pint');
+INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('qt', 'quart');
+INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('gal', 'gallon');
+INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('lb', 'pound');
+INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('doz', 'dozen');
+INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('pkg', 'package');
+INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('sm', 'small');
+INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('med', 'medium');
+INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('lg', 'large');
+INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('sq', 'square');
+INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('approx', 'approximately');
+INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('min', 'minutes');
+
+
+INSERT INTO RECIPE (RECIPE_NAME, PREPARATION, IS_VALID_RECIPE) VALUES ('Scrambled Eggs', 'BEAT eggs, milk, salt and pepper in medium bowl until blended.
+HEAT butter in large nonstick skillet over medium heat until hot. POUR IN egg mixture. As eggs begin to set, GENTLY PULL the eggs across the pan with a spatula, forming large soft curds.
+CONTINUE cooking – pulling, lifting and folding eggs – until thickened and no visible liquid egg remains. Do not stir constantly. REMOVE from heat. SERVE immediately.',1);
+
+INSERT INTO accountrecipe(EMAIL, RECIPE_ID) VALUES ('john.smith@email.com', 1);
+
+
+/*RECIPEINGREDIENTS AND USERINGREDIENTS NOT WORKING!!*/
+
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_NAME, QUANTITY, UNIT_ABBREVIATION) VALUES (1, 'eggs', 4,'');
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_NAME, QUANTITY, UNIT_ABBREVIATION) VALUES (1, 'milk', 1/4,'cup');
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_NAME, QUANTITY, UNIT_ABBREVIATION) VALUES (1, 'salt', null,'pinch of');
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_NAME, QUANTITY, UNIT_ABBREVIATION) VALUES (1, 'pepper', null,'pinch of');
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_NAME, QUANTITY, UNIT_ABBREVIATION) VALUES (1, 'butter', 4,'tsp');
+
+INSERT INTO useringredient(EMAIL, INGREDIENT_NAME) VALUES ('john.smith@email.com', 'butter');
+INSERT INTO useringredient(EMAIL, INGREDIENT_NAME) VALUES ('john.smith@email.com2', 'eggs');
+INSERT INTO useringredient(EMAIL, INGREDIENT_NAME) VALUES ('john.smith@email.com', 'garlic');
+INSERT INTO useringredient(EMAIL, INGREDIENT_NAME) VALUES ('john.smith@email.com', 'milk');
+INSERT INTO useringredient(EMAIL, INGREDIENT_NAME) VALUES ('john.smith@email.com', 'olive oil');
+INSERT INTO useringredient(EMAIL, INGREDIENT_NAME) VALUES ('john.smith@email.com', 'salt');
+INSERT INTO useringredient(EMAIL, INGREDIENT_NAME) VALUES ('john.smith@email.com', 'pepper');
