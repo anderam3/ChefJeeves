@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="cnn-Web.config Connection String" description="cnn Connection String used in web.config by the application to access the database." defaultValue="Database=chefjeeves;Data Source=ca-cdbr-azure-central-a.cloudapp.net;User Id=b004e379466a25;Password=e8a2fc49;Pooling=false" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Adam\\Documents\\School\\McMaster\\Current\ Term\\Senior\ Engineering\ Project\\Assignments\\ChefJeeves\\ChefJeeves\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='cnn']/@connectionString" />
+  </parameter>
+</parameters>
