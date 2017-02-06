@@ -235,3 +235,9 @@ C:\Users\Adam\Documents\School\McMaster\Current Term\Senior Engineering Project\
 \\psf\Home\Documents\McMaster\Winter2017\SeniorEngineeringProject\ChefJeeves\ChefJeeves\ChefJeeves\bin\System.Net.Http.Formatting.xml
 \\psf\Home\Documents\McMaster\Winter2017\SeniorEngineeringProject\ChefJeeves\ChefJeeves\ChefJeeves\bin\System.Web.Http.xml
 \\psf\Home\Documents\McMaster\Winter2017\SeniorEngineeringProject\ChefJeeves\ChefJeeves\ChefJeeves\bin\System.Web.Http.WebHost.xml
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\System.Net.Http.Formatting.dll
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\System.Web.Http.dll
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\System.Web.Http.WebHost.dll
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\System.Net.Http.Formatting.xml
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\System.Web.Http.xml
+C:\Users\WanJun\Source\Repos\ChefJeeves\ChefJeeves\bin\System.Web.Http.WebHost.xml

@@ -44,7 +44,7 @@ namespace ChefJeeves.Models
         {
             String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
             con = new MySqlConnection(con_string);
-            cmd = new MySqlCommand("INSERT INTO account VALUES('"+ email +"','" + firstname + "','" + lastname + "','" + password + "')", con);
+            cmd = new MySqlCommand("INSERT INTO account (EMAIL,FIRST_NAME,LAST_NAME,PASSCODE,SALT,IS_ACTIVE_USER,IS_ADMIN) VALUES ('"+ email +"','" + firstname + "','" + lastname + "','" + password + "', 1, 1, 0)", con);
             bool flag = false;
             using (con)
             {
