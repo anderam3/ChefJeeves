@@ -31,6 +31,31 @@ namespace ChefJeeves.Controllers
             }
             return View(user);
         }
+
+        [HttpGet]
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Register(Models.RegisterModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                if (user.IsRegistered(user.FirstName, user.LastName, user.Email, user.Passcode))
+                {
+                    //FormsAuthentication.SetAuthCookie(user.Email, user.RememberMe);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Entered data is incomplete or incorrect!");
+                }
+            }
+            return View(user);
+        }
+
         [HttpGet]
         public ActionResult Login()
         {
