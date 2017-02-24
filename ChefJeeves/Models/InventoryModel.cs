@@ -12,6 +12,7 @@ namespace ChefJeeves.Models
     { 
         private MySqlConnection con;
         private MySqlCommand cmd;
+        private MySqlDataReader rdr;
 
         public void Delete(string email, string ingredientName)
         {
@@ -24,6 +25,30 @@ namespace ChefJeeves.Models
                 {
                     con.Open();
                     cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+                catch (Exception ex)
+                {
+                    con.Close();
+                }
+            }
+        }
+
+        public void Refresh()
+        {
+            String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
+            con = new MySqlConnection(con_string);
+            cmd = new MySqlCommand("SELECT ingredient_name from `ingredient`", con);
+            using (con)
+            {
+                try
+                {
+                    con.Open();
+                    rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        rdr["INGREDIENT_NAME"].ToString();
+                    }
                     con.Close();
                 }
                 catch (Exception ex)
