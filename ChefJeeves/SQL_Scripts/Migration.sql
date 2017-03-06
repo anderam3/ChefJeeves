@@ -1,5 +1,5 @@
 USE `chefjeeves`;
-SET FOREIGN_KEY_CHECKS=0;
+SET FOREIGN_KEY_CHECKS=1;
 
 DROP TABLE IF EXISTS `AccountRecipe`;
 DROP TABLE IF EXISTS `RecipeIngredient`;
@@ -10,38 +10,36 @@ DROP TABLE IF EXISTS `Account`;
 DROP TABLE IF EXISTS `Ingredient`;
 
 
-CREATE TABLE `Account` (
+CREATE TABLE `account` (
+	`USERNAME` varchar(64) NOT NULL,
 	`EMAIL` varchar(64) NOT NULL,
-	`FIRST_NAME` varchar(64) NOT NULL,
-	`LAST_NAME` varchar(64) NOT NULL,
+	`FULL_NAME` varchar(64) NOT NULL,
+	`PHONE` int(64) DEFAULT NULL,
+	`SECURITY_QUESTION` varchar(512) NOT NULL,
+	`SECURITY_ANSWER` varchar(512) NOT NULL,
 	`PASSCODE` varchar(512) NOT NULL,
 	`SALT` float NOT NULL,
 	`IS_ACTIVE_USER` tinyint(1) NOT NULL,
-	`IS_ADMIN` tinyint(1) NOT NULL,
-  PRIMARY KEY (`EMAIL`)
+  PRIMARY KEY (`USERNAME`,`EMAIL`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Recipe` (
 	`RECIPE_ID` int(11) NOT NULL AUTO_INCREMENT,
 	`RECIPE_NAME` varchar(64) NOT NULL,
 	`PREPARATION` text NOT NULL,
-	`SERVING` FLOAT NOT NULL,
-	`LINK` varchar(512),
-	`IS_VALID_RECIPE` tinyint(1) NOT NULL,
   PRIMARY KEY (`RECIPE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `AccountRecipe` (
-	`EMAIL` varchar(64) NOT NULL,
+	`USERNAME` varchar(64) NOT NULL,
 	`RECIPE_ID` int(11) NOT NULL,
-	PRIMARY KEY (`EMAIL`,`RECIPE_ID`),
-	CONSTRAINT `AccountRecipe_EMAIL` FOREIGN KEY (`EMAIL`) REFERENCES `Account` (`EMAIL`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+	PRIMARY KEY (`USERNAME`,`RECIPE_ID`),
+	CONSTRAINT `AccountRecipe_USERNAME` FOREIGN KEY (`USERNAME`) REFERENCES `Account` (`USERNAME`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 	CONSTRAINT `AccountRecipe_RECIPE_ID` FOREIGN KEY (`RECIPE_ID`) REFERENCES `Recipe` (`RECIPE_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Ingredient` (
 	`INGREDIENT_NAME` varchar(64) NOT NULL,
-	`IS_VALID_INGREDIENT` tinyint(1) NOT NULL,
 	PRIMARY KEY (`INGREDIENT_NAME`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -63,28 +61,28 @@ CREATE TABLE `RecipeIngredient` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `AccountIngredient` (
-	`EMAIL` varchar(64) NOT NULL,
+	`USERNAME` varchar(64) NOT NULL,
 	`INGREDIENT_NAME` varchar(64) NOT NULL,
-	PRIMARY KEY (`EMAIL`,`INGREDIENT_NAME`),
-	CONSTRAINT `AccountIngredient_EMAIL` FOREIGN KEY (`EMAIL`) REFERENCES `Account` (`EMAIL`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+	PRIMARY KEY (`USERNAME`,`INGREDIENT_NAME`),
+	CONSTRAINT `AccountIngredient_USERNAME` FOREIGN KEY (`USERNAME`) REFERENCES `Account` (`USERNAME`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 	CONSTRAINT `AccountIngredient_INGREDIENT_NAME` FOREIGN KEY (`INGREDIENT_NAME`) REFERENCES `Ingredient` (`INGREDIENT_NAME`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `account` (`EMAIL`,`FIRST_NAME`,`LAST_NAME`,`PASSCODE`,`SALT`,`IS_ACTIVE_USER`,`IS_ADMIN`) VALUES ('john.smith@email.com','John','Smith','password',1.0,1,1);
+INSERT INTO `account` (`USERNAME`,`EMAIL`,`FULL_NAME`,`PHONE`,`SECURITY_QUESTION`,`SECURITY_ANSWER`,`PASSCODE`,`SALT`,`IS_ACTIVE_USER`) VALUES ('jsmith','john.smith@email.com','John Smith',1111111111,'Age?',23,'password',1.0,1);
 
-INSERT INTO `ingredient`(`INGREDIENT_NAME`,`IS_VALID_INGREDIENT`) VALUES ('bacon',1);
-INSERT INTO `ingredient`(`INGREDIENT_NAME`,`IS_VALID_INGREDIENT`) VALUES ('brown bean',1);
-INSERT INTO `ingredient`(`INGREDIENT_NAME`,`IS_VALID_INGREDIENT`) VALUES ('butter',1);
-INSERT INTO `ingredient`(`INGREDIENT_NAME`,`IS_VALID_INGREDIENT`) VALUES ('egg',1);
-INSERT INTO `ingredient`(`INGREDIENT_NAME`,`IS_VALID_INGREDIENT`) VALUES ('flour',1);
-INSERT INTO `ingredient`(`INGREDIENT_NAME`,`IS_VALID_INGREDIENT`) VALUES ('garlic',1);
-INSERT INTO `ingredient`(`INGREDIENT_NAME`,`IS_VALID_INGREDIENT`) VALUES ('milk',1);
-INSERT INTO `ingredient`(`INGREDIENT_NAME`,`IS_VALID_INGREDIENT`) VALUES ('olive oil',1);
-INSERT INTO `ingredient`(`INGREDIENT_NAME`,`IS_VALID_INGREDIENT`) VALUES ('orange',1);
-INSERT INTO `ingredient`(`INGREDIENT_NAME`,`IS_VALID_INGREDIENT`) VALUES ('pepper',1);
-INSERT INTO `ingredient`(`INGREDIENT_NAME`,`IS_VALID_INGREDIENT`) VALUES ('salt',1);
-INSERT INTO `ingredient`(`INGREDIENT_NAME`,`IS_VALID_INGREDIENT`) VALUES ('strawberry',1);
-INSERT INTO `ingredient`(`INGREDIENT_NAME`,`IS_VALID_INGREDIENT`) VALUES ('tomato',1);
+INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('bacon');
+INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('brown bean');
+INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('butter');
+INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('egg');
+INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('flour');
+INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('garlic');
+INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('milk');
+INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('olive oil');
+INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('orange');
+INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('pepper');
+INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('salt');
+INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('strawberry');
+INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('tomato');
 
 INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('tsp', 'teaspoon');
 INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('tbsp', 'tablespoon');
@@ -106,24 +104,23 @@ INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('approx', 'approxi
 INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('min', 'minutes');
 
 
-INSERT INTO RECIPE (RECIPE_NAME, PREPARATION, SERVING, LINK, IS_VALID_RECIPE) 
+INSERT INTO RECIPE (RECIPE_NAME, PREPARATION) 
 VALUES ('Scrambled Eggs', 'BEAT eggs, milk, salt and pepper in medium bowl until blended.
 HEAT butter in large nonstick skillet over medium heat until hot. POUR IN egg mixture. As eggs begin to set, GENTLY PULL the eggs across the pan with a spatula, forming large soft curds.
-CONTINUE cooking – pulling, lifting and folding eggs – until thickened and no visible liquid egg remains. Do not stir constantly. REMOVE from heat. SERVE immediately.',
-2,'http://www.incredibleegg.org/recipe/basic-scrambled-eggs/',1);
+CONTINUE cooking – pulling, lifting and folding eggs – until thickened and no visible liquid egg remains. Do not stir constantly. REMOVE from heat. SERVE immediately.');
 
-INSERT INTO accountrecipe(EMAIL, RECIPE_ID) VALUES ('john.smith@email.com', 1);
+INSERT INTO accountrecipe(USERNAME, RECIPE_ID) VALUES ('jsmith', 1);
 
 INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_NAME, QUANTITY) VALUES (1, 'egg', 4);
-INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_NAME, QUANTITY, UNIT_ABBREVIATION) VALUES (1, 'milk', 1/4,'cup');
-INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_NAME, QUANTITY, UNIT_ABBREVIATION) VALUES (1, 'salt', 1,'pinch');
-INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_NAME, QUANTITY, UNIT_ABBREVIATION) VALUES (1, 'pepper', 1,'pinch');
-INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_NAME, QUANTITY, UNIT_ABBREVIATION) VALUES (1, 'butter', 4,'tsp');
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_NAME, QUANTITY, UNIT_ABBREVIATION) VALUES (1,'milk',0.25,'cup');
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_NAME, QUANTITY, UNIT_ABBREVIATION) VALUES (1,'salt',1,'pinch');
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_NAME, QUANTITY, UNIT_ABBREVIATION) VALUES (1,'pepper',1,'pinch');
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_NAME, QUANTITY, UNIT_ABBREVIATION) VALUES (1,'butter',4,'tsp');
 
-INSERT INTO AccountIngredient(EMAIL, INGREDIENT_NAME) VALUES ('john.smith@email.com', 'butter');
-INSERT INTO AccountIngredient(EMAIL, INGREDIENT_NAME) VALUES ('john.smith@email.com', 'egg');
-INSERT INTO AccountIngredient(EMAIL, INGREDIENT_NAME) VALUES ('john.smith@email.com', 'garlic');
-INSERT INTO AccountIngredient(EMAIL, INGREDIENT_NAME) VALUES ('john.smith@email.com', 'olive oil');
-INSERT INTO AccountIngredient(EMAIL, INGREDIENT_NAME) VALUES ('john.smith@email.com', 'milk');
-INSERT INTO AccountIngredient(EMAIL, INGREDIENT_NAME) VALUES ('john.smith@email.com', 'salt');
-INSERT INTO AccountIngredient(EMAIL, INGREDIENT_NAME) VALUES ('john.smith@email.com', 'pepper');
+INSERT INTO AccountIngredient(USERNAME, INGREDIENT_NAME) VALUES ('jsmith', 'butter');
+INSERT INTO AccountIngredient(USERNAME, INGREDIENT_NAME) VALUES ('jsmith', 'egg');
+INSERT INTO AccountIngredient(USERNAME, INGREDIENT_NAME) VALUES ('jsmith', 'garlic');
+INSERT INTO AccountIngredient(USERNAME, INGREDIENT_NAME) VALUES ('jsmith', 'olive oil');
+INSERT INTO AccountIngredient(USERNAME, INGREDIENT_NAME) VALUES ('jsmith', 'milk');
+INSERT INTO AccountIngredient(USERNAME, INGREDIENT_NAME) VALUES ('jsmith', 'salt');
+INSERT INTO AccountIngredient(USERNAME, INGREDIENT_NAME) VALUES ('jsmith', 'pepper');
