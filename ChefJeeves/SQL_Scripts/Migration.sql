@@ -9,17 +9,19 @@ DROP TABLE IF EXISTS `Measurement`;
 DROP TABLE IF EXISTS `Account`;
 DROP TABLE IF EXISTS `Ingredient`;
 
+DROP PROCEDURE IF EXISTS `EmailExists`;
+DROP PROCEDURE IF EXISTS `InsertUser`;
+DROP PROCEDURE IF EXISTS `UsernameExists`;
+DROP PROCEDURE IF EXISTS `VerifyPassword`;
 
 CREATE TABLE `account` (
 	`USERNAME` varchar(64) NOT NULL,
 	`EMAIL` varchar(64) NOT NULL,
 	`FULL_NAME` varchar(64) NOT NULL,
-	`PHONE` int(64) DEFAULT NULL,
-	`SECURITY_QUESTION` varchar(512) NOT NULL,
+	`SECURITY_QUESTION` varchar(64) NOT NULL,
 	`SECURITY_ANSWER` varchar(512) NOT NULL,
 	`PASSCODE` varchar(512) NOT NULL,
 	`SALT` float NOT NULL,
-	`IS_ACTIVE_USER` tinyint(1) NOT NULL,
   PRIMARY KEY (`USERNAME`,`EMAIL`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -68,7 +70,75 @@ CREATE TABLE `AccountIngredient` (
 	CONSTRAINT `AccountIngredient_INGREDIENT_NAME` FOREIGN KEY (`INGREDIENT_NAME`) REFERENCES `Ingredient` (`INGREDIENT_NAME`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `account` (`USERNAME`,`EMAIL`,`FULL_NAME`,`PHONE`,`SECURITY_QUESTION`,`SECURITY_ANSWER`,`PASSCODE`,`SALT`,`IS_ACTIVE_USER`) VALUES ('jsmith','john.smith@email.com','John Smith',1111111111,'Age?',23,'password',1.0,1);
+DELIMITER $$
+
+CREATE PROCEDURE `EmailExists`(
+  IN Address VARCHAR(64),
+  OUT Result tinyint(1)
+)
+BEGIN
+  DECLARE vEmail VARCHAR(64);
+  SET vEmail= (SELECT Email FROM account WHERE email = Address LIMIT 1);
+  IF vEmail = Address THEN
+    SET Result = 1;
+  ELSE
+    SET Result = 0;
+  END IF;
+END$$
+
+CREATE PROCEDURE `InsertUser`(
+	User varchar(64),
+    Address varchar (64),
+    FullName varchar(64),
+    Pass varchar(512),
+    Question varchar(512),
+    Answer varchar(512)
+)
+BEGIN
+	DECLARE vSalt FLOAT;
+    SET vSalt = RAND();
+    SET Pass = SHA2(CONCAT(Pass, vSalt),512);
+    SET Answer = SHA2(CONCAT(Answer, vSalt),512);
+    INSERT INTO `Account` VALUES (User, Address, FullName, Question, Answer, Pass, vSalt);
+END$$
+
+CREATE PROCEDURE `UsernameExists`(
+  IN User VARCHAR(64),
+  OUT Result tinyint(1)
+)
+BEGIN
+  DECLARE vUserName VARCHAR(64);
+  SET vUserName= (SELECT Username FROM account WHERE username = User LIMIT 1);
+  IF vUserName = User THEN
+    SET Result = 1;
+  ELSE
+    SET Result = 0;
+  END IF;
+END$$
+
+CREATE PROCEDURE `VerifyPassword`(
+  IN User VARCHAR(64),
+  IN Pass VARCHAR(512),
+  OUT IsSuccessful tinyint(1)
+)
+BEGIN
+  DECLARE vSalt FLOAT;
+  DECLARE vPassCode1 VARCHAR(512);
+  DECLARE vPassCode2 VARCHAR(512);
+  SET vSalt = (SELECT Salt FROM account WHERE username = user LIMIT 1);
+  SET vPassCode1 = (SELECT Passcode FROM account WHERE username = user LIMIT 1);
+  SET vPassCode2 = SHA2(CONCAT(Pass, vSalt),512);
+  IF vPassCode1 = vPassCode2 THEN
+    SET IsSuccessful = 1;
+  ELSE
+    SET IsSuccessful = 0;
+  END IF;
+END$$
+
+'Sample password is *888uuu and security answer is 23 before hash and salt. An sanple image must reside in the Profiles folder names jsmith.jpg'
+DELIMITER ;
+
+INSERT INTO `account` (`USERNAME`,`EMAIL`,`FULL_NAME`,`SECURITY_QUESTION`,`SECURITY_ANSWER`,`PASSCODE`,`SALT`) VALUES ('jsmith','john.smith@email.com','John Smith','Age?','5ee521184a46f3bd25f08f60b922e3acc6c0ff60f219c102511b6f9c1aa0b05f606c4d93303030596b790cb402a06030b676a12e2460e0ff95fc5a0d1e3c8767','d064295332f4f5235f21bd8ad73941e810a81cdced996a35e7de7773fd35ef517f93589867d6ba4596604020a9a29110206c4f109dab3db5d64a260c34f0006b',0.999581);
 
 INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('bacon');
 INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('brown bean');

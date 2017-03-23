@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="chefjeevesModelStoreContainer" CdmEntityContainer="chefjeevesEntities">
+    <EntitySetMapping Name="accounts">
+      <EntityTypeMapping TypeName="chefjeevesModel.account">
+        <MappingFragment StoreEntitySet="account">
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
+          <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
+          <ScalarProperty Name="PASSCODE" ColumnName="PASSCODE" />
+          <ScalarProperty Name="SALT" ColumnName="SALT" />
+          <ScalarProperty Name="IS_ACTIVE_USER" ColumnName="IS_ACTIVE_USER" />
+          <ScalarProperty Name="IS_ADMIN" ColumnName="IS_ADMIN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ingredients">
+      <EntityTypeMapping TypeName="chefjeevesModel.ingredient">
+        <MappingFragment StoreEntitySet="ingredient">
+          <ScalarProperty Name="INGREDIENT_NAME" ColumnName="INGREDIENT_NAME" />
+          <ScalarProperty Name="IS_VALID_INGREDIENT" ColumnName="IS_VALID_INGREDIENT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="measurements">
+      <EntityTypeMapping TypeName="chefjeevesModel.measurement">
+        <MappingFragment StoreEntitySet="measurement">
+          <ScalarProperty Name="UNIT_ABBREVIATION" ColumnName="UNIT_ABBREVIATION" />
+          <ScalarProperty Name="UNIT_NAME" ColumnName="UNIT_NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="recipes">
+      <EntityTypeMapping TypeName="chefjeevesModel.recipe">
+        <MappingFragment StoreEntitySet="recipe">
+          <ScalarProperty Name="RECIPE_ID" ColumnName="RECIPE_ID" />
+          <ScalarProperty Name="RECIPE_NAME" ColumnName="RECIPE_NAME" />
+          <ScalarProperty Name="PREPARATION" ColumnName="PREPARATION" />
+          <ScalarProperty Name="SERVING" ColumnName="SERVING" />
+          <ScalarProperty Name="LINK" ColumnName="LINK" />
+          <ScalarProperty Name="IS_VALID_RECIPE" ColumnName="IS_VALID_RECIPE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="recipeingredients">
+      <EntityTypeMapping TypeName="chefjeevesModel.recipeingredient">
+        <MappingFragment StoreEntitySet="recipeingredient">
+          <ScalarProperty Name="RECIPE_ID" ColumnName="RECIPE_ID" />
+          <ScalarProperty Name="INGREDIENT_NAME" ColumnName="INGREDIENT_NAME" />
+          <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+          <ScalarProperty Name="UNIT_ABBREVIATION" ColumnName="UNIT_ABBREVIATION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="accountingredient" TypeName="chefjeevesModel.accountingredient" StoreEntitySet="accountingredient">
+      <EndProperty Name="account">
+        <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+      </EndProperty>
+      <EndProperty Name="ingredient">
+        <ScalarProperty Name="INGREDIENT_NAME" ColumnName="INGREDIENT_NAME" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="accountrecipe" TypeName="chefjeevesModel.accountrecipe" StoreEntitySet="accountrecipe">
+      <EndProperty Name="account">
+        <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+      </EndProperty>
+      <EndProperty Name="recipe">
+        <ScalarProperty Name="RECIPE_ID" ColumnName="RECIPE_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="useringredient" TypeName="chefjeevesModel.useringredient" StoreEntitySet="useringredient">
+      <EndProperty Name="account">
+        <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+      </EndProperty>
+      <EndProperty Name="ingredient">
+        <ScalarProperty Name="INGREDIENT_NAME" ColumnName="INGREDIENT_NAME" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

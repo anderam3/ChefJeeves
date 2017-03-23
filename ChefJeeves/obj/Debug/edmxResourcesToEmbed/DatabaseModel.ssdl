@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="chefjeevesModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="account">
+    <Key>
+      <PropertyRef Name="EMAIL" />
+    </Key>
+    <Property Name="EMAIL" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="FIRST_NAME" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="LAST_NAME" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="PASSCODE" Type="varchar" MaxLength="512" Nullable="false" />
+    <Property Name="SALT" Type="float" Nullable="false" />
+    <Property Name="IS_ACTIVE_USER" Type="bool" Nullable="false" />
+    <Property Name="IS_ADMIN" Type="bool" Nullable="false" />
+  </EntityType>
+  <EntityType Name="accountingredient">
+    <Key>
+      <PropertyRef Name="EMAIL" />
+      <PropertyRef Name="INGREDIENT_NAME" />
+    </Key>
+    <Property Name="EMAIL" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="INGREDIENT_NAME" Type="varchar" MaxLength="64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="accountrecipe">
+    <Key>
+      <PropertyRef Name="EMAIL" />
+      <PropertyRef Name="RECIPE_ID" />
+    </Key>
+    <Property Name="EMAIL" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="RECIPE_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ingredient">
+    <Key>
+      <PropertyRef Name="INGREDIENT_NAME" />
+    </Key>
+    <Property Name="INGREDIENT_NAME" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="IS_VALID_INGREDIENT" Type="bool" Nullable="false" />
+  </EntityType>
+  <EntityType Name="measurement">
+    <Key>
+      <PropertyRef Name="UNIT_ABBREVIATION" />
+    </Key>
+    <Property Name="UNIT_ABBREVIATION" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="UNIT_NAME" Type="varchar" MaxLength="64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="recipe">
+    <Key>
+      <PropertyRef Name="RECIPE_ID" />
+    </Key>
+    <Property Name="RECIPE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RECIPE_NAME" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="PREPARATION" Type="text" Nullable="false" />
+    <Property Name="SERVING" Type="float" Nullable="false" />
+    <Property Name="LINK" Type="varchar" MaxLength="512" />
+    <Property Name="IS_VALID_RECIPE" Type="bool" Nullable="false" />
+  </EntityType>
+  <EntityType Name="recipeingredient">
+    <Key>
+      <PropertyRef Name="RECIPE_ID" />
+      <PropertyRef Name="INGREDIENT_NAME" />
+    </Key>
+    <Property Name="RECIPE_ID" Type="int" Nullable="false" />
+    <Property Name="INGREDIENT_NAME" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="QUANTITY" Type="float" Nullable="false" />
+    <Property Name="UNIT_ABBREVIATION" Type="varchar" MaxLength="64" />
+  </EntityType>
+  <EntityType Name="useringredient">
+    <Key>
+      <PropertyRef Name="EMAIL" />
+      <PropertyRef Name="INGREDIENT_NAME" />
+    </Key>
+    <Property Name="EMAIL" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="INGREDIENT_NAME" Type="varchar" MaxLength="64" Nullable="false" />
+  </EntityType>
+  <Association Name="AccountIngredient_EMAIL">
+    <End Role="account" Type="Self.account" Multiplicity="1" />
+    <End Role="accountingredient" Type="Self.accountingredient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="account">
+        <PropertyRef Name="EMAIL" />
+      </Principal>
+      <Dependent Role="accountingredient">
+        <PropertyRef Name="EMAIL" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AccountIngredient_INGREDIENT_NAME">
+    <End Role="ingredient" Type="Self.ingredient" Multiplicity="1" />
+    <End Role="accountingredient" Type="Self.accountingredient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ingredient">
+        <PropertyRef Name="INGREDIENT_NAME" />
+      </Principal>
+      <Dependent Role="accountingredient">
+        <PropertyRef Name="INGREDIENT_NAME" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AccountRecipe_EMAIL">
+    <End Role="account" Type="Self.account" Multiplicity="1" />
+    <End Role="accountrecipe" Type="Self.accountrecipe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="account">
+        <PropertyRef Name="EMAIL" />
+      </Principal>
+      <Dependent Role="accountrecipe">
+        <PropertyRef Name="EMAIL" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AccountRecipe_RECIPE_ID">
+    <End Role="recipe" Type="Self.recipe" Multiplicity="1" />
+    <End Role="accountrecipe" Type="Self.accountrecipe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="recipe">
+        <PropertyRef Name="RECIPE_ID" />
+      </Principal>
+      <Dependent Role="accountrecipe">
+        <PropertyRef Name="RECIPE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RecipeIngredient_INGREDIENT_NAME">
+    <End Role="ingredient" Type="Self.ingredient" Multiplicity="1" />
+    <End Role="recipeingredient" Type="Self.recipeingredient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ingredient">
+        <PropertyRef Name="INGREDIENT_NAME" />
+      </Principal>
+      <Dependent Role="recipeingredient">
+        <PropertyRef Name="INGREDIENT_NAME" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RecipeIngredient_RECIPE_ID">
+    <End Role="recipe" Type="Self.recipe" Multiplicity="1" />
+    <End Role="recipeingredient" Type="Self.recipeingredient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="recipe">
+        <PropertyRef Name="RECIPE_ID" />
+      </Principal>
+      <Dependent Role="recipeingredient">
+        <PropertyRef Name="RECIPE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RecipeIngredient_UNIT_ABBREVIATION">
+    <End Role="measurement" Type="Self.measurement" Multiplicity="0..1" />
+    <End Role="recipeingredient" Type="Self.recipeingredient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="measurement">
+        <PropertyRef Name="UNIT_ABBREVIATION" />
+      </Principal>
+      <Dependent Role="recipeingredient">
+        <PropertyRef Name="UNIT_ABBREVIATION" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserIngredient_EMAIL">
+    <End Role="account" Type="Self.account" Multiplicity="1" />
+    <End Role="useringredient" Type="Self.useringredient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="account">
+        <PropertyRef Name="EMAIL" />
+      </Principal>
+      <Dependent Role="useringredient">
+        <PropertyRef Name="EMAIL" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserIngredient_INGREDIENT_NAME">
+    <End Role="ingredient" Type="Self.ingredient" Multiplicity="1" />
+    <End Role="useringredient" Type="Self.useringredient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ingredient">
+        <PropertyRef Name="INGREDIENT_NAME" />
+      </Principal>
+      <Dependent Role="useringredient">
+        <PropertyRef Name="INGREDIENT_NAME" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="chefjeevesModelStoreContainer">
+    <EntitySet Name="account" EntityType="Self.account" Schema="chefjeeves" store:Type="Tables" />
+    <EntitySet Name="accountingredient" EntityType="Self.accountingredient" Schema="chefjeeves" store:Type="Tables" />
+    <EntitySet Name="accountrecipe" EntityType="Self.accountrecipe" Schema="chefjeeves" store:Type="Tables" />
+    <EntitySet Name="ingredient" EntityType="Self.ingredient" Schema="chefjeeves" store:Type="Tables" />
+    <EntitySet Name="measurement" EntityType="Self.measurement" Schema="chefjeeves" store:Type="Tables" />
+    <EntitySet Name="recipe" EntityType="Self.recipe" Schema="chefjeeves" store:Type="Tables" />
+    <EntitySet Name="recipeingredient" EntityType="Self.recipeingredient" Schema="chefjeeves" store:Type="Tables" />
+    <EntitySet Name="useringredient" EntityType="Self.useringredient" Schema="chefjeeves" store:Type="Tables" />
+    <AssociationSet Name="AccountIngredient_EMAIL" Association="Self.AccountIngredient_EMAIL">
+      <End Role="account" EntitySet="account" />
+      <End Role="accountingredient" EntitySet="accountingredient" />
+    </AssociationSet>
+    <AssociationSet Name="AccountIngredient_INGREDIENT_NAME" Association="Self.AccountIngredient_INGREDIENT_NAME">
+      <End Role="ingredient" EntitySet="ingredient" />
+      <End Role="accountingredient" EntitySet="accountingredient" />
+    </AssociationSet>
+    <AssociationSet Name="AccountRecipe_EMAIL" Association="Self.AccountRecipe_EMAIL">
+      <End Role="account" EntitySet="account" />
+      <End Role="accountrecipe" EntitySet="accountrecipe" />
+    </AssociationSet>
+    <AssociationSet Name="AccountRecipe_RECIPE_ID" Association="Self.AccountRecipe_RECIPE_ID">
+      <End Role="recipe" EntitySet="recipe" />
+      <End Role="accountrecipe" EntitySet="accountrecipe" />
+    </AssociationSet>
+    <AssociationSet Name="RecipeIngredient_INGREDIENT_NAME" Association="Self.RecipeIngredient_INGREDIENT_NAME">
+      <End Role="ingredient" EntitySet="ingredient" />
+      <End Role="recipeingredient" EntitySet="recipeingredient" />
+    </AssociationSet>
+    <AssociationSet Name="RecipeIngredient_RECIPE_ID" Association="Self.RecipeIngredient_RECIPE_ID">
+      <End Role="recipe" EntitySet="recipe" />
+      <End Role="recipeingredient" EntitySet="recipeingredient" />
+    </AssociationSet>
+    <AssociationSet Name="RecipeIngredient_UNIT_ABBREVIATION" Association="Self.RecipeIngredient_UNIT_ABBREVIATION">
+      <End Role="measurement" EntitySet="measurement" />
+      <End Role="recipeingredient" EntitySet="recipeingredient" />
+    </AssociationSet>
+    <AssociationSet Name="UserIngredient_EMAIL" Association="Self.UserIngredient_EMAIL">
+      <End Role="account" EntitySet="account" />
+      <End Role="useringredient" EntitySet="useringredient" />
+    </AssociationSet>
+    <AssociationSet Name="UserIngredient_INGREDIENT_NAME" Association="Self.UserIngredient_INGREDIENT_NAME">
+      <End Role="ingredient" EntitySet="ingredient" />
+      <End Role="useringredient" EntitySet="useringredient" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

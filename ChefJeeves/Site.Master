@@ -1,0 +1,49 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="ChefJeeves.Site" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title><asp:ContentPlaceHolder ID="title" runat="server"></asp:ContentPlaceHolder></title>
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/Site.css" />
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                    <ul class="dropdown-menu">
+                    <li><asp:HyperLink ID="lnkEditAccount" runat="server" NavigateUrl="~/protected/EditAccount.aspx">Edit Account</asp:HyperLink></li>
+                    <li role="separator" class="divider"></li>
+                    <li><asp:HyperLink ID="lnkEditSecurityInformation" runat="server" NavigateUrl="~/protected/EditSecurityInformation.aspx">Edit Security Information</asp:HyperLink></li>
+                    <li role="separator" class="divider"></li>
+                    <li><asp:HyperLink ID="lnkIngredientInventory" runat="server" NavigateUrl="~/protected/IngredientInventory.aspx">Ingredient Inventory</asp:HyperLink></li>
+                    <li role="separator" class="divider"></li>
+                    <li><asp:HyperLink ID="lnkAddNewIngredient" runat="server" NavigateUrl="~/protected/AddNewIngredient.aspx">Add New Ingredient</asp:HyperLink></li>
+                    <li role="separator" class="divider"></li>
+                    <li><asp:HyperLink ID="lnkAddNewRecipe" runat="server" NavigateUrl="~/protected/AddNewRecipe.aspx">Add New Recipe</asp:HyperLink></li>
+                    <li role="separator" class="divider"></li>
+                    <li><asp:HyperLink ID="lnkAddNewMeasurement" runat="server" NavigateUrl="~/protected/AddNewMeasurement.aspx">Add New Measurement</asp:HyperLink></li>
+                    <li role="separator" class="divider"></li>
+                    <li><asp:HyperLink ID="lnkLogout" runat="server" NavigateUrl="~/Login.aspx">Logout</asp:HyperLink></li>
+                    </ul>
+                </li>
+                </ul>
+            </div>
+            </div>
+        </nav>
+    </header>
+    <h1><asp:ContentPlaceHolder ID="heading" runat="server"></asp:ContentPlaceHolder></h1>
+    <form runat="server">
+    <div>
+        <asp:ContentPlaceHolder ID="content" runat="server"></asp:ContentPlaceHolder>
+    </div>
+    </form>
+    <script src="../Scripts/jquery-3.1.1.min.js" ></script>
+    <script src="../Scripts/bootstrap.min.js" ></script>
+    <script src="../Scripts/script.js" ></script>
+</body>
+</html>
