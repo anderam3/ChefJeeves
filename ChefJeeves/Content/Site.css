@@ -1,6 +1,13 @@
 ﻿body {
-    /*padding-top: 50px;*/
     padding-bottom: 20px;
+}
+
+header{
+    padding-bottom: 25px;
+}
+
+#imgLogo {
+    width: 15%;
 }
 
 .round {
@@ -8,6 +15,18 @@
     border: 5px solid black;
     height: 100px;
     width: 100px;
+}
+
+table, tr, td{
+    border:none;
+}
+
+th{
+    display:none;
+}
+
+td:last-child{
+    border-right:none;
 }
 
 .jumbotron {

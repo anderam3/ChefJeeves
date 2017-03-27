@@ -9,10 +9,15 @@ DROP TABLE IF EXISTS `Measurement`;
 DROP TABLE IF EXISTS `Account`;
 DROP TABLE IF EXISTS `Ingredient`;
 
+DROP PROCEDURE IF EXISTS `DeleteIngredient`;
 DROP PROCEDURE IF EXISTS `EmailExists`;
+DROP PROCEDURE IF EXISTS `GetAccountIngredients`;
+DROP PROCEDURE IF EXISTS `GetSecurityQuestion`;
 DROP PROCEDURE IF EXISTS `InsertUser`;
+DROP PROCEDURE IF EXISTS `UpdatePassword`;
 DROP PROCEDURE IF EXISTS `UsernameExists`;
 DROP PROCEDURE IF EXISTS `VerifyPassword`;
+DROP PROCEDURE IF EXISTS `VerifySecurityAnswer`;
 
 CREATE TABLE `account` (
 	`USERNAME` varchar(64) NOT NULL,
@@ -41,8 +46,9 @@ CREATE TABLE `AccountRecipe` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Ingredient` (
+	`INGREDIENT_ID` int(11) NOT NULL,
 	`INGREDIENT_NAME` varchar(64) NOT NULL,
-	PRIMARY KEY (`INGREDIENT_NAME`)
+	PRIMARY KEY (`INGREDIENT_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Measurement` (
@@ -53,24 +59,32 @@ CREATE TABLE `Measurement` (
 
 CREATE TABLE `RecipeIngredient` (
 	`RECIPE_ID` int(11) NOT NULL,
-	`INGREDIENT_NAME` varchar(64) NOT NULL,
+	`INGREDIENT_ID` int(11) NOT NULL,
 	`QUANTITY` float NOT NULL,
 	`UNIT_ABBREVIATION` varchar(64),
-	PRIMARY KEY (`RECIPE_ID`,`INGREDIENT_NAME`),
+	PRIMARY KEY (`RECIPE_ID`,`INGREDIENT_ID`),
 	CONSTRAINT `RecipeIngredient_RECIPE_ID` FOREIGN KEY (`RECIPE_ID`) REFERENCES `Recipe` (`RECIPE_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-	CONSTRAINT `RecipeIngredient_INGREDIENT_NAME` FOREIGN KEY (`INGREDIENT_NAME`) REFERENCES `Ingredient` (`INGREDIENT_NAME`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+	CONSTRAINT `RecipeIngredient_INGREDIENT_ID` FOREIGN KEY (`INGREDIENT_ID`) REFERENCES `Ingredient` (`INGREDIENT_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 	CONSTRAINT `RecipeIngredient_UNIT_ABBREVIATION` FOREIGN KEY (`UNIT_ABBREVIATION`) REFERENCES `Measurement` (`UNIT_ABBREVIATION`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `AccountIngredient` (
 	`USERNAME` varchar(64) NOT NULL,
-	`INGREDIENT_NAME` varchar(64) NOT NULL,
-	PRIMARY KEY (`USERNAME`,`INGREDIENT_NAME`),
+	`INGREDIENT_ID` int(11) NOT NULL,
+	PRIMARY KEY (`USERNAME`,`INGREDIENT_ID`),
 	CONSTRAINT `AccountIngredient_USERNAME` FOREIGN KEY (`USERNAME`) REFERENCES `Account` (`USERNAME`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-	CONSTRAINT `AccountIngredient_INGREDIENT_NAME` FOREIGN KEY (`INGREDIENT_NAME`) REFERENCES `Ingredient` (`INGREDIENT_NAME`) ON DELETE NO ACTION ON UPDATE NO ACTION
+	CONSTRAINT `AccountIngredient_INGREDIENT_ID` FOREIGN KEY (`INGREDIENT_ID`) REFERENCES `Ingredient` (`INGREDIENT_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DELIMITER $$
+
+CREATE PROCEDURE `DeleteIngredient`(
+    IN User VARCHAR(64),
+	IN ID int(11)
+)
+BEGIN
+	DELETE FROM AccountIngredient WHERE Ingredient_ID = ID and username = User;
+END$$
 
 CREATE PROCEDURE `EmailExists`(
   IN Address VARCHAR(64),
@@ -84,6 +98,27 @@ BEGIN
   ELSE
     SET Result = 0;
   END IF;
+END$$
+
+CREATE PROCEDURE `GetAccountIngredients`(
+  IN User VARCHAR(64),
+  IN Ingredient VARCHAR(64)
+)
+BEGIN
+  SELECT b.Ingredient_Name as NAME, b.Ingredient_ID as ID 
+  FROM AccountIngredient a, Ingredient b
+  WHERE a.Ingredient_ID = b.Ingredient_ID and a.username = User and b.INGREDIENT_NAME LIKE CONCAT(Ingredient,'%');
+END$$
+
+CREATE PROCEDURE `GetSecurityQuestion`(
+  IN User VARCHAR(64),
+  OUT Question varchar(512)
+)
+BEGIN
+  SELECT Security_Question
+  INTO Question
+  From account
+  WHERE username = User;
 END$$
 
 CREATE PROCEDURE `InsertUser`(
@@ -100,6 +135,18 @@ BEGIN
     SET Pass = SHA2(CONCAT(Pass, vSalt),512);
     SET Answer = SHA2(CONCAT(Answer, vSalt),512);
     INSERT INTO `Account` VALUES (User, Address, FullName, Question, Answer, Pass, vSalt);
+END$$
+
+CREATE PROCEDURE `UpdatePassword`(
+    IN User varchar(64),
+	IN Pass varchar(512)
+)
+BEGIN
+	DECLARE vSalt FLOAT;
+    SET vSalt = RAND();
+    SET Pass = SHA2(CONCAT(Pass, vSalt),512);
+    UPDATE `Account` SET PASSCODE = Pass,SALT = vSalt 
+	WHERE Username = User;
 END$$
 
 CREATE PROCEDURE `UsernameExists`(
@@ -135,24 +182,43 @@ BEGIN
   END IF;
 END$$
 
+CREATE PROCEDURE `VerifySecurityAnswer`(
+  IN User VARCHAR(64),
+  IN Answer VARCHAR(512),
+  OUT IsSuccessful tinyint(1)
+)
+BEGIN
+  DECLARE vSalt FLOAT;
+  DECLARE vAnswer1 VARCHAR(512);
+  DECLARE vAnswer2 VARCHAR(512);
+  SET vSalt = (SELECT Salt FROM account WHERE username = user LIMIT 1);
+  SET vAnswer1 = (SELECT Security_Answer FROM account WHERE username = user LIMIT 1);
+  SET vAnswer2 = SHA2(CONCAT(Answer, vSalt),512);
+  IF vAnswer1 = vAnswer2 THEN
+    SET IsSuccessful = 1;
+  ELSE
+    SET IsSuccessful = 0;
+  END IF;
+END$$
+
 'Sample password is *888uuu and security answer is 23 before hash and salt. An sanple image must reside in the Profiles folder names jsmith.jpg'
 DELIMITER ;
 
 INSERT INTO `account` (`USERNAME`,`EMAIL`,`FULL_NAME`,`SECURITY_QUESTION`,`SECURITY_ANSWER`,`PASSCODE`,`SALT`) VALUES ('jsmith','john.smith@email.com','John Smith','Age?','5ee521184a46f3bd25f08f60b922e3acc6c0ff60f219c102511b6f9c1aa0b05f606c4d93303030596b790cb402a06030b676a12e2460e0ff95fc5a0d1e3c8767','d064295332f4f5235f21bd8ad73941e810a81cdced996a35e7de7773fd35ef517f93589867d6ba4596604020a9a29110206c4f109dab3db5d64a260c34f0006b',0.999581);
 
-INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('bacon');
-INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('brown bean');
-INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('butter');
-INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('egg');
-INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('flour');
-INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('garlic');
-INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('milk');
-INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('olive oil');
-INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('orange');
-INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('pepper');
-INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('salt');
-INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('strawberry');
-INSERT INTO `ingredient`(`INGREDIENT_NAME`) VALUES ('tomato');
+INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (1,'bacon');
+INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (2,'brown bean');
+INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (3,'butter');
+INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (4,'egg');
+INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (5,'flour');
+INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (6,'garlic');
+INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (7,'milk');
+INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (8,'olive oil');
+INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (9,'orange');
+INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (10,'black pepper');
+INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (11,'salt');
+INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (12,'strawberry');
+INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (13,'tomato');
 
 INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('tsp', 'teaspoon');
 INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('tbsp', 'tablespoon');
@@ -175,22 +241,22 @@ INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('min', 'minutes');
 
 
 INSERT INTO RECIPE (RECIPE_NAME, PREPARATION) 
-VALUES ('Scrambled Eggs', 'BEAT eggs, milk, salt and pepper in medium bowl until blended.
+VALUES ('Scrambled Eggs', 'BEAT eggs, milk, salt and black pepper in medium bowl until blended.
 HEAT butter in large nonstick skillet over medium heat until hot. POUR IN egg mixture. As eggs begin to set, GENTLY PULL the eggs across the pan with a spatula, forming large soft curds.
 CONTINUE cooking – pulling, lifting and folding eggs – until thickened and no visible liquid egg remains. Do not stir constantly. REMOVE from heat. SERVE immediately.');
 
 INSERT INTO accountrecipe(USERNAME, RECIPE_ID) VALUES ('jsmith', 1);
 
-INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_NAME, QUANTITY) VALUES (1, 'egg', 4);
-INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_NAME, QUANTITY, UNIT_ABBREVIATION) VALUES (1,'milk',0.25,'cup');
-INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_NAME, QUANTITY, UNIT_ABBREVIATION) VALUES (1,'salt',1,'pinch');
-INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_NAME, QUANTITY, UNIT_ABBREVIATION) VALUES (1,'pepper',1,'pinch');
-INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_NAME, QUANTITY, UNIT_ABBREVIATION) VALUES (1,'butter',4,'tsp');
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY) VALUES (1,4,4);
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY, UNIT_ABBREVIATION) VALUES (1,7,0.25,'cup');
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY, UNIT_ABBREVIATION) VALUES (1,11,1,'pinch');
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY, UNIT_ABBREVIATION) VALUES (1,10,1,'pinch');
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY, UNIT_ABBREVIATION) VALUES (1,3,4,'tsp');
 
-INSERT INTO AccountIngredient(USERNAME, INGREDIENT_NAME) VALUES ('jsmith', 'butter');
-INSERT INTO AccountIngredient(USERNAME, INGREDIENT_NAME) VALUES ('jsmith', 'egg');
-INSERT INTO AccountIngredient(USERNAME, INGREDIENT_NAME) VALUES ('jsmith', 'garlic');
-INSERT INTO AccountIngredient(USERNAME, INGREDIENT_NAME) VALUES ('jsmith', 'olive oil');
-INSERT INTO AccountIngredient(USERNAME, INGREDIENT_NAME) VALUES ('jsmith', 'milk');
-INSERT INTO AccountIngredient(USERNAME, INGREDIENT_NAME) VALUES ('jsmith', 'salt');
-INSERT INTO AccountIngredient(USERNAME, INGREDIENT_NAME) VALUES ('jsmith', 'pepper');
+INSERT INTO AccountIngredient(USERNAME, INGREDIENT_ID) VALUES ('jsmith',3);
+INSERT INTO AccountIngredient(USERNAME, INGREDIENT_ID) VALUES ('jsmith',4);
+INSERT INTO AccountIngredient(USERNAME, INGREDIENT_ID) VALUES ('jsmith',6);
+INSERT INTO AccountIngredient(USERNAME, INGREDIENT_ID) VALUES ('jsmith',8);
+INSERT INTO AccountIngredient(USERNAME, INGREDIENT_ID) VALUES ('jsmith',7);
+INSERT INTO AccountIngredient(USERNAME, INGREDIENT_ID) VALUES ('jsmith',11);
+INSERT INTO AccountIngredient(USERNAME, INGREDIENT_ID) VALUES ('jsmith',10);

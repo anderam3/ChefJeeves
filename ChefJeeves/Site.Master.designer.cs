@@ -22,6 +22,15 @@ namespace ChefJeeves {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder title;
         
         /// <summary>
+        /// heading control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder heading;
+        
+        /// <summary>
         /// lnkEditAccount control.
         /// </summary>
         /// <remarks>
@@ -83,15 +92,6 @@ namespace ChefJeeves {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkLogout;
-        
-        /// <summary>
-        /// heading control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder heading;
         
         /// <summary>
         /// content control.

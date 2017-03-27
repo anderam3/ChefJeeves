@@ -79,11 +79,15 @@
             ControlToCompare="txtConfirmPassword" ControlToValidate="txtPassword" 
             ErrorMessage="Must be the same as above" ForeColor="DarkRed"></asp:CompareValidator>
         <br />
-        By using this site you agree that the administrator(s) may save your IP address, cookies, and any other personal data transmitted through your browser. All account data is property of the administrator(s) of this site and can do what he/she wishes with it. This privacy policy may change at any time.
-        <br />
         <asp:Button ID="btnCreate" runat="server" Text="Create" OnClick="btnCreate_Click" CssClass="btn btn-default"/>
         <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click" CssClass="btn btn-default"/>
     </div>
     </form>
+    <footer>
+        By using this site you agree that the administrator(s) may save your IP address, cookies, and any other personal data transmitted through your browser. All account data is property of the administrator(s) of this site and can do what he/she wishes with it. This privacy policy may change at any time.
+    </footer>
+    <script src="../Scripts/jquery-3.1.1.min.js" ></script>
+    <script src="../Scripts/bootstrap.min.js" ></script>
+    <script src="../Scripts/Site.js" ></script>
 </body>
 </html>

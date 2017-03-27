@@ -46,6 +46,7 @@ namespace ChefJeeves
                     if (Int64.Parse(cmd.Parameters["isSuccessful"].Value.ToString()) == 1)
                     {
                         Session["username"] = lgn.UserName.Trim();
+                        Session["isSuccessful"] = 1;
                         con.Close();
                         Response.Redirect("~/protected/SuggestedRecipes.aspx");
                     }
