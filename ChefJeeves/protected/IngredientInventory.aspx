@@ -16,4 +16,4 @@
         <EmptyDataTemplate>No Ingredients in Inventory</EmptyDataTemplate> 
     </asp:GridView>
     <asp:SqlDataSource ID="SqlDataSource" runat="server"></asp:SqlDataSource>
-    </asp:Content>
+ </asp:Content>
