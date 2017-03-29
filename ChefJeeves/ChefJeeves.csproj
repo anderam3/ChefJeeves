@@ -223,6 +223,13 @@
     <Compile Include="protected\AddNewRecipe.aspx.designer.cs">
       <DependentUpon>AddNewRecipe.aspx</DependentUpon>
     </Compile>
+    <Compile Include="protected\ChangePassword.aspx.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="protected\ChangePassword.aspx.designer.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+    </Compile>
     <Compile Include="protected\EditAccount.aspx.cs">
       <DependentUpon>EditAccount.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -243,6 +250,13 @@
     </Compile>
     <Compile Include="protected\SuggestedRecipes.aspx.designer.cs">
       <DependentUpon>SuggestedRecipes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SecurityQuestion.aspx.cs">
+      <DependentUpon>SecurityQuestion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SecurityQuestion.aspx.designer.cs">
+      <DependentUpon>SecurityQuestion.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -284,6 +298,7 @@
     <Content Include="protected\AddNewIngredient.aspx" />
     <Content Include="protected\AddNewMeasurement.aspx" />
     <Content Include="protected\AddNewRecipe.aspx" />
+    <Content Include="protected\ChangePassword.aspx" />
     <Content Include="protected\EditAccount.aspx" />
     <Content Include="protected\IngredientInventory.aspx" />
     <Content Include="protected\SuggestedRecipes.aspx" />
@@ -303,6 +318,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Site.js" />
+    <Content Include="SecurityQuestion.aspx" />
     <Content Include="SQL_Scripts\Migration.sql" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
