@@ -1,0 +1,14 @@
+diff a/ChefJeeves/Site.Master b/ChefJeeves/Site.Master	(rejected hunks)
+@@ -42,11 +42,10 @@
+             </div>
+         </nav>
+     </header>
+-    <form runat="server">
++    
+     <div>
+         <asp:ContentPlaceHolder ID="content" runat="server"></asp:ContentPlaceHolder>
+     </div>
+-    </form>
+     <footer>
+         By using this site you agree that the administrator(s) may save your IP address, cookies, and any other personal data transmitted through your browser. All account data is property of the administrator(s) of this site and can do what he/she wishes with it. This privacy policy may change at any time.
+     </footer>

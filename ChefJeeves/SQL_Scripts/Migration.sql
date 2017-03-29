@@ -1,10 +1,12 @@
 USE `chefjeeves`;
 SET FOREIGN_KEY_CHECKS=1;
+SET SQL_SAFE_UPDATES = 0;
 
 DROP TABLE IF EXISTS `AccountRecipe`;
 DROP TABLE IF EXISTS `RecipeIngredient`;
 DROP TABLE IF EXISTS `AccountIngredient`;
 DROP TABLE IF EXISTS `Recipe`;
+DROP TABLE IF EXISTS `tmpRecipe`;
 DROP TABLE IF EXISTS `Measurement`;
 DROP TABLE IF EXISTS `Account`;
 DROP TABLE IF EXISTS `Ingredient`;
@@ -12,6 +14,7 @@ DROP TABLE IF EXISTS `Ingredient`;
 DROP PROCEDURE IF EXISTS `DeleteIngredient`;
 DROP PROCEDURE IF EXISTS `EmailExists`;
 DROP PROCEDURE IF EXISTS `GetAccountIngredients`;
+DROP PROCEDURE IF EXISTS `GetRecipes`;
 DROP PROCEDURE IF EXISTS `GetSecurityQuestion`;
 DROP PROCEDURE IF EXISTS `InsertUser`;
 DROP PROCEDURE IF EXISTS `UpdatePassword`;
@@ -108,6 +111,45 @@ BEGIN
   SELECT b.Ingredient_Name as NAME, b.Ingredient_ID as ID 
   FROM AccountIngredient a, Ingredient b
   WHERE a.Ingredient_ID = b.Ingredient_ID and a.username = User and b.INGREDIENT_NAME LIKE CONCAT(Ingredient,'%');
+END$$
+
+CREATE PROCEDURE `GetRecipes`(
+  IN User VARCHAR(64),
+  IN Recipe VARCHAR(64)
+)
+BEGIN
+  DECLARE name varchar(64);
+  DECLARE cntAccountIngredients, cntRecipeIngredients, idRecipe int(11);
+  DECLARE done boolean DEFAULT FALSE;
+  DECLARE cur CURSOR FOR SELECT Recipe_Name, Recipe_Id FROM Recipe;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+  SET SQL_SAFE_UPDATES = 0;
+  DROP TABLE IF EXISTS `tmpRecipe`;
+  CREATE TEMPORARY TABLE `tmpRecipe` ENGINE=InnoDB DEFAULT CHARSET=utf8 AS SELECT Recipe_Name, Recipe_Id FROM Recipe;
+  OPEN cur;
+  rdloop: LOOP
+    FETCH cur INTO name, idRecipe;
+    IF done THEN
+      LEAVE rdloop;
+    END IF;
+    SET cntAccountIngredients = (SELECT Count(c.Recipe_ID) as Count
+	FROM AccountIngredient a, Ingredient b, Recipe c, RecipeIngredient d
+	WHERE a.Ingredient_ID = b.Ingredient_ID
+	and b.Ingredient_ID = d.Ingredient_ID
+	and c.Recipe_ID = d.Recipe_ID
+	and d.Recipe_ID = idRecipe
+	and a.username = User);
+	SET cntRecipeIngredients = (SELECT COUNT(c.Recipe_ID) as Count
+	FROM Ingredient b, Recipe c, RecipeIngredient d
+	WHERE b.Ingredient_ID = d.Ingredient_ID
+	and c.Recipe_ID = d.Recipe_ID
+	and c.Recipe_ID = idRecipe);
+    IF cntAccountIngredients <> cntRecipeIngredients THEN
+      DELETE FROM tmpRecipe WHERE Recipe_Id = idRecipe;
+	END IF;
+  END LOOP;
+  CLOSE cur;
+  SELECT Recipe_Name AS Name, Recipe_Id as ID FROM tmpRecipe WHERE Recipe_Name LIKE CONCAT(Recipe,'%');
 END$$
 
 CREATE PROCEDURE `GetSecurityQuestion`(
@@ -219,6 +261,10 @@ INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (10,'black pe
 INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (11,'salt');
 INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (12,'strawberry');
 INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (13,'tomato');
+INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (14,'lettuce');
+INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (15,'onion');
+INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (16,'whole wheat bread');
+INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (17,'cheddar cheese');
 
 INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('tsp', 'teaspoon');
 INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('tbsp', 'tablespoon');
@@ -238,21 +284,36 @@ INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('lg', 'large');
 INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('sq', 'square');
 INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('approx', 'approximately');
 INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('min', 'minutes');
+INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('slice', 'slice');
+INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('strip', 'strip');
 
-
-INSERT INTO RECIPE (RECIPE_NAME, PREPARATION) 
-VALUES ('Scrambled Eggs', 'BEAT eggs, milk, salt and black pepper in medium bowl until blended.
+INSERT INTO RECIPE (RECIPE_ID, RECIPE_NAME, PREPARATION) 
+VALUES (1, 'Scrambled Eggs', 'BEAT eggs, milk, salt and black pepper in medium bowl until blended.
 HEAT butter in large nonstick skillet over medium heat until hot. POUR IN egg mixture. As eggs begin to set, GENTLY PULL the eggs across the pan with a spatula, forming large soft curds.
 CONTINUE cooking – pulling, lifting and folding eggs – until thickened and no visible liquid egg remains. Do not stir constantly. REMOVE from heat. SERVE immediately.');
+INSERT INTO RECIPE (RECIPE_ID, RECIPE_NAME, PREPARATION)
+VALUES (2, 'BLTO Sandwich', 'Spread butter on 2 slice of whole wheat bread. Then assemble sandwich with 3 strips of bacon, a slice of lettuce, 2 slices of tomato, and 2 slices of onion.');
+INSERT INTO RECIPE (RECIPE_ID, RECIPE_NAME, PREPARATION) 
+VALUES (3, 'Grilled Cheddar Cheese Sandwich', 'Put 3 slice of cheddar cheese inbetween 2 slice of whole wheat bread. Place on BBQ on each sandwich side until cheese melts.');
 
 INSERT INTO accountrecipe(USERNAME, RECIPE_ID) VALUES ('jsmith', 1);
+INSERT INTO accountrecipe(USERNAME, RECIPE_ID) VALUES ('jsmith', 2);
+INSERT INTO accountrecipe(USERNAME, RECIPE_ID) VALUES ('jsmith', 3);
 
 INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY) VALUES (1,4,4);
 INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY, UNIT_ABBREVIATION) VALUES (1,7,0.25,'cup');
 INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY, UNIT_ABBREVIATION) VALUES (1,11,1,'pinch');
 INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY, UNIT_ABBREVIATION) VALUES (1,10,1,'pinch');
 INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY, UNIT_ABBREVIATION) VALUES (1,3,4,'tsp');
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY, UNIT_ABBREVIATION) VALUES (2,16,2,'slice');
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY, UNIT_ABBREVIATION) VALUES (2,1,3,'strip');
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY, UNIT_ABBREVIATION) VALUES (2,14,1,'slice');
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY, UNIT_ABBREVIATION) VALUES (2,13,2,'slice');
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY, UNIT_ABBREVIATION) VALUES (2,15,2,'slice');
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY, UNIT_ABBREVIATION) VALUES (3,16,2,'slice');
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY, UNIT_ABBREVIATION) VALUES (3,17,3,'slice');
 
+INSERT INTO AccountIngredient(USERNAME, INGREDIENT_ID) VALUES ('jsmith',1);
 INSERT INTO AccountIngredient(USERNAME, INGREDIENT_ID) VALUES ('jsmith',3);
 INSERT INTO AccountIngredient(USERNAME, INGREDIENT_ID) VALUES ('jsmith',4);
 INSERT INTO AccountIngredient(USERNAME, INGREDIENT_ID) VALUES ('jsmith',6);
@@ -260,3 +321,7 @@ INSERT INTO AccountIngredient(USERNAME, INGREDIENT_ID) VALUES ('jsmith',8);
 INSERT INTO AccountIngredient(USERNAME, INGREDIENT_ID) VALUES ('jsmith',7);
 INSERT INTO AccountIngredient(USERNAME, INGREDIENT_ID) VALUES ('jsmith',11);
 INSERT INTO AccountIngredient(USERNAME, INGREDIENT_ID) VALUES ('jsmith',10);
+INSERT INTO AccountIngredient(USERNAME, INGREDIENT_ID) VALUES ('jsmith',13);
+INSERT INTO AccountIngredient(USERNAME, INGREDIENT_ID) VALUES ('jsmith',14);
+INSERT INTO AccountIngredient(USERNAME, INGREDIENT_ID) VALUES ('jsmith',15);
+INSERT INTO AccountIngredient(USERNAME, INGREDIENT_ID) VALUES ('jsmith',16);

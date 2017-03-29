@@ -264,6 +264,10 @@
     <Content Include="Images\Ingredients\11.jpg" />
     <Content Include="Images\Ingredients\12.jpg" />
     <Content Include="Images\Ingredients\13.jpg" />
+    <Content Include="Images\Ingredients\14.jpg" />
+    <Content Include="Images\Ingredients\15.jpg" />
+    <Content Include="Images\Ingredients\16.jpg" />
+    <Content Include="Images\Ingredients\17.jpg" />
     <Content Include="Images\Ingredients\2.jpg" />
     <Content Include="Images\Ingredients\3.jpg" />
     <Content Include="Images\Ingredients\4.jpg" />
@@ -274,6 +278,8 @@
     <Content Include="Images\Ingredients\9.jpg" />
     <Content Include="Images\Profiles\jsmith.jpg" />
     <Content Include="Images\Recipes\1.jpg" />
+    <Content Include="Images\Recipes\2.jpg" />
+    <Content Include="Images\Recipes\3.jpg" />
     <Content Include="Login.aspx" />
     <Content Include="protected\AddNewIngredient.aspx" />
     <Content Include="protected\AddNewMeasurement.aspx" />
