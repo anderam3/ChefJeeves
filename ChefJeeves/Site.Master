@@ -18,7 +18,7 @@
                     <h1>
                         <asp:ContentPlaceHolder ID="heading" runat="server"></asp:ContentPlaceHolder>
                     </h1>
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right dropdownNav">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle glyphicon glyphicon-menu-hamburger" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
                             <ul class="dropdown-menu">
@@ -42,11 +42,11 @@
             </div>
         </nav>
     </header>
-    <form runat="server">
+    
     <div>
         <asp:ContentPlaceHolder ID="content" runat="server"></asp:ContentPlaceHolder>
     </div>
-    </form>
+    
     <footer>
         By using this site you agree that the administrator(s) may save your IP address, cookies, and any other personal data transmitted through your browser. All account data is property of the administrator(s) of this site and can do what he/she wishes with it. This privacy policy may change at any time.
     </footer>

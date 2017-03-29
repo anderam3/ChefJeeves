@@ -149,9 +149,15 @@ a.logo
 }
 
 .navbar-nav li{
-    margin-top: 30px;
+    /*-margin-top: 30px;*/
     font-size: 30px;
 }
 userIngList{
     list-style-type:none;
+}
+
+.dropdownNav{
+        position: absolute;
+    top: 20px;
+    right: 20px;
 }
