@@ -5,7 +5,7 @@
     <form runat="server">
     <asp:TextBox ID="txtSearch" runat="server" ></asp:TextBox>
     <asp:LinkButton ID="lnkSearch" runat="server"  CssClass="glyphicon glyphicon-search" OnClick="lnkSearch_Click" />
-    <asp:GridView ID="grd" runat="server">
+    <asp:GridView ID="grd" runat="server" OnRowDataBound = "OnRowDataBound">
         <Columns>  
             <asp:TemplateField HeaderText="IMAGE" ShowHeader="false">
                 <ItemTemplate>
