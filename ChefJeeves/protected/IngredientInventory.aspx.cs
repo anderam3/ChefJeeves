@@ -14,15 +14,12 @@ namespace ChefJeeves
 {
 	public partial class IngredientInventory : System.Web.UI.Page
     {
-        private MySqlConnection con;
-        private MySqlCommand cmd;
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["username"] == null || Session["isSuccessful"] == null)
             {
                 Response.Redirect("~/Login.aspx");
-            }
+            }        
             Refresh();
         }
 
@@ -31,6 +28,7 @@ namespace ChefJeeves
             String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
             MySqlConnection con = new MySqlConnection(con_string);
             MySqlCommand cmd = new MySqlCommand();
+            cmd = new MySqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "DeleteIngredient";

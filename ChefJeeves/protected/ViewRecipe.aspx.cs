@@ -11,39 +11,60 @@ using System.Web.UI.WebControls;
 namespace ChefJeeves
 {
 	public partial class ViewRecipe : System.Web.UI.Page
-{
-    protected void Page_Load(object sender, EventArgs e)
     {
+        private MySqlConnection con;
+        private MySqlCommand cmd;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
+            con = new MySqlConnection(con_string);
+            cmd = new MySqlCommand();
             if (Session["username"] == null || Session["isSuccessful"] == null)
             {
                 Response.Redirect("~/Login.aspx");
             }
+            else if (Session["recipeID"] == null)
+            {
+                Response.Redirect("~/protected/SuggestedRecipes.aspx");
+            }
             else
             {
+                imgRecipe.ImageUrl = "../Images/Recipes/" + Session["recipeID"] + ".jpg";
+                foreach (GridViewRow row in grd.Rows)
+                {
+                    row.Cells[0].Controls.Add(new Image {
+                            ImageUrl = "../Images/Ingredients/" + row.Cells[0].Text + ".jpg",
+                            CssClass = "round"
+                        }
+                    );
+                    row.Cells[3].ToolTip = row.Cells[4].Text;
+                    row.Cells[4].Visible = false;
+                }
                 
-                String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
-                MySqlConnection con = new MySqlConnection(con_string);
-                MySqlCommand cmd = new MySqlCommand();
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "GetRecipeDetails";
+                cmd.CommandText = "GetRecipe";
                 cmd.Parameters.Clear();
-                cmd.Parameters.Add("RecipeID", MySqlDbType.Int64, 11);
-                cmd.Parameters["RecipeID"].Value = Session["recipeID"];
-                cmd.Parameters["RecipeID"].Direction = ParameterDirection.Input;
-                cmd.Parameters.Add("RecipeName", MySqlDbType.VarChar, 512);
-                cmd.Parameters["RecipeName"].Direction = ParameterDirection.Output;
-                cmd.Parameters.Add("Preparations", MySqlDbType.VarChar, 512);
-                cmd.Parameters["Preparations"].Direction = ParameterDirection.Output;
-
+                cmd.Parameters.Add("ID", MySqlDbType.Int64, 11);
+                cmd.Parameters["ID"].Value = Session["recipeID"];
+                cmd.Parameters["ID"].Direction = ParameterDirection.Input;
+                cmd.Parameters.Add("Name", MySqlDbType.VarChar, 64);
+                cmd.Parameters["Name"].Direction = ParameterDirection.Output;
+                cmd.Parameters.Add("Prep", MySqlDbType.Text);
+                cmd.Parameters["Prep"].Direction = ParameterDirection.Output;
+                cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
+                cmd.Parameters["User"].Direction = ParameterDirection.Output;
                 using (con)
                 {
                     try
                     {
                         con.Open();
-                        cmd.ExecuteNonQuery();
-                        myheading.InnerHtml = cmd.Parameters["RecipeName"].Value.ToString();
-
+                        cmd.ExecuteScalar();
+                        ltlTitle.Text = cmd.Parameters["Name"].Value.ToString();
+                        lblHeading.Text = cmd.Parameters["Name"].Value.ToString();
+                        ltlDirections.Text = cmd.Parameters["Prep"].Value.ToString();
+                        lblUser.Text = cmd.Parameters["User"].Value.ToString();
                         con.Close();
                         con.Dispose();
                     }
@@ -53,7 +74,7 @@ namespace ChefJeeves
                         con.Dispose();
                     }
                 }
+            }
         }
-        }
-}
+    }
 }
