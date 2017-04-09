@@ -19,18 +19,18 @@ namespace ChefJeeves
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            imgProfile.ImageUrl = "../Images/Profiles/" + Session["username"] + ".jpg";
+            //Regex for email addresses
+            RegularExpressionValidator2.ValidationExpression = @"(?i)^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|"
+                            + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)"
+                            + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
+            //Regex for passwords
+            RegularExpressionValidator3.ValidationExpression = @"^(?=.*[a-zA-Z])(?=.*\d)(?=.*(_|[^\w])).{7,12}$";
+            String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
+            con = new MySqlConnection(con_string);
+            cmd = new MySqlCommand();
             if (!IsPostBack)
             {
-                imgProfile.ImageUrl = "../Images/Profiles/" + Session["username"] + ".jpg";
-                //Regex for email addresses
-                RegularExpressionValidator2.ValidationExpression = @"(?i)^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|"
-                                + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)"
-                                + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
-                //Regex for passwords
-                RegularExpressionValidator3.ValidationExpression = @"^(?=.*[a-zA-Z])(?=.*\d)(?=.*(_|[^\w])).{7,12}$";
-                String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
-                con = new MySqlConnection(con_string);
-                cmd = new MySqlCommand();
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "GetAccount";
@@ -181,7 +181,7 @@ namespace ChefJeeves
                 cmd.CommandText = "UpdateAccount";
                 cmd.Parameters.Clear();
                 cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
-                cmd.Parameters["User"].Value = lblUserName.Text.Trim();
+                cmd.Parameters["User"].Value = Session["username"].ToString();
                 cmd.Parameters.Add("Name", MySqlDbType.VarChar, 64);
                 cmd.Parameters["Name"].Value = txtName.Text.Trim();
                 cmd.Parameters.Add("Address", MySqlDbType.VarChar, 64);

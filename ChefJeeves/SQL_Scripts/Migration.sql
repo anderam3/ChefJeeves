@@ -316,21 +316,6 @@ BEGIN
   END IF;
 END$$
 
-CREATE PROCEDURE `GetAccountInfo`(
-  IN User VARCHAR(64)
-  OUT EmailAcc varchar(64),
-  OUT Full_NameAcc varchar(64), 
-  OUT Security_QuestionAcc varchar(64),
-  OUT Security_AnswerAcc varchar(64),
-  OUT PasscodeAcc varchar(64)
-)
-BEGIN
-  SELECT Email, Full_Name, Security_Question, Security_Answer,Passcode
-  INTO EmailAcc, Full_NameAcc, Security_QuestionAcc, Security_AnswerAcc,PasscodeAcc 
-  FROM Account a
-  WHERE a.username = User;
-END$$
-
 'Sample password is *888uuu and security answer is 23 before hash and salt. An sanple image must reside in the Profiles folder names jsmith.jpg'
 DELIMITER ;
 
