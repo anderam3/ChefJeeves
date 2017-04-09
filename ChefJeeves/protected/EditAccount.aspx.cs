@@ -27,11 +27,50 @@ namespace ChefJeeves
             RegularExpressionValidator3.ValidationExpression = @"^(?=.*[a-zA-Z])(?=.*\d)(?=.*(_|[^\w])).{7,12}$";
             String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
             con = new MySqlConnection(con_string);
+            
         }
 
         protected void hasImage(object sender, ServerValidateEventArgs e)
         {
             e.IsValid = fileUpload.HasFile;
+        }
+
+        private void GetUserInfo()
+        {
+            String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
+            MySqlConnection con = new MySqlConnection(con_string);
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.Connection = con;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "GetAccountInfo";
+            cmd.Parameters.Clear();
+            cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
+            cmd.Parameters["User"].Value = Session["username"];
+            cmd.Parameters["User"].Direction = ParameterDirection.Input;
+            using (con)
+            {
+                try
+                {
+                    con.Open();
+
+                    txtUserName.Text = (string)(Session["username"]);
+                    txtEmail.Text = (string)(Session["email"]);
+                    txtName.Text = (string)(Session["name"]);
+                    txtSecurityQuestion.Text = (string)(Session[" "]);
+                    txtSecurityAnswer.Text = (string)(Session["username"]);
+                    txtConfirmSecurityAnswer.Text = (string)(Session["username"]);
+                    txtPassword.Text = (string)(Session["username"]);
+                    txtConfirmPassword.Text = (string)(Session["username"]);
+
+                    con.Close();
+                    con.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    con.Close();
+                    con.Dispose();
+                }
+            }
         }
 
         protected void usernameExists(object sender, ServerValidateEventArgs e)
@@ -142,15 +181,9 @@ namespace ChefJeeves
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            fileUpload = new FileUpload();
-            txtUserName.Text = "";
-            txtEmail.Text = "";
-            txtName.Text = "";
-            txtSecurityQuestion.Text = "";
-            txtSecurityAnswer.Text = "";
-            txtConfirmSecurityAnswer.Text = "";
-            txtPassword.Text = "";
-            txtConfirmPassword.Text = "";
+
+            Response.Redirect("~/protected/EditAccount.aspx");
+            
         }
     }
 }

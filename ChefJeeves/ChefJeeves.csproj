@@ -251,6 +251,13 @@
     <Compile Include="protected\SuggestedRecipes.aspx.designer.cs">
       <DependentUpon>SuggestedRecipes.aspx</DependentUpon>
     </Compile>
+    <Compile Include="protected\ViewRecipe.aspx.cs">
+      <DependentUpon>ViewRecipe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="protected\ViewRecipe.aspx.designer.cs">
+      <DependentUpon>ViewRecipe.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SecurityQuestion.aspx.cs">
       <DependentUpon>SecurityQuestion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -302,6 +309,7 @@
     <Content Include="protected\EditAccount.aspx" />
     <Content Include="protected\IngredientInventory.aspx" />
     <Content Include="protected\SuggestedRecipes.aspx" />
+    <Content Include="protected\ViewRecipe.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\techno_hideo_bold.ttf" />

@@ -12,13 +12,13 @@
             OnServerValidate="hasImage"
             ErrorMessage="The profile must have an image" ForeColor="DarkRed"></asp:CustomValidator>
         -->
-        <table>
+        <table id="editAccount">
             <tr>
                 <td>
                     <asp:Label ID="lblUserName" runat="server" Text="Username:"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtUserName" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtUserName" runat="server" ></asp:TextBox>
                 </td>            
                 <td>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" 

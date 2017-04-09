@@ -66,6 +66,17 @@ namespace ChefJeeves
             }
         }
 
+        protected void OnRowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Attributes.Add("style", "cursor:pointer;");
+                e.Row.Attributes.Add("onclick", "location='ViewRecipe.aspx'");
+                e.Row.ToolTip = "Click to view this recipe.";
+                Session["recipeID"] = e.Row.Cells[2].Text;
+            }
+        }
+
         protected void lnkSearch_Click(object sender, EventArgs e)
         {
             txtSearch.AutoPostBack = true;

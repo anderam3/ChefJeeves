@@ -2,6 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">Ingredient Inventory</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="heading" runat="server">Ingredient Inventory</asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="content" runat="server">
+    <form runat="server">
     <asp:TextBox ID="txtSearch" runat="server" ></asp:TextBox>
     <asp:LinkButton ID="lnkSearch" runat="server"  CssClass="glyphicon glyphicon-search" OnClick="lnkSearch_Click" />
     <asp:LinkButton ID="lnkAdd" runat="server" CssClass="glyphicon glyphicon-plus-sign" />
@@ -16,4 +17,5 @@
         <EmptyDataTemplate>No Ingredients in Inventory</EmptyDataTemplate> 
     </asp:GridView>
     <asp:SqlDataSource ID="SqlDataSource" runat="server"></asp:SqlDataSource>
+    </form>
  </asp:Content>
