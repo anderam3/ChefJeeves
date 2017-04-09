@@ -18,11 +18,6 @@ namespace ChefJeeves
             {
                 Response.Redirect("~/Login.aspx");
             }
-            Refresh();
-        }
-
-        private void Refresh()
-        {
             String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
             MySqlConnection con = new MySqlConnection(con_string);
             MySqlCommand cmd = new MySqlCommand();
@@ -52,12 +47,9 @@ namespace ChefJeeves
                         row.Cells[2].Visible = false;
                     }
                     con.Close();
-                    con.Dispose();
                 }
                 catch (Exception ex)
                 {
-                    con.Close();
-                    con.Dispose();
                 }
             }
         }

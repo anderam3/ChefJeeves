@@ -181,10 +181,10 @@ table#editAccount tbody tr td:first-child, table#createAccount tbody tr td:first
 }
 
 
-h1{
-    font-size: 40px;
+h3 {
     width: 400px;
     height: 100px;
     text-align: center;
     margin: 0 auto;
     line-height: 100px;
+}

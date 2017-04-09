@@ -13,12 +13,14 @@ DROP TABLE IF EXISTS `Ingredient`;
 
 DROP PROCEDURE IF EXISTS `DeleteIngredient`;
 DROP PROCEDURE IF EXISTS `EmailExists`;
+DROP PROCEDURE IF EXISTS `GetAccount`;
 DROP PROCEDURE IF EXISTS `GetAccountIngredients`;
 DROP PROCEDURE IF EXISTS `GetRecipe`;
 DROP PROCEDURE IF EXISTS `GetRecipeDetails`;
 DROP PROCEDURE IF EXISTS `GetRecipes`;
 DROP PROCEDURE IF EXISTS `GetSecurityQuestion`;
-DROP PROCEDURE IF EXISTS `InsertUser`;
+DROP PROCEDURE IF EXISTS `InsertAccount`;
+DROP PROCEDURE IF EXISTS `UpdateAccount`;
 DROP PROCEDURE IF EXISTS `UpdatePassword`;
 DROP PROCEDURE IF EXISTS `UsernameExists`;
 DROP PROCEDURE IF EXISTS `VerifyPassword`;
@@ -94,17 +96,40 @@ BEGIN
 END$$
 
 CREATE PROCEDURE `EmailExists`(
+  IN User VARCHAR(64),
   IN Address VARCHAR(64),
   OUT Result tinyint(1)
 )
 BEGIN
-  DECLARE vEmail VARCHAR(64);
-  SET vEmail= (SELECT Email FROM account WHERE email = Address LIMIT 1);
-  IF vEmail = Address THEN
-    SET Result = 1;
+  DECLARE currentUser VARCHAR(64);
+  SET currentUser = (SELECT username FROM account WHERE email = Address LIMIT 1);
+  IF currentUser is NULL THEN
+    IF (SELECT email FROM account WHERE email = Address LIMIT 1) = Address THEN
+		SET Result = 1;
+	  ELSE
+		SET Result = 0;
+	  END IF;
   ELSE
-    SET Result = 0;
+    IF (SELECT email FROM account WHERE email = Address AND username != user LIMIT 1) = Address THEN
+		SET Result = 1;
+	  ELSE
+		SET Result = 0;
+	  END IF;
   END IF;
+END$$
+
+CREATE PROCEDURE `GetAccount`(
+  IN User varchar(64),
+  OUT Name varchar(64),
+  OUT Address varchar(64),
+  OUT Question varchar(64)
+)
+BEGIN
+  SELECT FULL_NAME, EMAIL, SECURITY_QUESTION
+    INTO Name, Address, Question
+	FROM account
+    WHERE Username = user
+	LIMIT 1;
 END$$
 
 CREATE PROCEDURE `GetAccountIngredients`(
@@ -193,20 +218,38 @@ BEGIN
   WHERE username = User;
 END$$
 
-CREATE PROCEDURE `InsertUser`(
+CREATE PROCEDURE `InsertAccount`(
 	User varchar(64),
     Address varchar (64),
-    FullName varchar(64),
+    Name varchar(64),
     Pass varchar(512),
     Question varchar(512),
     Answer varchar(512)
 )
 BEGIN
-	DECLARE vSalt FLOAT;
-    SET vSalt = RAND();
-    SET Pass = SHA2(CONCAT(Pass, vSalt),512);
-    SET Answer = SHA2(CONCAT(Answer, vSalt),512);
-    INSERT INTO `Account` VALUES (User, Address, FullName, Question, Answer, Pass, vSalt);
+	DECLARE Saltt FLOAT;
+    SET Saltt = RAND();
+    SET Pass = SHA2(CONCAT(Pass, Saltt), 512);
+    SET Answer = SHA2(CONCAT(Answer, Saltt), 512);
+    INSERT INTO `account` VALUES (User, Address, Name, Question, Answer, Pass, Saltt);
+END$$
+
+CREATE PROCEDURE `UpdateAccount`(
+    IN User varchar(64),
+	IN Name varchar(64),
+	IN Address varchar(64),
+    IN Question varchar(64),
+	IN Answer varchar(512),
+    IN Pass varchar(512)
+)
+BEGIN
+	DECLARE Saltt FLOAT;
+    SET Saltt = RAND();
+    SET Pass = SHA2(CONCAT(Pass, Saltt), 512);
+    SET Answer = SHA2(CONCAT(Answer, Saltt), 512); 
+    UPDATE `account` 
+	SET FULL_NAME = Name, EMAIL = Address, PASSCODE = Pass, SECURITY_QUESTION = Question, SECURITY_ANSWER = Answer, SALT = Saltt 
+	WHERE Username = User;
 END$$
 
 CREATE PROCEDURE `UpdatePassword`(

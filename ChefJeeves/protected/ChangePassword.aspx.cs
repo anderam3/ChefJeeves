@@ -49,7 +49,6 @@ namespace ChefJeeves
                 catch (Exception ex)
                 {
                     lblError.Text = ex.Message;
-                    con.Close();
                 }
             }
         }

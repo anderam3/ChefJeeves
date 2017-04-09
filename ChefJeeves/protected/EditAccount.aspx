@@ -1,49 +1,23 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EditAccount.aspx.cs" Inherits="ChefJeeves.EditAccount" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EditAccount.aspx.cs" Inherits="ChefJeeves.EditAccount" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">Edit Account</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="heading" runat="server">Edit Account</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="heading" runat="server">
+     <asp:Image ID="imgProfile" CssClass="round" runat="server" ImageUrl="../Images/Profiles/" />
+     <asp:Label ID="lblUserName" runat="server" Text="Edit Account:"></asp:Label>
+</asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="content" runat="server">
-
-
     <form id="form1" runat="server">
-    <!--
-        <asp:FileUpload ID="fileUpload" runat="server" />
-        
-        <asp:CustomValidator runat="server" ID="CustomValidator1" 
-            OnServerValidate="hasImage"
-            ErrorMessage="The profile must have an image" ForeColor="DarkRed"></asp:CustomValidator>
-        -->
         <table id="editAccount">
             <tr>
                 <td>
-                    <asp:Label ID="lblUserName" runat="server" Text="Username:"></asp:Label>
+                    <asp:Label ID="lblName" runat="server" Text="Name:"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtUserName" runat="server" ></asp:TextBox>
-                </td>            
+                    <asp:TextBox ID="txtName" runat="server"></asp:TextBox>
+                </td>
                 <td>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" 
-                        ControlToValidate="txtUserName" ErrorMessage="Can't be empty" 
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" 
+                        ControlToValidate="txtName" ErrorMessage="Can't be empty" 
                         Display="Dynamic" ForeColor="DarkRed"></asp:RequiredFieldValidator>
-
-                    <asp:RegularExpressionValidator ID="RegularExpressionValidator4" runat="server" 
-                        ControlToValidate="txtUserName" ErrorMessage="Must be less than 65 alphanumeric characters" 
-                        ValidationExpression="^\w{1,64}$" ForeColor="DarkRed"></asp:RegularExpressionValidator>
-
-                    <asp:CustomValidator runat="server" ID="CustomValidator4" OnServerValidate="usernameExists"
-                        ErrorMessage="Username already exists. Choose another one." ForeColor="DarkRed"></asp:CustomValidator>
-
-
-                 <!--   <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
-                        ControlToValidate="txtUserName" ErrorMessage="Can't be empty" 
-                        Display="Dynamic" ForeColor="DarkRed"></asp:RequiredFieldValidator>
-
-                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" 
-                        ControlToValidate="txtUserName" ErrorMessage="Must be less than 65 alphanumeric characters" 
-                        ValidationExpression="^\w{1,64}$" ForeColor="DarkRed"></asp:RegularExpressionValidator>
-
-                    <asp:CustomValidator runat="server" ID="CustomValidator2" 
-                        OnServerValidate="usernameExists"
-                        ErrorMessage="Username already exists. Choose another one." ForeColor="DarkRed"></asp:CustomValidator>-->
                 </td>
             </tr>
             <tr>
@@ -66,21 +40,6 @@
                         OnServerValidate="emailExists"
                         ErrorMessage="Email address already exists. Choose another one." ForeColor="DarkRed"></asp:CustomValidator>
                 </td>
-        
-        
-            </tr>
-            <tr>
-                <td>
-                    <asp:Label ID="lblName" runat="server" Text="Name:"></asp:Label>
-                </td>
-                <td>
-                    <asp:TextBox ID="txtName" runat="server"></asp:TextBox>
-                </td>
-                <td>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" 
-                        ControlToValidate="txtName" ErrorMessage="Can't be empty" 
-                        Display="Dynamic" ForeColor="DarkRed"></asp:RequiredFieldValidator>
-                </td>
             </tr>
             <tr>
                 <td>
@@ -97,63 +56,89 @@
             </tr>
             <tr>
                 <td>
-                    <asp:Label ID="lblSecurityAnswer" runat="server" Text="Security Answer:"></asp:Label>
+                    <asp:Label ID="lblCurrentSecurityAnswer" runat="server" Text="Current Security Answer:" TextMode="Password"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtSecurityAnswer" runat="server" TextMode="Password"></asp:TextBox>
+                    <asp:TextBox ID="txtCurrentSecurityAnswer" runat="server" TextMode="Password"></asp:TextBox>
+                </td>
+                <td>
+                    <asp:CustomValidator runat="server" ID="CustomValidator2" 
+                        OnServerValidate="verifySecurityAnswer"
+                        ErrorMessage="Security answer incorrect." ForeColor="DarkRed"></asp:CustomValidator>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:Label ID="lblNewSecurityAnswer" runat="server" Text="New Security Answer:"></asp:Label>
+                </td>
+                <td>
+                    <asp:TextBox ID="txtNewSecurityAnswer" runat="server" TextMode="Password"></asp:TextBox>
                 </td>
                 <td>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" 
-                        ControlToValidate="txtSecurityAnswer" ErrorMessage="Can't be empty" 
+                        ControlToValidate="txtNewSecurityAnswer" ErrorMessage="Can't be empty" 
                         Display="Dynamic" ForeColor="DarkRed"></asp:RequiredFieldValidator>
                 </td>
             </tr>        
             <tr>
                 <td>
-                    <asp:Label ID="lblConfirmSecurityAnswer" runat="server" Text="Confirm Security Answer:" ></asp:Label>
+                    <asp:Label ID="lblConfirmNewSecurityAnswer" runat="server" Text="Confirm New Security Answer:" ></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtConfirmSecurityAnswer" runat="server" TextMode="Password"></asp:TextBox>
+                    <asp:TextBox ID="txtConfirmNewSecurityAnswer" runat="server" TextMode="Password"></asp:TextBox>
                 </td>
                 <td>
                     <asp:CompareValidator ID="CompareValidator1" runat="server" 
-                        ControlToCompare="txtSecurityAnswer" ControlToValidate="txtConfirmSecurityAnswer" 
+                        ControlToCompare="txtNewSecurityAnswer" ControlToValidate="txtConfirmNewSecurityAnswer" 
                         ErrorMessage="Must be the same as above" ForeColor="DarkRed"></asp:CompareValidator>
                 </td>
             </tr>        
             <tr>
                 <td>
-                    <asp:Label ID="lblPassword" runat="server" Text="Password:" TextMode="Password"></asp:Label>
+                    <asp:Label ID="lblCurrentPassword" runat="server" Text="Current Password:" TextMode="Password"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtPassword" runat="server" TextMode="Password"></asp:TextBox>
+                    <asp:TextBox ID="txtCurrentPassword" runat="server" TextMode="Password"></asp:TextBox>
                 </td>
                 <td>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" 
-                        ControlToValidate="txtPassword" ErrorMessage="Can't be empty" 
+                    <asp:CustomValidator runat="server" ID="CustomValidator1" 
+                        OnServerValidate="verifyPassword"
+                        ErrorMessage="Password incorrect." ForeColor="DarkRed"></asp:CustomValidator>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:Label ID="lblNewPassword" runat="server" Text="New Password:" TextMode="Password"></asp:Label>
+                </td>
+                <td>
+                    <asp:TextBox ID="txtNewPassword" runat="server" TextMode="Password"></asp:TextBox>
+                </td>
+                <td>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
+                        ControlToValidate="txtNewPassword" ErrorMessage="Can't be empty" 
                         Display="Dynamic" ForeColor="DarkRed"></asp:RequiredFieldValidator>
 
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server" 
-                        ControlToValidate="txtPassword" ErrorMessage="Must be between 7 and 12 characters, and contains at least 1 special, 1 number, and 1 letter character"
+                        ControlToValidate="txtNewPassword" ErrorMessage="Must be between 7 and 12 characters, and contains at least 1 special, 1 number, and 1 letter character"
                         ForeColor="DarkRed"></asp:RegularExpressionValidator>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <asp:Label ID="lblConfirmPassword" runat="server" Text="Confirm Password:" ></asp:Label>
+                    <asp:Label ID="lblConfirmNewPassword" runat="server" Text="Confirm New Password:" ></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtConfirmPassword" runat="server" TextMode="Password"></asp:TextBox>
+                    <asp:TextBox ID="txtConfirmNewPassword" runat="server" TextMode="Password"></asp:TextBox>
                 </td>
                 <td>
                     <asp:CompareValidator ID="CompareValidator2" runat="server" 
-                        ControlToCompare="txtConfirmPassword" ControlToValidate="txtPassword" 
+                        ControlToCompare="txtNewPassword" ControlToValidate="txtConfirmNewPassword" 
                         ErrorMessage="Must be the same as above" ForeColor="DarkRed"></asp:CompareValidator>
                 </td>
             </tr>        
             <tr>
                 <td>
-                    <asp:Button ID="btnCreate" runat="server" Text="Save Changes" OnClick="btnCreate_Click" CssClass="btn btn-default"/>
+                    <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" CssClass="btn btn-default"/>
                 </td>
                 <td>
                     <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click" CssClass="btn btn-default"/>
@@ -161,12 +146,4 @@
             </tr>   
         </table>
     </form>
-
-
-
-
-
-
-
-
 </asp:Content>
