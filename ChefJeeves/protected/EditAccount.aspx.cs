@@ -27,7 +27,7 @@ namespace ChefJeeves
             RegularExpressionValidator3.ValidationExpression = @"^(?=.*[a-zA-Z])(?=.*\d)(?=.*(_|[^\w])).{7,12}$";
             String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
             con = new MySqlConnection(con_string);
-            
+            GetUserInfo();
         }
 
         protected void hasImage(object sender, ServerValidateEventArgs e)
@@ -47,20 +47,31 @@ namespace ChefJeeves
             cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
             cmd.Parameters["User"].Value = Session["username"];
             cmd.Parameters["User"].Direction = ParameterDirection.Input;
+            cmd.Parameters.Add("EmailAcc", MySqlDbType.VarChar, 64);
+            cmd.Parameters["EmailAcc"].Direction = ParameterDirection.Output;
+            cmd.Parameters.Add("Full_NameAcc", MySqlDbType.VarChar, 64);
+            cmd.Parameters["Full_NameAcc"].Direction = ParameterDirection.Output;
+            cmd.Parameters.Add("Security_QuestionAcc", MySqlDbType.VarChar, 64);
+            cmd.Parameters["Security_QuestionAcc"].Direction = ParameterDirection.Output;
+            cmd.Parameters.Add("Security_AnswerAcc", MySqlDbType.VarChar, 64);
+            cmd.Parameters["Security_AnswerAcc"].Direction = ParameterDirection.Output;
+            cmd.Parameters.Add("PasscodeAcc", MySqlDbType.VarChar, 64);
+            cmd.Parameters["PasscodeAcc"].Direction = ParameterDirection.Output;
             using (con)
             {
                 try
                 {
                     con.Open();
+                    cmd.ExecuteScalar();
 
                     txtUserName.Text = (string)(Session["username"]);
-                    txtEmail.Text = (string)(Session["email"]);
-                    txtName.Text = (string)(Session["name"]);
-                    txtSecurityQuestion.Text = (string)(Session[" "]);
-                    txtSecurityAnswer.Text = (string)(Session["username"]);
-                    txtConfirmSecurityAnswer.Text = (string)(Session["username"]);
-                    txtPassword.Text = (string)(Session["username"]);
-                    txtConfirmPassword.Text = (string)(Session["username"]);
+                    txtEmail.Text = cmd.Parameters["EmailAcc"].Value.ToString();
+                    txtName.Text = cmd.Parameters["Full_NameAcc"].Value.ToString();
+                    txtSecurityQuestion.Text = cmd.Parameters["Security_QuestionAcc"].Value.ToString();
+                    txtSecurityAnswer.Text = cmd.Parameters["Security_AnswerAcc"].Value.ToString();
+                    txtConfirmSecurityAnswer.Text = cmd.Parameters["Security_AnswerAcc"].Value.ToString();
+                    txtPassword.Text = cmd.Parameters["PasscodeAcc"].Value.ToString();
+                    txtConfirmPassword.Text = cmd.Parameters["PasscodeAcc"].Value.ToString();
 
                     con.Close();
                     con.Dispose();
