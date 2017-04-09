@@ -40,15 +40,6 @@ namespace ChefJeeves {
         protected global::System.Web.UI.WebControls.HyperLink lnkEditAccount;
         
         /// <summary>
-        /// lnkEditSecurityInformation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkEditSecurityInformation;
-        
-        /// <summary>
         /// lnkIngredientInventory control.
         /// </summary>
         /// <remarks>
@@ -58,13 +49,13 @@ namespace ChefJeeves {
         protected global::System.Web.UI.WebControls.HyperLink lnkIngredientInventory;
         
         /// <summary>
-        /// lnkAddNewIngredient control.
+        /// lnkAddNewIngredients control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkAddNewIngredient;
+        protected global::System.Web.UI.WebControls.HyperLink lnkAddNewIngredients;
         
         /// <summary>
         /// lnkAddNewRecipe control.
@@ -74,15 +65,6 @@ namespace ChefJeeves {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkAddNewRecipe;
-        
-        /// <summary>
-        /// lnkAddNewMeasurement control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkAddNewMeasurement;
         
         /// <summary>
         /// lnkLogout control.

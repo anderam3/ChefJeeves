@@ -14,6 +14,8 @@ DROP TABLE IF EXISTS `Ingredient`;
 DROP PROCEDURE IF EXISTS `DeleteIngredient`;
 DROP PROCEDURE IF EXISTS `EmailExists`;
 DROP PROCEDURE IF EXISTS `GetAccountIngredients`;
+DROP PROCEDURE IF EXISTS `GetRecipe`;
+DROP PROCEDURE IF EXISTS `GetRecipeDetails`;
 DROP PROCEDURE IF EXISTS `GetRecipes`;
 DROP PROCEDURE IF EXISTS `GetSecurityQuestion`;
 DROP PROCEDURE IF EXISTS `InsertUser`;
@@ -35,9 +37,11 @@ CREATE TABLE `account` (
 
 CREATE TABLE `Recipe` (
 	`RECIPE_ID` int(11) NOT NULL AUTO_INCREMENT,
+	`SUBMITTED_USERNAME` varchar(64) NOT NULL,
 	`RECIPE_NAME` varchar(64) NOT NULL,
 	`PREPARATION` text NOT NULL,
-  PRIMARY KEY (`RECIPE_ID`)
+  PRIMARY KEY (`RECIPE_ID`),
+  CONSTRAINT `Recipe_Submitted_Username` FOREIGN KEY (`SUBMITTED_USERNAME`) REFERENCES `Account` (`USERNAME`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `AccountRecipe` (
@@ -64,7 +68,7 @@ CREATE TABLE `RecipeIngredient` (
 	`RECIPE_ID` int(11) NOT NULL,
 	`INGREDIENT_ID` int(11) NOT NULL,
 	`QUANTITY` float NOT NULL,
-	`UNIT_ABBREVIATION` varchar(64),
+	`UNIT_ABBREVIATION` varchar(64) NOT NULL,
 	PRIMARY KEY (`RECIPE_ID`,`INGREDIENT_ID`),
 	CONSTRAINT `RecipeIngredient_RECIPE_ID` FOREIGN KEY (`RECIPE_ID`) REFERENCES `Recipe` (`RECIPE_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 	CONSTRAINT `RecipeIngredient_INGREDIENT_ID` FOREIGN KEY (`INGREDIENT_ID`) REFERENCES `Ingredient` (`INGREDIENT_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -110,7 +114,33 @@ CREATE PROCEDURE `GetAccountIngredients`(
 BEGIN
   SELECT b.Ingredient_Name as NAME, b.Ingredient_ID as ID 
   FROM AccountIngredient a, Ingredient b
-  WHERE a.Ingredient_ID = b.Ingredient_ID and a.username = User and b.INGREDIENT_NAME LIKE CONCAT(Ingredient,'%');
+  WHERE a.Ingredient_ID = b.Ingredient_ID and a.username = User and b.INGREDIENT_NAME LIKE CONCAT(Ingredient,'%')
+  ORDER BY b.Ingredient_Name;
+END$$
+
+CREATE PROCEDURE `GetRecipe`(
+    IN ID int(11),
+	OUT Name varchar(64),
+    OUT Prep text
+)
+BEGIN
+    SELECT RECIPE_NAME, PREPARATION
+	INTO Name, Prep
+	FROM recipe
+	WHERE RECIPE_ID = ID
+	LIMIT 1;
+END$$
+
+CREATE PROCEDURE `GetRecipeDetails`(
+    IN ID int(11)
+)
+BEGIN
+    SELECT DISTINCT b.Ingredient_ID as ID, b.Ingredient_Name as Ingredient, a.Quantity, c.Unit_Abbreviation as Unit, c.Unit_Name
+	FROM RecipeIngredient a, Ingredient b, Measurement c
+	WHERE a.Ingredient_ID = b.Ingredient_ID 
+		and a.Unit_Abbreviation = c.Unit_Abbreviation
+        and a.Recipe_ID = ID
+	ORDER BY b.Ingredient_Name, a.Quantity, c.Unit_Abbreviation;
 END$$
 
 CREATE PROCEDURE `GetRecipes`(
@@ -149,7 +179,7 @@ BEGIN
 	END IF;
   END LOOP;
   CLOSE cur;
-  SELECT Recipe_Name AS Name, Recipe_Id as ID FROM tmpRecipe WHERE Recipe_Name LIKE CONCAT(Recipe,'%');
+  SELECT Recipe_Name AS Name, Recipe_Id as ID FROM tmpRecipe WHERE Recipe_Name LIKE CONCAT(Recipe,'%') ORDER BY Recipe_Name;
 END$$
 
 CREATE PROCEDURE `GetSecurityQuestion`(
@@ -275,6 +305,7 @@ INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (15,'onion');
 INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (16,'whole wheat bread');
 INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (17,'cheddar cheese');
 
+INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('', 'itself');
 INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('tsp', 'teaspoon');
 INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('tbsp', 'tablespoon');
 INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('cup', 'cup');
@@ -296,20 +327,20 @@ INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('min', 'minutes');
 INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('slice', 'slice');
 INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('strip', 'strip');
 
-INSERT INTO RECIPE (RECIPE_ID, RECIPE_NAME, PREPARATION) 
-VALUES (1, 'Scrambled Eggs', 'BEAT eggs, milk, salt and black pepper in medium bowl until blended.
+INSERT INTO RECIPE (RECIPE_ID, SUBMITTED_USERNAME, RECIPE_NAME, PREPARATION) 
+VALUES (1, 'jsmith', 'Scrambled Eggs', 'BEAT eggs, milk, salt and black pepper in medium bowl until blended.
 HEAT butter in large nonstick skillet over medium heat until hot. POUR IN egg mixture. As eggs begin to set, GENTLY PULL the eggs across the pan with a spatula, forming large soft curds.
 CONTINUE cooking – pulling, lifting and folding eggs – until thickened and no visible liquid egg remains. Do not stir constantly. REMOVE from heat. SERVE immediately.');
-INSERT INTO RECIPE (RECIPE_ID, RECIPE_NAME, PREPARATION)
-VALUES (2, 'BLTO Sandwich', 'Spread butter on 2 slice of whole wheat bread. Then assemble sandwich with 3 strips of bacon, a slice of lettuce, 2 slices of tomato, and 2 slices of onion.');
-INSERT INTO RECIPE (RECIPE_ID, RECIPE_NAME, PREPARATION) 
-VALUES (3, 'Grilled Cheddar Cheese Sandwich', 'Put 3 slice of cheddar cheese inbetween 2 slice of whole wheat bread. Place on BBQ on each sandwich side until cheese melts.');
+INSERT INTO RECIPE (RECIPE_ID, SUBMITTED_USERNAME, RECIPE_NAME, PREPARATION)
+VALUES (2, 'jsmith', 'BLTO Sandwich', 'Spread butter on 2 slice of whole wheat bread. Then assemble sandwich with 3 strips of bacon, a slice of lettuce, 2 slices of tomato, and 2 slices of onion.');
+INSERT INTO RECIPE (RECIPE_ID, SUBMITTED_USERNAME, RECIPE_NAME, PREPARATION) 
+VALUES (3, 'jsmith', 'Grilled Cheddar Cheese Sandwich', 'Put 3 slice of cheddar cheese inbetween 2 slice of whole wheat bread. Place on BBQ on each sandwich side until cheese melts.');
 
 INSERT INTO accountrecipe(USERNAME, RECIPE_ID) VALUES ('jsmith', 1);
 INSERT INTO accountrecipe(USERNAME, RECIPE_ID) VALUES ('jsmith', 2);
 INSERT INTO accountrecipe(USERNAME, RECIPE_ID) VALUES ('jsmith', 3);
 
-INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY) VALUES (1,4,4);
+INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY, UNIT_ABBREVIATION) VALUES (1,4,4,'');
 INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY, UNIT_ABBREVIATION) VALUES (1,7,0.25,'cup');
 INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY, UNIT_ABBREVIATION) VALUES (1,11,1,'pinch');
 INSERT INTO recipeingredient(RECIPE_ID, INGREDIENT_ID, QUANTITY, UNIT_ABBREVIATION) VALUES (1,10,1,'pinch');

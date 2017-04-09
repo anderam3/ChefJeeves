@@ -101,7 +101,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -187,6 +187,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CaptchaImage.cs" />
+    <Compile Include="CaptchaPage.aspx.cs">
+      <DependentUpon>CaptchaPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CaptchaPage.aspx.designer.cs">
+      <DependentUpon>CaptchaPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ContactUs.aspx.cs">
+      <DependentUpon>ContactUs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ContactUs.aspx.designer.cs">
+      <DependentUpon>ContactUs.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CreateAccount.aspx.cs">
       <DependentUpon>CreateAccount.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -202,19 +217,12 @@
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="protected\AddNewIngredient.aspx.cs">
-      <DependentUpon>AddNewIngredient.aspx</DependentUpon>
+    <Compile Include="protected\AddNewIngredients.aspx.cs">
+      <DependentUpon>AddNewIngredients.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="protected\AddNewIngredient.aspx.designer.cs">
-      <DependentUpon>AddNewIngredient.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="protected\AddNewMeasurement.aspx.cs">
-      <DependentUpon>AddNewMeasurement.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="protected\AddNewMeasurement.aspx.designer.cs">
-      <DependentUpon>AddNewMeasurement.aspx</DependentUpon>
+    <Compile Include="protected\AddNewIngredients.aspx.designer.cs">
+      <DependentUpon>AddNewIngredients.aspx</DependentUpon>
     </Compile>
     <Compile Include="protected\AddNewRecipe.aspx.cs">
       <DependentUpon>AddNewRecipe.aspx</DependentUpon>
@@ -274,6 +282,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CaptchaPage.aspx" />
+    <Content Include="ContactUs.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="CreateAccount.aspx" />
@@ -302,8 +312,7 @@
     <Content Include="Images\Recipes\2.jpg" />
     <Content Include="Images\Recipes\3.jpg" />
     <Content Include="Login.aspx" />
-    <Content Include="protected\AddNewIngredient.aspx" />
-    <Content Include="protected\AddNewMeasurement.aspx" />
+    <Content Include="protected\AddNewIngredients.aspx" />
     <Content Include="protected\AddNewRecipe.aspx" />
     <Content Include="protected\ChangePassword.aspx" />
     <Content Include="protected\EditAccount.aspx" />

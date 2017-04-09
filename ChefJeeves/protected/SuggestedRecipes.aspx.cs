@@ -12,9 +12,6 @@ namespace ChefJeeves
 {
     public partial class SuggestedRecipes : System.Web.UI.Page
     {
-        private MySqlConnection con;
-        private MySqlCommand cmd;
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["username"] == null || Session["isSuccessful"] == null)
@@ -23,7 +20,6 @@ namespace ChefJeeves
             }
             Refresh();
         }
-
 
         private void Refresh()
         {
@@ -48,12 +44,12 @@ namespace ChefJeeves
                     grd.EmptyDataText = "You cannot make any Recipes based off your current Ingredient Inventory";
                     grd.DataSource = cmd.ExecuteReader();
                     grd.DataBind();
-                    BoundField colDelete = new BoundField();
                     Image img = new Image();
                     foreach (GridViewRow row in grd.Rows)
                     {
                         img = (Image)row.Cells[0].Controls[1];
                         img.ImageUrl = "../Images/Recipes/" + row.Cells[2].Text + ".jpg";
+                        row.Cells[2].Visible = false;
                     }
                     con.Close();
                     con.Dispose();
@@ -70,11 +66,28 @@ namespace ChefJeeves
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                e.Row.Attributes.Add("style", "cursor:pointer;");
-                e.Row.Attributes.Add("onclick", "location='ViewRecipe.aspx'");
+                e.Row.Attributes["style"] = "cursor:pointer;";
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(grd, "Select$" + e.Row.RowIndex);
                 e.Row.ToolTip = "Click to view this recipe.";
-                Session["recipeID"] = e.Row.Cells[2].Text;
+                
             }
+        }
+
+        protected void OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach (GridViewRow row in grd.Rows)
+            {
+                if (row.RowIndex == grd.SelectedIndex)
+                {
+                    Session["recipeID"] = row.Cells[2].Text;
+                    Response.Redirect("~/protected/ViewRecipe.aspx");
+                }
+            }
+        }
+
+        protected void lnkClear_Click(object sender, EventArgs e)
+        {
+            txtSearch.Text = String.Empty;
         }
 
         protected void lnkSearch_Click(object sender, EventArgs e)
