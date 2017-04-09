@@ -85,6 +85,11 @@ namespace ChefJeeves
             }
         }
 
+        protected void lnkClear_Click(object sender, EventArgs e)
+        {
+            txtSearch.Text = String.Empty;
+        }
+
         protected void lnkSearch_Click(object sender, EventArgs e)
         {
             txtSearch.AutoPostBack = true;
