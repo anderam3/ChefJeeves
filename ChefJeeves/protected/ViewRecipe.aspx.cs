@@ -53,8 +53,6 @@ namespace ChefJeeves
                 cmd.Parameters["Name"].Direction = ParameterDirection.Output;
                 cmd.Parameters.Add("Prep", MySqlDbType.Text);
                 cmd.Parameters["Prep"].Direction = ParameterDirection.Output;
-                cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
-                cmd.Parameters["User"].Direction = ParameterDirection.Output;
                 using (con)
                 {
                     try
@@ -64,7 +62,6 @@ namespace ChefJeeves
                         ltlTitle.Text = cmd.Parameters["Name"].Value.ToString();
                         lblHeading.Text = cmd.Parameters["Name"].Value.ToString();
                         ltlDirections.Text = cmd.Parameters["Prep"].Value.ToString();
-                        lblUser.Text = cmd.Parameters["User"].Value.ToString();
                         con.Close();
                         con.Dispose();
                     }

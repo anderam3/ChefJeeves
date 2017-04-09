@@ -114,18 +114,18 @@ CREATE PROCEDURE `GetAccountIngredients`(
 BEGIN
   SELECT b.Ingredient_Name as NAME, b.Ingredient_ID as ID 
   FROM AccountIngredient a, Ingredient b
-  WHERE a.Ingredient_ID = b.Ingredient_ID and a.username = User and b.INGREDIENT_NAME LIKE CONCAT(Ingredient,'%');
+  WHERE a.Ingredient_ID = b.Ingredient_ID and a.username = User and b.INGREDIENT_NAME LIKE CONCAT(Ingredient,'%')
+  ORDER BY b.Ingredient_Name;
 END$$
 
 CREATE PROCEDURE `GetRecipe`(
     IN ID int(11),
 	OUT Name varchar(64),
-    OUT Prep text,
-	OUT User varchar(64)
+    OUT Prep text
 )
 BEGIN
-    SELECT RECIPE_NAME, PREPARATION, SUBMITTED_USERNAME
-	INTO Name, Prep, User
+    SELECT RECIPE_NAME, PREPARATION
+	INTO Name, Prep
 	FROM recipe
 	WHERE RECIPE_ID = ID
 	LIMIT 1;
@@ -179,7 +179,7 @@ BEGIN
 	END IF;
   END LOOP;
   CLOSE cur;
-  SELECT Recipe_Name AS Name, Recipe_Id as ID FROM tmpRecipe WHERE Recipe_Name LIKE CONCAT(Recipe,'%');
+  SELECT Recipe_Name AS Name, Recipe_Id as ID FROM tmpRecipe WHERE Recipe_Name LIKE CONCAT(Recipe,'%') ORDER BY Recipe_Name;
 END$$
 
 CREATE PROCEDURE `GetSecurityQuestion`(

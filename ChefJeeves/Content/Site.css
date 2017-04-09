@@ -29,6 +29,14 @@ td:last-child{
     border-right:none;
 }
 
+hr { 
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-width: 1px;
+    color: black;
+} 
+
 .jumbotron {
     /* Image from https://www.flickr.com/photos/roland/15693412/in/photolist-2or75-DwooAF-MxUwP-y9SE8E-pA5UFD-5g9b-cWfv-8gw2kF-MxUQ6-qqRb2F-bdcn-fE6E-2d3E-YMd-FWsab-Ds2vST-cV4L-bEXFAf-FgKc-8o8Q-fDQA-dxMB4j-fDR1-HmnjF-aqMDa3-dJB4FH-Hnm-FgLv-58L7EA-oRwcYa-2oqZj-DZzpto-76mE7c-6mY3m-o4pbj4-hQxRD6-ehWARV-oiQZxh-hQxDbw-ESSAxo-o4o53S-oC41q5-oPP2rW-RyA-okR1n7-2or1J-2or9s-qzesq5-5mG9-h1K */
     background-image: url('https://c1.staticflickr.com/1/11/15693412_a34ea110d2_b.jpg');

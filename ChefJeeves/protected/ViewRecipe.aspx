@@ -17,6 +17,5 @@
         </asp:SqlDataSource>
     <h3>Directions:</h3>
     <asp:Literal runat="server" ID="ltlDirections"></asp:Literal>
-    <h3>Submitted by user: <asp:Label ID="lblUser" runat="server"></asp:Label></h3>
     </form>
 </asp:Content>

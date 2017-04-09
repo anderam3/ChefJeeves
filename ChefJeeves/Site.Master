@@ -24,15 +24,11 @@
                             <ul class="dropdown-menu">
                             <li><asp:HyperLink ID="lnkEditAccount" runat="server" NavigateUrl="~/protected/EditAccount.aspx">Edit Account</asp:HyperLink></li>
                             <li role="separator" class="divider"></li>
-                            <li><asp:HyperLink ID="lnkEditSecurityInformation" runat="server" NavigateUrl="~/protected/EditSecurityInformation.aspx">Edit Security Information</asp:HyperLink></li>
-                            <li role="separator" class="divider"></li>
                             <li><asp:HyperLink ID="lnkIngredientInventory" runat="server" NavigateUrl="~/protected/IngredientInventory.aspx">Ingredient Inventory</asp:HyperLink></li>
                             <li role="separator" class="divider"></li>
-                            <li><asp:HyperLink ID="lnkAddNewIngredient" runat="server" NavigateUrl="~/protected/AddNewIngredient.aspx">Add New Ingredient</asp:HyperLink></li>
+                            <li><asp:HyperLink ID="lnkAddNewIngredients" runat="server" NavigateUrl="~/protected/AddNewIngredients.aspx">Add New Ingredients</asp:HyperLink></li>
                             <li role="separator" class="divider"></li>
                             <li><asp:HyperLink ID="lnkAddNewRecipe" runat="server" NavigateUrl="~/protected/AddNewRecipe.aspx">Add New Recipe</asp:HyperLink></li>
-                            <li role="separator" class="divider"></li>
-                            <li><asp:HyperLink ID="lnkAddNewMeasurement" runat="server" NavigateUrl="~/protected/AddNewMeasurement.aspx">Add New Measurement</asp:HyperLink></li>
                             <li role="separator" class="divider"></li>
                             <li><asp:HyperLink ID="lnkLogout" runat="server" NavigateUrl="~/Login.aspx">Logout</asp:HyperLink></li>
                             </ul>
