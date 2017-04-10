@@ -23,6 +23,10 @@
                     <td>
                       <asp:RequiredFieldValidator runat="server" Display="dynamic" ID="RequiredFieldValidator1"
                             SetFocusOnError="true" ControlToValidate="txtEmail" ErrorMessage="Your Email is required">*</asp:RequiredFieldValidator>
+                       
+                <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" 
+                    ControlToValidate="txtEmail" ErrorMessage="Must be valid email address" 
+                    ForeColor="DarkRed"></asp:RegularExpressionValidator>
                     </td>
                 </tr>
              
