@@ -37,7 +37,7 @@
                 <p>Our database is expanding with new recipes being continously added!</p>
             </div>
         </div>
-        <footer>
+        <footer id="footer">
              By using this site you agree that the administrator(s) may save your IP address, cookies, and any other personal data transmitted through your browser. All account data is property of the administrator(s) of this site and can do what he/she wishes with it. This privacy policy may change at any time.
             <asp:HyperLink id="hyperlink1"  NavigateUrl="ContactUs.aspx" Text="Contact Us" runat="server"/>
         </footer>

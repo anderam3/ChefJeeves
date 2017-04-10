@@ -31,17 +31,21 @@ namespace ChefJeeves
             else
             {
                 imgRecipe.ImageUrl = "../Images/Recipes/" + Session["recipeID"] + ".jpg";
+                Image1.ImageUrl = "../Images/Recipes/" + Session["recipeID"] + ".jpg";
                 foreach (GridViewRow row in grd.Rows)
                 {
-                    row.Cells[0].Controls.Add(new Image {
+                    
+                        
+                   /* row.Cells[0].Controls.Add(new Image {
                             ImageUrl = "../Images/Ingredients/" + row.Cells[0].Text + ".jpg",
                             CssClass = "round"
                         }
-                    );
+                    );*/
                     row.Cells[3].ToolTip = row.Cells[4].Text;
+                    
                     row.Cells[4].Visible = false;
                 }
-                
+
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "GetRecipe";

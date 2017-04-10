@@ -7,6 +7,7 @@ header{
 }
 
 #imgLogo {
+    position: absolute;
     width: 100px;
 }
 
@@ -21,9 +22,6 @@ table, tr, td{
     border:none;
 }
 
-th{
-    display:none;
-}
 
 td:last-child{
     border-right:none;
@@ -140,7 +138,8 @@ a.logo
 } 
 
 #recipeLeft{
-    width:60%;
+    width:60%;    
+    max-width:800px;
     float:left;
 }
 #recipeLeft img{
@@ -149,6 +148,7 @@ a.logo
 }
 #recipeRight{
     width:40%;
+    max-width:580px;
     float:left;
 }
 #recipeTable tr td:first-child{
@@ -181,10 +181,22 @@ table#editAccount tbody tr td:first-child, table#createAccount tbody tr td:first
 }
 
 
-h1{
+#navHeading {
     font-size: 40px;
-    width: 400px;
+    width: auto;
     height: 100px;
     text-align: center;
     margin: 0 auto;
     line-height: 100px;
+}
+
+#footer {
+    position: fixed;
+    clear:both;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    background-color: #efefef;
+    text-align: center;
+}
