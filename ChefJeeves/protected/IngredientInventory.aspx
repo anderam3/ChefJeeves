@@ -3,7 +3,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="heading" runat="server">Ingredient Inventory</asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="content" runat="server">
      
-    <form runat="server">
+    <form runat="server" class="ingInvTable">
     <asp:TextBox ID="txtSearch" runat="server" CausesValidation="false"></asp:TextBox>
     <asp:LinkButton ID="lnkClear" runat="server"  CssClass="glyphicon glyphicon-remove" OnClick="lnkClear_Click" />
     <asp:LinkButton ID="lnkSearch" runat="server"  CssClass="glyphicon glyphicon-search" OnClick="lnkSearch_Click" />
@@ -18,7 +18,7 @@
         <Columns>  
             <asp:TemplateField HeaderText="IMAGE" ShowHeader="false">
                 <ItemTemplate>
-                    <asp:Image CssClass="round" runat="server" />
+                    <asp:Image CssClass="roundIngInv" runat="server" />
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>  

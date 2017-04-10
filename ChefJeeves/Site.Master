@@ -15,15 +15,9 @@
                     <div class="navbar-form navbar-left">
                         <a href="../protected/SuggestedRecipes.aspx" ><img id="imgLogo" src="../Images/ChefJeevesLogo.png" /></a>
                     </div>
-<<<<<<< HEAD
                     <div id="navHeading">
                         <asp:ContentPlaceHolder ID="heading" runat="server"></asp:ContentPlaceHolder>
                     </div>
-=======
-                    <h3>
-                        <asp:ContentPlaceHolder ID="heading" runat="server"></asp:ContentPlaceHolder>
-                    </h3>
->>>>>>> 30ae03eb11d30d86f575d176f3b88f2e6fa28bfb
                     <ul class="nav navbar-nav navbar-right dropdownNav">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle glyphicon glyphicon-menu-hamburger" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>

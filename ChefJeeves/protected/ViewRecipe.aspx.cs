@@ -33,16 +33,13 @@ namespace ChefJeeves
                 imgRecipe.ImageUrl = "../Images/Recipes/" + Session["recipeID"] + ".jpg";
                 Image1.ImageUrl = "../Images/Recipes/" + Session["recipeID"] + ".jpg";
                 foreach (GridViewRow row in grd.Rows)
-                {
-                    
-                        
-                   /* row.Cells[0].Controls.Add(new Image {
+                {                   
+                    row.Cells[0].Controls.Add(new Image {
                             ImageUrl = "../Images/Ingredients/" + row.Cells[0].Text + ".jpg",
-                            CssClass = "round"
+                            CssClass = "roundViewRecipe"
                         }
-                    );*/
-                    row.Cells[3].ToolTip = row.Cells[4].Text;
-                    
+                    );
+                    row.Cells[3].ToolTip = row.Cells[4].Text;                    
                     row.Cells[4].Visible = false;
                 }
 

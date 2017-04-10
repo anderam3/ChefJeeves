@@ -13,9 +13,17 @@ header{
 
 .round {
     border-radius: 50%;
-    border: 5px solid black;
+    border: 3px solid black;
     height: 100px;
     width: 100px;
+}
+
+.roundViewRecipe, .roundIngInv {
+    border-radius: 50%;
+    border: 2px solid black;
+    height: 50px;
+    width: 50px;
+    margin:5px;
 }
 
 table, tr, td{
@@ -181,20 +189,15 @@ table#editAccount tbody tr td:first-child, table#createAccount tbody tr td:first
 }
 
 
-<<<<<<< HEAD
 #navHeading {
     font-size: 40px;
     width: auto;
-=======
-h3 {
-    width: 400px;
->>>>>>> 30ae03eb11d30d86f575d176f3b88f2e6fa28bfb
     height: 100px;
     text-align: center;
     margin: 0 auto;
     line-height: 100px;
 }
-<<<<<<< HEAD
+
 
 #footer {
     position: fixed;
@@ -206,5 +209,34 @@ h3 {
     background-color: #efefef;
     text-align: center;
 }
-=======
->>>>>>> 30ae03eb11d30d86f575d176f3b88f2e6fa28bfb
+
+
+.viewRecipeTable div table tbody tr:first-child, .suggestedRecipeTable div table tbody tr:first-child, .ingInvTable div table tbody tr:first-child{
+    display:none;
+}
+
+.suggestedRecipeTable div table tbody tr td img, .ingInvTable div table tbody tr td img{
+    margin:5px;
+}
+
+.ingInvTable div table tbody tr {
+    float:left;
+    width:250px;
+}
+
+.ingInvTable div table tbody tr td:nth-child(2){
+    width:100%;
+}
+
+.ingInvTable div table tbody tr td:last-child{
+    width:100%;
+    text-align:right;
+}
+.ingInvTable div table tbody tr td:last-child a{
+    margin-right: 20px;
+}
+
+.viewRecipeTable div table tbody tr td:nth-child(3){
+    padding-left: 5px;
+    padding-right: 3px;
+}

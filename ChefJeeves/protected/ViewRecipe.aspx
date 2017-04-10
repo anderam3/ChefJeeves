@@ -20,7 +20,7 @@
             <div>
                 <h3>Ingredients</h3>
             </div>
-            <form id="frm" runat="server">
+            <form id="frm" class="viewRecipeTable" runat="server">
             <asp:GridView ID="grd" runat="server" DataSourceID="SqlDataSource"></asp:GridView>
                 <asp:SqlDataSource ID="SqlDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:cnn %>" ProviderName="<%$ ConnectionStrings:cnn.ProviderName %>" SelectCommand="GetRecipeDetails" SelectCommandType="StoredProcedure">
                     <SelectParameters>

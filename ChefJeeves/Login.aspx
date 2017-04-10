@@ -8,9 +8,22 @@
         <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css' />
     </head>
     <body>
-        <form runat="server">
+        <header>
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <div class="navbar-form navbar-left">
+                            <a href="#" ><img id="imgLogo" src="../Images/ChefJeevesLogo.png" /></a>
+                        </div>                        
+                    </div>
+                </div>
+            </nav>
+        </header>
+        
         <div class="jumbotron">
             <div id="nameText">Chef Jeeves</div> 
+        </div>
+        <form runat="server">
             <asp:Login ID="lgn" runat="server" DisplayRememberMe="False" OnAuthenticate="lgn_Authenticate" OnLoggedIn="lgn_LoggedIn" FailureText="Your credentials incorrect or your account does not exist" UserNameLabelText="Username:" LoginButtonText="Sign-in" TitleText="Please enter your username and password">
                 <TitleTextStyle Font-Bold="True" />
             </asp:Login>
@@ -19,7 +32,7 @@
                 runat="server"
                 EnableViewState="False"
                 ForeColor="DarkRed"></asp:Label>
-        </div>
+        
             <asp:Button ID="btnCreateAccount" runat="server" Text="Create Account" OnClick="btnCreateAccount_Click" CssClass="btn btn-default"/>
             <asp:Button ID="btnForgotPassword" runat="server" Text="Forgot Password" OnClick="btnForgotPassword_Click" CssClass="btn btn-default"/>
         </form>
