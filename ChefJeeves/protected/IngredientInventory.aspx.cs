@@ -19,46 +19,7 @@ namespace ChefJeeves
             if (Session["username"] == null || Session["isSuccessful"] == null)
             {
                 Response.Redirect("~/Login.aspx");
-            }        
-            Refresh();
-        }
-
-        protected void DeleteIngredient(object sender, CommandEventArgs e)
-        {
-            String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
-            MySqlConnection con = new MySqlConnection(con_string);
-            MySqlCommand cmd = new MySqlCommand();
-            cmd = new MySqlCommand();
-            cmd.Connection = con;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "DeleteIngredient";
-            cmd.Parameters.Clear();
-            cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
-            cmd.Parameters["User"].Value = Session["username"];
-            cmd.Parameters["User"].Direction = ParameterDirection.Input;
-            cmd.Parameters.Add("ID", MySqlDbType.Int64, 11);
-            cmd.Parameters["ID"].Value = (sender as LinkButton).ID;
-            cmd.Parameters["ID"].Direction = ParameterDirection.Input;
-            using (con)
-            {
-                try
-                {
-                    con.Open();
-                    cmd.ExecuteScalar();
-                    con.Close();
-                    con.Dispose();
-                    Response.Redirect(Request.RawUrl);
-                }
-                catch (Exception ex)
-                {
-                    con.Close();
-                    con.Dispose();
-                }
             }
-        }
-
-        private void Refresh()
-        {
             String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
             MySqlConnection con = new MySqlConnection(con_string);
             MySqlCommand cmd = new MySqlCommand();
@@ -95,12 +56,41 @@ namespace ChefJeeves
                         row.Cells[2].Controls.Add(trash);
                     }
                     con.Close();
-                    con.Dispose();
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+        }
+
+        protected void DeleteIngredient(object sender, CommandEventArgs e)
+        {
+            String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
+            MySqlConnection con = new MySqlConnection(con_string);
+            MySqlCommand cmd = new MySqlCommand();
+            cmd = new MySqlCommand();
+            cmd.Connection = con;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "DeleteIngredient";
+            cmd.Parameters.Clear();
+            cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
+            cmd.Parameters["User"].Value = Session["username"];
+            cmd.Parameters["User"].Direction = ParameterDirection.Input;
+            cmd.Parameters.Add("ID", MySqlDbType.Int64, 11);
+            cmd.Parameters["ID"].Value = (sender as LinkButton).ID;
+            cmd.Parameters["ID"].Direction = ParameterDirection.Input;
+            using (con)
+            {
+                try
+                {
+                    con.Open();
+                    cmd.ExecuteScalar();
+                    con.Close();
+                    Response.Redirect(Request.RawUrl);
                 }
                 catch (Exception ex)
                 {
                     con.Close();
-                    con.Dispose();
                 }
             }
         }

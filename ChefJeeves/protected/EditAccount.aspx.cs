@@ -19,6 +19,7 @@ namespace ChefJeeves
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            imgProfile.ImageUrl = "../Images/Profiles/" + Session["username"] + ".jpg";
             //Regex for email addresses
             RegularExpressionValidator2.ValidationExpression = @"(?i)^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|"
                             + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)"
@@ -27,92 +28,37 @@ namespace ChefJeeves
             RegularExpressionValidator3.ValidationExpression = @"^(?=.*[a-zA-Z])(?=.*\d)(?=.*(_|[^\w])).{7,12}$";
             String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
             con = new MySqlConnection(con_string);
-            GetUserInfo();
-        }
-
-        protected void hasImage(object sender, ServerValidateEventArgs e)
-        {
-            e.IsValid = fileUpload.HasFile;
-        }
-
-        private void GetUserInfo()
-        {
-            String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
-            MySqlConnection con = new MySqlConnection(con_string);
-            MySqlCommand cmd = new MySqlCommand();
-            cmd.Connection = con;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "GetAccountInfo";
-            cmd.Parameters.Clear();
-            cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
-            cmd.Parameters["User"].Value = Session["username"];
-            cmd.Parameters["User"].Direction = ParameterDirection.Input;
-            cmd.Parameters.Add("EmailAcc", MySqlDbType.VarChar, 64);
-            cmd.Parameters["EmailAcc"].Direction = ParameterDirection.Output;
-            cmd.Parameters.Add("Full_NameAcc", MySqlDbType.VarChar, 64);
-            cmd.Parameters["Full_NameAcc"].Direction = ParameterDirection.Output;
-            cmd.Parameters.Add("Security_QuestionAcc", MySqlDbType.VarChar, 64);
-            cmd.Parameters["Security_QuestionAcc"].Direction = ParameterDirection.Output;
-            cmd.Parameters.Add("Security_AnswerAcc", MySqlDbType.VarChar, 64);
-            cmd.Parameters["Security_AnswerAcc"].Direction = ParameterDirection.Output;
-            cmd.Parameters.Add("PasscodeAcc", MySqlDbType.VarChar, 64);
-            cmd.Parameters["PasscodeAcc"].Direction = ParameterDirection.Output;
-            using (con)
-            {
-                try
-                {
-                    con.Open();
-                    cmd.ExecuteScalar();
-
-                    txtUserName.Text = (string)(Session["username"]);
-                    txtEmail.Text = cmd.Parameters["EmailAcc"].Value.ToString();
-                    txtName.Text = cmd.Parameters["Full_NameAcc"].Value.ToString();
-                    txtSecurityQuestion.Text = cmd.Parameters["Security_QuestionAcc"].Value.ToString();
-                    txtSecurityAnswer.Text = cmd.Parameters["Security_AnswerAcc"].Value.ToString();
-                    txtConfirmSecurityAnswer.Text = cmd.Parameters["Security_AnswerAcc"].Value.ToString();
-                    txtPassword.Text = cmd.Parameters["PasscodeAcc"].Value.ToString();
-                    txtConfirmPassword.Text = cmd.Parameters["PasscodeAcc"].Value.ToString();
-
-                    con.Close();
-                    con.Dispose();
-                }
-                catch (Exception ex)
-                {
-                    con.Close();
-                    con.Dispose();
-                }
-            }
-        }
-
-        protected void usernameExists(object sender, ServerValidateEventArgs e)
-        {
             cmd = new MySqlCommand();
-            cmd.Connection = con;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "UsernameExists";
-            cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
-            cmd.Parameters["User"].Value = txtUserName.Text.Trim();
-            cmd.Parameters["User"].Direction = ParameterDirection.Input;
-            cmd.Parameters.Add("Result", MySqlDbType.Int64, 1);
-            cmd.Parameters["Result"].Direction = ParameterDirection.Output;
-            using (con)
+            if (!IsPostBack)
             {
-                try
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetAccount";
+                cmd.Parameters.Clear();
+                cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
+                cmd.Parameters["User"].Value = Session["username"];
+                cmd.Parameters["User"].Direction = ParameterDirection.Input;
+                cmd.Parameters.Add("Name", MySqlDbType.VarChar, 64);
+                cmd.Parameters["Name"].Direction = ParameterDirection.Output;
+                cmd.Parameters.Add("Address", MySqlDbType.VarChar, 64);
+                cmd.Parameters["Address"].Direction = ParameterDirection.Output;
+                cmd.Parameters.Add("Question", MySqlDbType.VarChar, 64);
+                cmd.Parameters["Question"].Direction = ParameterDirection.Output;
+                using (con)
                 {
-                    con.Open();
-                    cmd.ExecuteScalar();
-                    if (Int64.Parse(cmd.Parameters["Result"].Value.ToString()) == 1)
+                    try
                     {
-                        e.IsValid = false;
+                        con.Open();
+                        cmd.ExecuteReader();
+                        lblUserName.Text = "Edit Account: " + Session["username"].ToString();
+                        txtEmail.Text = cmd.Parameters["Address"].Value.ToString();
+                        txtName.Text = cmd.Parameters["Name"].Value.ToString();
+                        txtSecurityQuestion.Text = cmd.Parameters["Question"].Value.ToString();
+                        con.Close();
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        e.IsValid = true;
                     }
-                    con.Close();
-                }
-                catch (Exception ex)
-                {
                 }
             }
         }
@@ -123,6 +69,9 @@ namespace ChefJeeves
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "EmailExists";
+            cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
+            cmd.Parameters["User"].Value = Session["username"].ToString();
+            cmd.Parameters["User"].Direction = ParameterDirection.Input;
             cmd.Parameters.Add("Address", MySqlDbType.VarChar, 64);
             cmd.Parameters["Address"].Value = txtEmail.Text.Trim();
             cmd.Parameters["Address"].Direction = ParameterDirection.Input;
@@ -150,28 +99,99 @@ namespace ChefJeeves
             }
         }
 
-        protected void btnCreate_Click(object sender, EventArgs e)
+        protected void verifySecurityAnswer(object sender, ServerValidateEventArgs e)
+        {
+            cmd = new MySqlCommand();
+            cmd.Connection = con;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "VerifySecurityAnswer";
+            cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
+            cmd.Parameters["User"].Value = Session["username"].ToString();
+            cmd.Parameters["User"].Direction = ParameterDirection.Input;
+            cmd.Parameters.Add("Answer", MySqlDbType.VarChar, 512);
+            cmd.Parameters["Answer"].Value = txtCurrentSecurityAnswer.Text;
+            cmd.Parameters["Answer"].Direction = ParameterDirection.Input;
+            cmd.Parameters.Add("IsSuccessful", MySqlDbType.Int64, 1);
+            cmd.Parameters["IsSuccessful"].Direction = ParameterDirection.Output;
+            using (con)
+            {
+                try
+                {
+                    con.Open();
+                    cmd.ExecuteScalar();
+                    if (Int64.Parse(cmd.Parameters["IsSuccessful"].Value.ToString()) == 1)
+                    {
+                        e.IsValid = true;
+                    }
+                    else
+                    {
+                        e.IsValid = false;
+                    }
+                    con.Close();
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+        }
+
+        protected void verifyPassword(object sender, ServerValidateEventArgs e)
+        {
+            cmd = new MySqlCommand();
+            cmd.Connection = con;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "VerifyPassword";
+            cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
+            cmd.Parameters["User"].Value = Session["username"].ToString();
+            cmd.Parameters["User"].Direction = ParameterDirection.Input;
+            cmd.Parameters.Add("Pass", MySqlDbType.VarChar, 512);
+            cmd.Parameters["Pass"].Value = txtCurrentPassword.Text;
+            cmd.Parameters["Pass"].Direction = ParameterDirection.Input;
+            cmd.Parameters.Add("IsSuccessful", MySqlDbType.Int64, 1);
+            cmd.Parameters["IsSuccessful"].Direction = ParameterDirection.Output;
+            using (con)
+            {
+                try
+                {
+                    con.Open();
+                    cmd.ExecuteScalar();
+                    if (Int64.Parse(cmd.Parameters["IsSuccessful"].Value.ToString()) == 1)
+                    {
+                        e.IsValid = true;
+                    }
+                    else
+                    {
+                        e.IsValid = false;
+                    }
+                    con.Close();
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+        }
+
+        protected void btnSave_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
                 cmd = new MySqlCommand();
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "InsertUser";
+                cmd.CommandText = "UpdateAccount";
                 cmd.Parameters.Clear();
                 cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
-                cmd.Parameters["User"].Value = txtUserName.Text.Trim();
-                fileUpload.PostedFile.SaveAs(Server.MapPath("~/Images/Profiles/" + txtUserName.Text.Trim()) + ".jpg");
+                cmd.Parameters["User"].Value = Session["username"].ToString();
+                cmd.Parameters.Add("Name", MySqlDbType.VarChar, 64);
+                cmd.Parameters["Name"].Value = txtName.Text.Trim();
                 cmd.Parameters.Add("Address", MySqlDbType.VarChar, 64);
                 cmd.Parameters["Address"].Value = txtEmail.Text.Trim();
-                cmd.Parameters.Add("FullName", MySqlDbType.VarChar, 64);
-                cmd.Parameters["FullName"].Value = txtName.Text.Trim();
-                cmd.Parameters.Add("Pass", MySqlDbType.VarChar, 512);
-                cmd.Parameters["Pass"].Value = txtPassword.Text.Trim();
                 cmd.Parameters.Add("Question", MySqlDbType.VarChar, 64);
                 cmd.Parameters["Question"].Value = txtSecurityQuestion.Text.Trim();
                 cmd.Parameters.Add("Answer", MySqlDbType.VarChar, 512);
-                cmd.Parameters["Answer"].Value = txtSecurityAnswer.Text.Trim();
+                cmd.Parameters["Answer"].Value = txtNewSecurityAnswer.Text.Trim();
+                cmd.Parameters.Add("Pass", MySqlDbType.VarChar, 512);
+                cmd.Parameters["Pass"].Value = txtNewPassword.Text.Trim();
                 using (con)
                 {
                     try
@@ -179,8 +199,6 @@ namespace ChefJeeves
                         con.Open();
                         cmd.ExecuteNonQuery();
                         con.Close();
-                        Session["username"] = txtUserName.Text.Trim();
-                        Session["isSuccessful"] = true;
                         Response.Redirect("~/protected/SuggestedRecipes.aspx");
                     }
                     catch (Exception ex)
@@ -192,9 +210,7 @@ namespace ChefJeeves
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-
-            Response.Redirect("~/protected/EditAccount.aspx");
-            
+            Response.Redirect(Request.RawUrl);
         }
     }
 }

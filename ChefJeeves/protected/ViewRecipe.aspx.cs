@@ -67,12 +67,9 @@ namespace ChefJeeves
                         lblHeading.Text = cmd.Parameters["Name"].Value.ToString();
                         ltlDirections.Text = cmd.Parameters["Prep"].Value.ToString();
                         con.Close();
-                        con.Dispose();
                     }
                     catch (Exception ex)
                     {
-                        con.Close();
-                        con.Dispose();
                     }
                 }
             }

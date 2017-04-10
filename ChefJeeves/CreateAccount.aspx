@@ -137,7 +137,7 @@
             </td>
             <td>
                 <asp:CompareValidator ID="CompareValidator2" runat="server" 
-                    ControlToCompare="txtConfirmPassword" ControlToValidate="txtPassword" 
+                    ControlToCompare="txtPassword" ControlToValidate="txtConfirmPassword" 
                     ErrorMessage="Must be the same as above" ForeColor="DarkRed"></asp:CompareValidator>
             </td>
         </tr>

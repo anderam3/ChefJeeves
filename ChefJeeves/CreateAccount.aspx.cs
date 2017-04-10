@@ -72,6 +72,9 @@ namespace ChefJeeves
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "EmailExists";
+            cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
+            cmd.Parameters["User"].Value = String.Empty;
+            cmd.Parameters["User"].Direction = ParameterDirection.Input;
             cmd.Parameters.Add("Address", MySqlDbType.VarChar, 64);
             cmd.Parameters["Address"].Value = txtEmail.Text.Trim();
             cmd.Parameters["Address"].Direction = ParameterDirection.Input;
@@ -106,15 +109,15 @@ namespace ChefJeeves
                 cmd = new MySqlCommand();
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "InsertUser";
+                cmd.CommandText = "InsertAccount";
                 cmd.Parameters.Clear();
                 cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
                 cmd.Parameters["User"].Value = txtUserName.Text.Trim();
                 fileUpload.PostedFile.SaveAs(Server.MapPath("~/Images/Profiles/" + txtUserName.Text.Trim()) + ".jpg");
                 cmd.Parameters.Add("Address", MySqlDbType.VarChar, 64);
                 cmd.Parameters["Address"].Value = txtEmail.Text.Trim();
-                cmd.Parameters.Add("FullName", MySqlDbType.VarChar, 64);
-                cmd.Parameters["FullName"].Value = txtName.Text.Trim();
+                cmd.Parameters.Add("Name", MySqlDbType.VarChar, 64);
+                cmd.Parameters["Name"].Value = txtName.Text.Trim();
                 cmd.Parameters.Add("Pass", MySqlDbType.VarChar, 512);
                 cmd.Parameters["Pass"].Value = txtPassword.Text.Trim();
                 cmd.Parameters.Add("Question", MySqlDbType.VarChar, 64);
@@ -142,14 +145,14 @@ namespace ChefJeeves
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             fileUpload = new FileUpload();
-            txtUserName.Text = "";
-            txtEmail.Text = "";
-            txtName.Text = "";
-            txtSecurityQuestion.Text = "";
-            txtSecurityAnswer.Text = "";
-            txtConfirmSecurityAnswer.Text = "";
-            txtPassword.Text = "";
-            txtConfirmPassword.Text = "";
+            txtUserName.Text = String.Empty;
+            txtEmail.Text = String.Empty;
+            txtName.Text = String.Empty;
+            txtSecurityQuestion.Text = String.Empty;
+            txtSecurityAnswer.Text = String.Empty;
+            txtConfirmSecurityAnswer.Text = String.Empty;
+            txtPassword.Text = String.Empty;
+            txtConfirmPassword.Text = String.Empty;
         }
     }
 }

@@ -57,7 +57,6 @@ namespace ChefJeeves
                 }
                 catch (Exception ex)
                 {
-                    con.Close();
                 }
             }
         }
@@ -100,7 +99,6 @@ namespace ChefJeeves
                         cmd.Parameters.Add("Question", MySqlDbType.VarChar, 512);
                         cmd.Parameters["Question"].Direction = ParameterDirection.Output;
                         cmd.ExecuteScalar();
-
                         Session["username"] = cmd.Parameters["User"].Value.ToString();
                         Session["question"] = cmd.Parameters["Question"].Value.ToString();
                         con.Close();
@@ -115,7 +113,6 @@ namespace ChefJeeves
                 catch (Exception ex)
                 {
                     lblError.Text = ex.Message;
-                    con.Close();
                 }
             }
         }
