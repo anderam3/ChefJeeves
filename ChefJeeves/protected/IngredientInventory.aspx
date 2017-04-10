@@ -7,12 +7,12 @@
     <asp:TextBox ID="txtSearch" runat="server" CausesValidation="false"></asp:TextBox>
     <asp:LinkButton ID="lnkClear" runat="server"  CssClass="glyphicon glyphicon-remove" OnClick="lnkClear_Click" />
     <asp:LinkButton ID="lnkSearch" runat="server"  CssClass="glyphicon glyphicon-search" OnClick="lnkSearch_Click" />
-    <asp:LinkButton ID="lnkAdd" runat="server" CssClass="glyphicon glyphicon-plus-sign" />
+    <asp:LinkButton ID="lnkAdd" runat="server" CssClass="glyphicon glyphicon-plus-sign" OnClick="lnkAdd_Click"/>
     <br/>
-    <asp:Image ID="imgAddIng" CssClass="round" runat="server" />
-    <asp:TextBox ID="txtAddIng" runat="server" CausesValidation="false"></asp:TextBox>
-    <asp:LinkButton ID="lnkSave" runat="server"  CssClass="glyphicon glyphicon-floppy-disk" OnClick="lnkSave_Click" />
-    <asp:LinkButton ID="lnkCancel" runat="server"  CssClass="glyphicon glyphicon-remove" OnClick="lnkSearch_Click" />
+    <asp:Image ID="imgAddIng" CssClass="round" runat="server" visible="false"/>
+    <asp:TextBox ID="txtAddIng" runat="server" CausesValidation="false" visible="false" ></asp:TextBox>
+    <asp:LinkButton ID="lnkSave" runat="server"  CssClass="glyphicon glyphicon-floppy-disk" OnClick="lnkSave_Click" visible="false"/>
+    <asp:LinkButton ID="lnkCancel" runat="server"  CssClass="glyphicon glyphicon-remove" OnClick="lnkCancel_Click" visible="false"/>
     <asp:HiddenField ID="hfingredientId" runat="server" />
     <asp:GridView ID="grd" runat="server">
         <Columns>  

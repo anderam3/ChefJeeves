@@ -106,6 +106,32 @@ namespace ChefJeeves
             txtSearch.AutoPostBack = false;
         }
 
+        protected void lnkAdd_Click(object sender, EventArgs e)
+        {
+            if (imgAddIng.Visible == false)
+            {
+                imgAddIng.Visible = true;
+                txtAddIng.Visible = true;
+                lnkSave.Visible = true;
+                lnkCancel.Visible = true;
+                lnkAdd.CssClass = "glyphicon glyphicon-minus-sign";
+            }
+            else
+            {
+                imgAddIng.Visible = false;
+                txtAddIng.Visible = false;
+                lnkSave.Visible = false;
+                lnkCancel.Visible = false;
+                lnkAdd.CssClass = "glyphicon glyphicon-plus-sign";
+            }
+            
+        }
+
+        protected void lnkCancel_Click(object sender, EventArgs e)
+        {
+            txtAddIng.Text = String.Empty;
+        }
+
         protected void lnkSave_Click(object sender, EventArgs e)
         {
             //string customerName = Request.Form[txtSearch.UniqueID];
