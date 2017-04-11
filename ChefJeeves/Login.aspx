@@ -3,9 +3,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head runat="server">
         <title>Chef Jeeves</title>
+        <link rel="icon" href="~/Images/favicon.ico" />
         <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css"/>
         <link rel="stylesheet" href="~/Content/Site.css" />
-        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css' />
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
     </head>
     <body>
         <header>
@@ -50,13 +52,20 @@
                 <p>Our database is expanding with new recipes being continously added!</p>
             </div>
         </div>
+        <hr />
         <footer id="footer">
+<<<<<<< HEAD
              By using this site you agree that the administrator(s) may save your IP address, cookies, and any other personal data transmitted through your browser. All account data is property of the administrator(s) of this site and can do what he/she wishes with it. This privacy policy may change at any time.
             <br />
             <asp:HyperLink id="hyperlink1"  NavigateUrl="ContactUs.aspx" Text="Contact Us" runat="server"/>
+=======
+            By using this site you agree that the administrator(s) may save your IP address, cookies, and any other personal data transmitted through your browser. All account data is property of the administrator(s) of this site and can do what he/she wishes with it. This privacy policy may change at any time.
+            <asp:HyperLink id="lnkContactUS"  NavigateUrl="ContactUs.aspx" Text="Contact Us" runat="server"/>
+>>>>>>> f0c75d0bf41e7aebda560471c02b661c14783a41
         </footer>
         <script src="../Scripts/jquery-3.1.1.min.js" ></script>
+        <script src="../Scripts/jquery-ui-1.12.1.min.js" ></script>
         <script src="../Scripts/bootstrap.min.js" ></script>
-        <script src="../Scripts/Site.js" ></script>   
+        <script src="../Scripts/Site.js" ></script>
     </body>
 </html>
