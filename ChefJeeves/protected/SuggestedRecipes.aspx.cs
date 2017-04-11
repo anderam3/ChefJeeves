@@ -61,7 +61,6 @@ namespace ChefJeeves
                 e.Row.Attributes["style"] = "cursor:pointer;";
                 e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(grd, "Select$" + e.Row.RowIndex);
                 e.Row.ToolTip = "Click to view this recipe.";
-                
             }
         }
 

@@ -12,18 +12,14 @@ namespace ChefJeeves
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            CaptchaImage ci = new CaptchaImage(this.Session["CaptchaImageText"].ToString(), 200, 50, "Arial Black");
-
+            CaptchaImage ci = new CaptchaImage(Session["CaptchaImageText"].ToString(), 200, 50, "Arial Black");
             // Change the response headers to output a JPEG image.
             this.Response.Clear();
             this.Response.ContentType = "image/jpeg";
-
             // Write the image to the response stream in JPEG format.
             ci.Image.Save(this.Response.OutputStream, ImageFormat.Jpeg);
-
             // Dispose of the CAPTCHA image object.
             ci.Dispose();
-
         }
     }
 }

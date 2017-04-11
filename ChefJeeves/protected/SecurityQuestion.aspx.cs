@@ -67,7 +67,8 @@ namespace ChefJeeves
 
         protected void btnReset_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Login.aspx");
+            txtSecurityAnswer.Text = String.Empty;
+            txtConfirmSecurityAnswer.Text = String.Empty;
         }
     }
 }

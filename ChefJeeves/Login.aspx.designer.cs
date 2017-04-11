@@ -49,12 +49,12 @@ namespace ChefJeeves {
         protected global::System.Web.UI.WebControls.Button btnForgotPassword;
         
         /// <summary>
-        /// lnkContactUS control.
+        /// lnkContactUs control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkContactUS;
+        protected global::System.Web.UI.WebControls.HyperLink lnkContactUs;
     }
 }

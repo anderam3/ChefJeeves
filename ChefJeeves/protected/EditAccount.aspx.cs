@@ -19,6 +19,10 @@ namespace ChefJeeves
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["username"] == null || Session["isSuccessful"] == null)
+            {
+                Response.Redirect("~/Login.aspx");
+            }
             imgProfile.ImageUrl = "../Images/Profiles/" + Session["username"] + ".jpg";
             //Regex for email addresses
             RegularExpressionValidator2.ValidationExpression = @"(?i)^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|"

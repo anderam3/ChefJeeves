@@ -230,13 +230,6 @@
     <Compile Include="protected\AddNewIngredient.aspx.designer.cs">
       <DependentUpon>AddNewIngredient.aspx</DependentUpon>
     </Compile>
-    <Compile Include="protected\AddNewRecipe.aspx.cs">
-      <DependentUpon>AddNewRecipe.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="protected\AddNewRecipe.aspx.designer.cs">
-      <DependentUpon>AddNewRecipe.aspx</DependentUpon>
-    </Compile>
     <Compile Include="protected\ChangePassword.aspx.cs">
       <DependentUpon>ChangePassword.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -361,7 +354,6 @@
     <Content Include="Images\Recipes\3.jpg" />
     <Content Include="Login.aspx" />
     <Content Include="protected\AddNewIngredient.aspx" />
-    <Content Include="protected\AddNewRecipe.aspx" />
     <Content Include="protected\ChangePassword.aspx" />
     <Content Include="protected\EditAccount.aspx" />
     <Content Include="protected\IngredientInventory.aspx" />

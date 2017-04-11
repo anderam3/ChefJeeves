@@ -13,11 +13,6 @@
         </div>
         <div id="recipeRight">
             <div>
-                <h2>
-                    <asp:Label runat="server" ID="Label1"></asp:Label>
-                </h2>
-            </div>
-            <div>
                 <h3>Ingredients</h3>
             </div>
             <form id="frm" class="viewRecipeTable" runat="server">
@@ -27,15 +22,11 @@
                         <asp:SessionParameter Name="ID" SessionField="recipeID" Type="Int64" />
                     </SelectParameters>
                 </asp:SqlDataSource>
-
             <h3>Directions:</h3>
             <div>
                 <asp:Literal runat="server" ID="ltlDirections"></asp:Literal>
             </div>
              </form>
-        </div>
-        
+        </div>  
     </div>
-    
-
 </asp:Content>

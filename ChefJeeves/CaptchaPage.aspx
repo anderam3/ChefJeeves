@@ -14,6 +14,12 @@
 <body>
     <form id="Captcha" method="post" runat="server">
     </form>
+    <hr />
+    <footer id="footer">
+        By using this site you agree that the administrator(s) may save your IP address, cookies, and any other personal data transmitted through your browser. All account data is property of the administrator(s) of this site and can do what he/she wishes with it. This privacy policy may change at any time.
+        <br />
+        <asp:HyperLink id="lnkContactUs"  NavigateUrl="ContactUs.aspx" Text="Contact Us" runat="server"/>
+    </footer>
     <script src="../Scripts/jquery-3.1.1.min.js" ></script>
     <script src="../Scripts/jquery-ui-1.12.1.min.js" ></script>
     <script src="../Scripts/bootstrap.min.js" ></script>

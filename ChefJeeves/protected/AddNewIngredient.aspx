@@ -3,7 +3,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="heading" runat="server">Add New Ingredient</asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="content" runat="server">
     <form runat="server"  >
-        
         <asp:FileUpload ID="fileUpload" runat="server" />
         <asp:CustomValidator runat="server" ID="CustomValidator1" OnServerValidate="hasImage" ErrorMessage="The ingredient must have an image" ForeColor="DarkRed"></asp:CustomValidator>
         <asp:TextBox ID="txtAddIng" runat="server"   ></asp:TextBox>

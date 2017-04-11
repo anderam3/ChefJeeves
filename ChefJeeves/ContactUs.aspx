@@ -1,21 +1,5 @@
-<<<<<<< HEAD
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ContactUs.aspx.cs" Inherits="ChefJeeves.ContactUs" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">Contact Chef Jeeves</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="heading" runat="server">Contact Chef Jeeves</asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="content" runat="server">
-    <form id="formContactUs" runat="server" class="form-horizontal" >
-        <div class="form-group">
-            <asp:Label runat="server" ID="lblEmail"  Text="Email:" for="txtEmail" class="col-sm-2  control-label"/>
-            <div class="col-sm-10">
-                <asp:TextBox runat="server"  ID="txtEmail" class="form-control" />
-                <asp:RequiredFieldValidator runat="server" Display="dynamic" ID="RequiredFieldValidator1" SetFocusOnError="true" ControlToValidate="txtEmail" ErrorMessage="Your Email is required">*</asp:RequiredFieldValidator>
-                <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="txtEmail" ErrorMessage="Must be valid email address" ForeColor="DarkRed"></asp:RegularExpressionValidator>
-            </div>
-=======
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ContactUs.aspx.cs" Inherits="ChefJeeves.ContactUs" %>
-
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Contact Chef Jeeves</title>
@@ -23,13 +7,11 @@
     <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
     <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css"/>
     <link rel="stylesheet" href="~/Content/Site.css" />
-    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css' />
 </head>
 <body>
     <form id="formContactUs" runat="server">
     <div style="padding: 5px 0px 10px 150px">
-        
-        <div>
             <table>
               
                 <tr>
@@ -94,7 +76,6 @@
                     </td>
                 </tr>
             </table>
->>>>>>> f0c75d0bf41e7aebda560471c02b661c14783a41
         </div>
         <div class="form-group">
             <asp:Label runat="server" ID="lblBody" for="txtBody" Text="Comments:" class="col-sm-2  control-label" />
@@ -120,7 +101,6 @@
                     <asp:Label runat="server" ID="lblFeedbackKO" Text="Sorry, there was a problem sending your message." SkinID="FeedbackKO" Visible="false" ForeColor="#CC0000" />
             </div>   
         </div>
- 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
             <asp:Button runat="server" type="submit" ID="btnSubmit" Text="Submit" onclick="btnSubmit_Click" class="btn btn-default "/>
@@ -129,13 +109,15 @@
             </div>
         </div> 
     </form>
-<<<<<<< HEAD
-</asp:Content>
-=======
+    <hr />
+    <footer id="footer">
+        By using this site you agree that the administrator(s) may save your IP address, cookies, and any other personal data transmitted through your browser. All account data is property of the administrator(s) of this site and can do what he/she wishes with it. This privacy policy may change at any time.
+        <br />
+        <asp:HyperLink id="lnkContactUs"  NavigateUrl="ContactUs.aspx" Text="Contact Us" runat="server"/>
+    </footer>
     <script src="../Scripts/jquery-3.1.1.min.js" ></script>
     <script src="../Scripts/jquery-ui-1.12.1.min.js" ></script>
     <script src="../Scripts/bootstrap.min.js" ></script>
     <script src="../Scripts/Site.js" ></script>
 </body>
 </html>
->>>>>>> f0c75d0bf41e7aebda560471c02b661c14783a41

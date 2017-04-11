@@ -84,13 +84,12 @@ namespace ChefJeeves
                 try
                 {
                     con.Open();
-                    cmd.ExecuteScalar();
+                    cmd.ExecuteNonQuery();
                     con.Close();
                     Response.Redirect(Request.RawUrl);
                 }
                 catch (Exception ex)
                 {
-                    con.Close();
                 }
             }
         }

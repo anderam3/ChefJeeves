@@ -17,11 +17,10 @@ namespace ChefJeeves
             RegularExpressionValidator2.ValidationExpression = @"(?i)^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|"
                             + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)"
                             + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
-            if (!this.IsPostBack)
+            if (!IsPostBack)
             {
                 // Create a random code and store it in the Session object.
                 this.Session["CaptchaImageText"] = GenerateRandomCode();
-
             }
         }
 
