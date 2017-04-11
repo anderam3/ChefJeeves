@@ -34,11 +34,9 @@
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" 
                         ControlToValidate="txtEmail" ErrorMessage="Can't be empty" 
                         Display="Dynamic" ForeColor="DarkRed"></asp:RequiredFieldValidator>
-
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" 
                         ControlToValidate="txtEmail" ErrorMessage="Must be valid email address" 
                         ForeColor="DarkRed"></asp:RegularExpressionValidator>
-
                     <asp:CustomValidator runat="server" ID="CustomValidator3" 
                         OnServerValidate="emailExists"
                         ErrorMessage="Email address already exists. Choose another one." ForeColor="DarkRed"></asp:CustomValidator>
@@ -120,7 +118,6 @@
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
                         ControlToValidate="txtNewPassword" ErrorMessage="Can't be empty" 
                         Display="Dynamic" ForeColor="DarkRed"></asp:RequiredFieldValidator>
-
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server" 
                         ControlToValidate="txtNewPassword" ErrorMessage="Must be between 7 and 12 characters, and contains at least 1 special, 1 number, and 1 letter character"
                         ForeColor="DarkRed"></asp:RegularExpressionValidator>

@@ -3,14 +3,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head runat="server">
         <title>Chef Jeeves</title>
+        <link rel="icon" href="~/Images/favicon.ico" />
         <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css"/>
         <link rel="stylesheet" href="~/Content/Site.css" />
+<<<<<<< HEAD
         <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css' />
         <style type="text/css">
             .auto-style1 {
                 width: 361px
             }
         </style>
+=======
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+>>>>>>> b47b9c954cffd58f9f3879877d1206a0cd0f0890
     </head>
     <body>
         <header style="background-color:white">
@@ -24,7 +30,6 @@
                 </div>
             </nav>
         </header>
-        
         <div class="jumbotron">
             <div id="nameText">Chef Jeeves</div> 
         </div>
@@ -76,12 +81,18 @@
                 </LayoutTemplate>
                 <TitleTextStyle Font-Bold="True" />
             </asp:Login>
+<<<<<<< HEAD
             <asp:Label
                 ID="lblError"
                 runat="server"
                 EnableViewState="False"
                 ForeColor="DarkRed"></asp:Label>
         
+=======
+            <asp:Label ID="lblError" runat="server" EnableViewState="False" ForeColor="DarkRed"></asp:Label>
+            <asp:Button ID="btnCreateAccount" runat="server" Text="Create Account" OnClick="btnCreateAccount_Click" CssClass="btn btn-default"/>
+            <asp:Button ID="btnForgotPassword" runat="server" Text="Forgot Password" OnClick="btnForgotPassword_Click" CssClass="btn btn-default"/>
+>>>>>>> b47b9c954cffd58f9f3879877d1206a0cd0f0890
         </form>
         <div class="row">
             <div class="col-md-4">
@@ -97,12 +108,15 @@
                 <p>Our database is expanding with new recipes being continously added!</p>
             </div>
         </div>
+        <hr />
         <footer id="footer">
-             By using this site you agree that the administrator(s) may save your IP address, cookies, and any other personal data transmitted through your browser. All account data is property of the administrator(s) of this site and can do what he/she wishes with it. This privacy policy may change at any time.
-            <asp:HyperLink id="hyperlink1"  NavigateUrl="ContactUs.aspx" Text="Contact Us" runat="server"/>
+            By using this site you agree that the administrator(s) may save your IP address, cookies, and any other personal data transmitted through your browser. All account data is property of the administrator(s) of this site and can do what he/she wishes with it. This privacy policy may change at any time.
+            <br />
+            <asp:HyperLink id="lnkContactUs"  NavigateUrl="ContactUs.aspx" Text="Contact Us" runat="server"/>
         </footer>
         <script src="../Scripts/jquery-3.1.1.min.js" ></script>
+        <script src="../Scripts/jquery-ui-1.12.1.min.js" ></script>
         <script src="../Scripts/bootstrap.min.js" ></script>
-        <script src="../Scripts/Site.js" ></script>   
+        <script src="../Scripts/Site.js" ></script>
     </body>
 </html>

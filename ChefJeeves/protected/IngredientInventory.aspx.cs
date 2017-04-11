@@ -84,13 +84,12 @@ namespace ChefJeeves
                 try
                 {
                     con.Open();
-                    cmd.ExecuteScalar();
+                    cmd.ExecuteNonQuery();
                     con.Close();
                     Response.Redirect(Request.RawUrl);
                 }
                 catch (Exception ex)
                 {
-                    con.Close();
                 }
             }
         }
@@ -108,93 +107,105 @@ namespace ChefJeeves
 
         protected void lnkAdd_Click(object sender, EventArgs e)
         {
-            if (imgAddIng.Visible == false)
+            imgAddIngredient.ImageUrl = String.Empty;
+            txtAddIngredient.Text = String.Empty;
+            if (imgAddIngredient.Visible == false)
             {
-                imgAddIng.Visible = true;
-                txtAddIng.Visible = true;
-                lnkSave.Visible = true;
-                lnkCancel.Visible = true;
+                imgAddIngredient.Visible = true;
+                txtAddIngredient.Visible = true;
+                lnkSaveIngredient.Visible = true;
                 lnkAdd.CssClass = "glyphicon glyphicon-minus-sign";
             }
             else
             {
-                imgAddIng.Visible = false;
-                txtAddIng.Visible = false;
-                lnkSave.Visible = false;
-                lnkCancel.Visible = false;
+                imgAddIngredient.Visible = false;
+                txtAddIngredient.Visible = false;
+                lnkSaveIngredient.Visible = false;
                 lnkAdd.CssClass = "glyphicon glyphicon-plus-sign";
             }
             
         }
 
-        protected void lnkCancel_Click(object sender, EventArgs e)
-        {
-            txtAddIng.Text = String.Empty;
-        }
-
         protected void lnkSave_Click(object sender, EventArgs e)
         {
-            //string customerName = Request.Form[txtSearch.UniqueID];
-            string ingredientId = Request.Form[hfingredientId.UniqueID];
-            //ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Name: " + customerName + "\\nID: " + customerId + "');", true);
+            string ingredientId = Request.Form[hfIngredientID.UniqueID];
+            int parsedID = 0;
+            if (Int32.TryParse(ingredientId, out parsedID))
+            {
+                String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
+                MySqlConnection con = new MySqlConnection(con_string);
+                MySqlCommand cmd = new MySqlCommand();
+                cmd = new MySqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "AddIngredient";
+                cmd.Parameters.Clear();
+                cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
+                cmd.Parameters["User"].Value = Session["username"];
+                cmd.Parameters["User"].Direction = ParameterDirection.Input;
+                cmd.Parameters.Add("ID", MySqlDbType.Int64, 11);
+                cmd.Parameters["ID"].Value = parsedID;
+                cmd.Parameters["ID"].Direction = ParameterDirection.Input;
+                cmd.Parameters.Add("isSuccessful", MySqlDbType.Int64, 1);
+                cmd.Parameters["isSuccessful"].Direction = ParameterDirection.Output;
+                using (con)
+                {
+                    try
+                    {
+                        con.Open();
+                        cmd.ExecuteScalar();
+                        if (Int64.Parse(cmd.Parameters["isSuccessful"].Value.ToString()) == 1)
+                        {
+                            lblError.Visible = false;
+                            Response.Redirect(Request.RawUrl);
+                        }
+                        else
+                        {
+                            lblError.Visible = true;
+                            con.Close();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                }
+            }
+            else{
+                lblError.Visible = true;
+            }
+        }
+
+        [WebMethod]
+        public static string[] GetIngredients(string ingredient)
+        {
+            List<string> ingredients = new List<string>();
             String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
             MySqlConnection con = new MySqlConnection(con_string);
             MySqlCommand cmd = new MySqlCommand();
-            cmd = new MySqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "AddIngredient";
+            cmd.CommandText = "GetNonAccountIngredients";
             cmd.Parameters.Clear();
             cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
-            cmd.Parameters["User"].Value = Session["username"];
+            cmd.Parameters["User"].Value = HttpContext.Current.Session["username"];
             cmd.Parameters["User"].Direction = ParameterDirection.Input;
-            cmd.Parameters.Add("ID", MySqlDbType.Int64, 11);
-            cmd.Parameters["ID"].Value = Convert.ToInt64(ingredientId); ;
-            cmd.Parameters["ID"].Direction = ParameterDirection.Input;
+            cmd.Parameters.Add("Ingredient", MySqlDbType.VarChar, 64);
+            cmd.Parameters["Ingredient"].Value = ingredient;
+            cmd.Parameters["Ingredient"].Direction = ParameterDirection.Input;
             using (con)
             {
                 try
                 {
                     con.Open();
-                    cmd.ExecuteScalar();
-                    con.Close();
-                    Response.Redirect(Request.RawUrl);
-                }
-                catch (Exception ex)
-                {
-                    con.Close();
-                }
-            }
-        }
-
-        [WebMethod]
-        public static string[] GetIngredients(string prefix)
-        {
-            prefix = prefix + '%';
-            List<string> ingredients = new List<string>();
-            String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
-            MySqlConnection conn = new MySqlConnection(con_string);
-            MySqlCommand cmd = new MySqlCommand();
-            cmd.Connection = conn;
-            cmd.CommandText = "select ingredient_name, ingredient_id from ingredient where ingredient_name like @SearchText";
-            cmd.Parameters.AddWithValue("@SearchText", prefix);
-            using (conn)
-            {
-                try
-                {
-                    conn.Open();
-                    MySqlDataReader sdr = cmd.ExecuteReader();
-                    while (sdr.Read())
+                    MySqlDataReader rd = cmd.ExecuteReader();
+                    while (rd.Read())
                     {
-                        ingredients.Add(string.Format("{0}-{1}", sdr["ingredient_name"], sdr["ingredient_id"]));
+                        ingredients.Add(string.Format("{0}-{1}", rd["Name"], rd["ID"]));
                     }
-                    conn.Close();
-                   // Response.Redirect(Request.RawUrl);
+                    con.Close();
                 }
                 catch (Exception ex)
-                {
-                    conn.Close();
-                    //return ex.Message();
+                { 
                 }
               
             }

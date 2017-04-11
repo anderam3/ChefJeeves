@@ -42,7 +42,6 @@ namespace ChefJeeves
                     row.Cells[3].ToolTip = row.Cells[4].Text;                    
                     row.Cells[4].Visible = false;
                 }
-
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "GetRecipe";

@@ -11,15 +11,18 @@ DROP TABLE IF EXISTS `Measurement`;
 DROP TABLE IF EXISTS `Account`;
 DROP TABLE IF EXISTS `Ingredient`;
 
+DROP PROCEDURE IF EXISTS `AddIngredient`;
+DROP PROCEDURE IF EXISTS `CreateAccount`;
+DROP PROCEDURE IF EXISTS `CreateIngredient`;
 DROP PROCEDURE IF EXISTS `DeleteIngredient`;
 DROP PROCEDURE IF EXISTS `EmailExists`;
 DROP PROCEDURE IF EXISTS `GetAccount`;
 DROP PROCEDURE IF EXISTS `GetAccountIngredients`;
+DROP PROCEDURE IF EXISTS `GetNonAccountIngredients`;
 DROP PROCEDURE IF EXISTS `GetRecipe`;
 DROP PROCEDURE IF EXISTS `GetRecipeDetails`;
 DROP PROCEDURE IF EXISTS `GetRecipes`;
 DROP PROCEDURE IF EXISTS `GetSecurityQuestion`;
-DROP PROCEDURE IF EXISTS `InsertAccount`;
 DROP PROCEDURE IF EXISTS `UpdateAccount`;
 DROP PROCEDURE IF EXISTS `UpdatePassword`;
 DROP PROCEDURE IF EXISTS `UsernameExists`;
@@ -39,11 +42,9 @@ CREATE TABLE `account` (
 
 CREATE TABLE `Recipe` (
 	`RECIPE_ID` int(11) NOT NULL AUTO_INCREMENT,
-	`SUBMITTED_USERNAME` varchar(64) NOT NULL,
 	`RECIPE_NAME` varchar(64) NOT NULL,
 	`PREPARATION` text NOT NULL,
-  PRIMARY KEY (`RECIPE_ID`),
-  CONSTRAINT `Recipe_Submitted_Username` FOREIGN KEY (`SUBMITTED_USERNAME`) REFERENCES `Account` (`USERNAME`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`RECIPE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `AccountRecipe` (
@@ -55,7 +56,7 @@ CREATE TABLE `AccountRecipe` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Ingredient` (
-	`INGREDIENT_ID` int(11) NOT NULL,
+	`INGREDIENT_ID` int(11) NOT NULL AUTO_INCREMENT,
 	`INGREDIENT_NAME` varchar(64) NOT NULL,
 	PRIMARY KEY (`INGREDIENT_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -86,6 +87,49 @@ CREATE TABLE `AccountIngredient` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DELIMITER $$
+
+CREATE PROCEDURE `AddIngredient`(
+    IN User VARCHAR(64),
+	IN ID int(11),
+    OUT isSuccessful tinyint(1)
+)
+BEGIN
+	IF (SELECT ID FROM AccountIngredient WHERE username = user AND ingredient_ID = ID LIMIT 1) is null THEN
+		INSERT INTO `accountingredient` VALUES (User, ID);
+        SET isSuccessful = 1;
+    ELSE
+		SET isSuccessful = 0;
+    END IF;
+END$$
+
+CREATE PROCEDURE `CreateAccount`(
+	User varchar(64),
+    Address varchar (64),
+    Name varchar(64),
+    Pass varchar(512),
+    Question varchar(512),
+    Answer varchar(512)
+)
+BEGIN
+	DECLARE Saltt FLOAT;
+    SET Saltt = RAND();
+    SET Pass = SHA2(CONCAT(Pass, Saltt), 512);
+    SET Answer = SHA2(CONCAT(Answer, Saltt), 512);
+    INSERT INTO `account` VALUES (User, Address, Name, Question, Answer, Pass, Saltt);
+END$$
+
+CREATE PROCEDURE `CreateIngredient`(
+	IN Name VARCHAR(64),
+	OUT ID INT(11)
+)
+BEGIN
+	IF (SELECT Ingredient_id FROM Ingredient WHERE ingredient_name = Name LIMIT 1) is null THEN
+		INSERT INTO `ingredient` (ingredient_name) VALUES (Name);
+        SET ID = LAST_INSERT_ID();
+    ELSE
+		SET ID = 0;
+    END IF;
+END$$
 
 CREATE PROCEDURE `DeleteIngredient`(
     IN User VARCHAR(64),
@@ -140,6 +184,22 @@ BEGIN
   SELECT b.Ingredient_Name as NAME, b.Ingredient_ID as ID 
   FROM AccountIngredient a, Ingredient b
   WHERE a.Ingredient_ID = b.Ingredient_ID and a.username = User and b.INGREDIENT_NAME LIKE CONCAT(Ingredient,'%')
+  ORDER BY b.Ingredient_Name;
+END$$
+
+CREATE PROCEDURE `GetNonAccountIngredients`(
+  IN User VARCHAR(64),
+  IN Ingredient VARCHAR(64)
+)
+BEGIN
+  SELECT Ingredient_Name as NAME, Ingredient_ID as ID 
+  FROM Ingredient b
+  WHERE Ingredient_Name LIKE CONCAT(Ingredient,'%') AND Ingredient_ID NOT IN 
+  (SELECT b.Ingredient_ID as ID 
+  FROM AccountIngredient a, Ingredient b
+  WHERE a.Username = user
+  and a.Ingredient_ID = b.Ingredient_ID
+  and b.INGREDIENT_NAME LIKE CONCAT(Ingredient,'%'))
   ORDER BY b.Ingredient_Name;
 END$$
 
@@ -218,22 +278,6 @@ BEGIN
   WHERE username = User;
 END$$
 
-CREATE PROCEDURE `InsertAccount`(
-	User varchar(64),
-    Address varchar (64),
-    Name varchar(64),
-    Pass varchar(512),
-    Question varchar(512),
-    Answer varchar(512)
-)
-BEGIN
-	DECLARE Saltt FLOAT;
-    SET Saltt = RAND();
-    SET Pass = SHA2(CONCAT(Pass, Saltt), 512);
-    SET Answer = SHA2(CONCAT(Answer, Saltt), 512);
-    INSERT INTO `account` VALUES (User, Address, Name, Question, Answer, Pass, Saltt);
-END$$
-
 CREATE PROCEDURE `UpdateAccount`(
     IN User varchar(64),
 	IN Name varchar(64),
@@ -257,10 +301,10 @@ CREATE PROCEDURE `UpdatePassword`(
 	IN Pass varchar(512)
 )
 BEGIN
-	DECLARE vSalt FLOAT;
-    SET vSalt = RAND();
-    SET Pass = SHA2(CONCAT(Pass, vSalt),512);
-    UPDATE `Account` SET PASSCODE = Pass,SALT = vSalt 
+	DECLARE Saltt FLOAT;
+    SET Saltt = RAND();
+    SET Pass = SHA2(CONCAT(Pass, Saltt),512);
+    UPDATE `Account` SET PASSCODE = Pass,SALT = Saltt 
 	WHERE Username = User;
 END$$
 
@@ -269,9 +313,7 @@ CREATE PROCEDURE `UsernameExists`(
   OUT Result tinyint(1)
 )
 BEGIN
-  DECLARE vUserName VARCHAR(64);
-  SET vUserName= (SELECT Username FROM account WHERE username = User LIMIT 1);
-  IF vUserName = User THEN
+  IF (SELECT Username FROM account WHERE username = User LIMIT 1) = User THEN
     SET Result = 1;
   ELSE
     SET Result = 0;
@@ -284,13 +326,13 @@ CREATE PROCEDURE `VerifyPassword`(
   OUT IsSuccessful tinyint(1)
 )
 BEGIN
-  DECLARE vSalt FLOAT;
-  DECLARE vPassCode1 VARCHAR(512);
-  DECLARE vPassCode2 VARCHAR(512);
-  SET vSalt = (SELECT Salt FROM account WHERE username = user LIMIT 1);
-  SET vPassCode1 = (SELECT Passcode FROM account WHERE username = user LIMIT 1);
-  SET vPassCode2 = SHA2(CONCAT(Pass, vSalt),512);
-  IF vPassCode1 = vPassCode2 THEN
+  DECLARE Saltt FLOAT;
+  DECLARE PassCode1 VARCHAR(512);
+  DECLARE PassCode2 VARCHAR(512);
+  SET Saltt = (SELECT Salt FROM account WHERE username = user LIMIT 1);
+  SET PassCode1 = (SELECT Passcode FROM account WHERE username = user LIMIT 1);
+  SET PassCode2 = SHA2(CONCAT(Pass, Saltt),512);
+  IF PassCode1 = PassCode2 THEN
     SET IsSuccessful = 1;
   ELSE
     SET IsSuccessful = 0;
@@ -303,20 +345,20 @@ CREATE PROCEDURE `VerifySecurityAnswer`(
   OUT IsSuccessful tinyint(1)
 )
 BEGIN
-  DECLARE vSalt FLOAT;
-  DECLARE vAnswer1 VARCHAR(512);
-  DECLARE vAnswer2 VARCHAR(512);
-  SET vSalt = (SELECT Salt FROM account WHERE username = user LIMIT 1);
-  SET vAnswer1 = (SELECT Security_Answer FROM account WHERE username = user LIMIT 1);
-  SET vAnswer2 = SHA2(CONCAT(Answer, vSalt),512);
-  IF vAnswer1 = vAnswer2 THEN
+  DECLARE Saltt FLOAT;
+  DECLARE Answer1 VARCHAR(512);
+  DECLARE Answer2 VARCHAR(512);
+  SET Saltt = (SELECT Salt FROM account WHERE username = user LIMIT 1);
+  SET Answer1 = (SELECT Security_Answer FROM account WHERE username = user LIMIT 1);
+  SET Answer2 = SHA2(CONCAT(Answer, Saltt),512);
+  IF Answer1 = Answer2 THEN
     SET IsSuccessful = 1;
   ELSE
     SET IsSuccessful = 0;
   END IF;
 END$$
 
-'Sample password is *888uuu and security answer is 23 before hash and salt. An sanple image must reside in the Profiles folder names jsmith.jpg'
+'Sample password is *888uuu and security answer is 23 before hash and salt. A sample image must reside in the Profiles folder names jsmith.jpg'
 DELIMITER ;
 
 INSERT INTO `account` (`USERNAME`,`EMAIL`,`FULL_NAME`,`SECURITY_QUESTION`,`SECURITY_ANSWER`,`PASSCODE`,`SALT`) VALUES ('jsmith','john.smith@email.com','John Smith','Age?','5ee521184a46f3bd25f08f60b922e3acc6c0ff60f219c102511b6f9c1aa0b05f606c4d93303030596b790cb402a06030b676a12e2460e0ff95fc5a0d1e3c8767','d064295332f4f5235f21bd8ad73941e810a81cdced996a35e7de7773fd35ef517f93589867d6ba4596604020a9a29110206c4f109dab3db5d64a260c34f0006b',0.999581);
@@ -361,14 +403,14 @@ INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('min', 'minutes');
 INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('slice', 'slice');
 INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('strip', 'strip');
 
-INSERT INTO RECIPE (RECIPE_ID, SUBMITTED_USERNAME, RECIPE_NAME, PREPARATION) 
-VALUES (1, 'jsmith', 'Scrambled Eggs', 'BEAT eggs, milk, salt and black pepper in medium bowl until blended.
+INSERT INTO RECIPE (RECIPE_ID, RECIPE_NAME, PREPARATION) 
+VALUES (1, 'Scrambled Eggs', 'BEAT eggs, milk, salt and black pepper in medium bowl until blended.
 HEAT butter in large nonstick skillet over medium heat until hot. POUR IN egg mixture. As eggs begin to set, GENTLY PULL the eggs across the pan with a spatula, forming large soft curds.
 CONTINUE cooking – pulling, lifting and folding eggs – until thickened and no visible liquid egg remains. Do not stir constantly. REMOVE from heat. SERVE immediately.');
-INSERT INTO RECIPE (RECIPE_ID, SUBMITTED_USERNAME, RECIPE_NAME, PREPARATION)
-VALUES (2, 'jsmith', 'BLTO Sandwich', 'Spread butter on 2 slice of whole wheat bread. Then assemble sandwich with 3 strips of bacon, a slice of lettuce, 2 slices of tomato, and 2 slices of onion.');
-INSERT INTO RECIPE (RECIPE_ID, SUBMITTED_USERNAME, RECIPE_NAME, PREPARATION) 
-VALUES (3, 'jsmith', 'Grilled Cheddar Cheese Sandwich', 'Put 3 slice of cheddar cheese inbetween 2 slice of whole wheat bread. Place on BBQ on each sandwich side until cheese melts.');
+INSERT INTO RECIPE (RECIPE_ID, RECIPE_NAME, PREPARATION)
+VALUES (2, 'BLTO Sandwich', 'Spread butter on 2 slice of whole wheat bread. Then assemble sandwich with 3 strips of bacon, a slice of lettuce, 2 slices of tomato, and 2 slices of onion.');
+INSERT INTO RECIPE (RECIPE_ID, RECIPE_NAME, PREPARATION) 
+VALUES (3, 'Grilled Cheddar Cheese Sandwich', 'Put 3 slice of cheddar cheese inbetween 2 slice of whole wheat bread. Place on BBQ on each sandwich side until cheese melts.');
 
 INSERT INTO accountrecipe(USERNAME, RECIPE_ID) VALUES ('jsmith', 1);
 INSERT INTO accountrecipe(USERNAME, RECIPE_ID) VALUES ('jsmith', 2);

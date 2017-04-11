@@ -109,7 +109,7 @@ namespace ChefJeeves
                 cmd = new MySqlCommand();
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "InsertAccount";
+                cmd.CommandText = "CreateAccount";
                 cmd.Parameters.Clear();
                 cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
                 cmd.Parameters["User"].Value = txtUserName.Text.Trim();

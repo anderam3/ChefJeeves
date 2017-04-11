@@ -14,11 +14,13 @@ namespace ChefJeeves
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!this.IsPostBack)
+            RegularExpressionValidator2.ValidationExpression = @"(?i)^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|"
+                            + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)"
+                            + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
+            if (!IsPostBack)
             {
                 // Create a random code and store it in the Session object.
                 this.Session["CaptchaImageText"] = GenerateRandomCode();
-
             }
         }
 
@@ -37,9 +39,8 @@ namespace ChefJeeves
             Message.From = new MailAddress(txtEmail.Text);
             //Recipient e-mail address.
             Message.To.Add("chefjeeves@gmail.com");
-
-            Message.Body = txtBody.Text;
-            Message.Subject = "Contact Us";
+            Message.Subject = "Auto: Chef Jeeves Contact";
+            Message.Body = txtEmail.Text + " said:  " + txtBody.Text;
             Message.IsBodyHtml = true;
             try
             {
@@ -57,9 +58,7 @@ namespace ChefJeeves
                 }
                 else
                 {
-                    // Display an error message.
                     this.MessageLabel.Text = "ERROR: Incorrect, try again.";
-                    // Clear the input and create a new random code.
                     this.CodeNumberTextBox.Text = "";
                     lblFeedbackOK.Visible = false;
                     this.Session["CaptchaImageText"] = GenerateRandomCode();
