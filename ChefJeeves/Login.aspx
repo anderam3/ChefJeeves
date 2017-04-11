@@ -34,7 +34,7 @@
         <div class="jumbotron">
             <div id="nameText">Chef Jeeves</div> 
         </div>
-        <div class="row">
+        <div class="row" style="margin-bottom:100px;">
             <div class="col-md-4">
                 <h2>Manage Ingredient Inventory</h2>
                 <p>Keep track off all the ingredients you buy for your fridge and pantry!</p>

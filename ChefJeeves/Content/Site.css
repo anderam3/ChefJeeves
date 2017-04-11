@@ -346,3 +346,10 @@ form#loginCredForm table tr td:nth-child(2) input {
     background-color: #5bc0de;
 }
 
+#contactPage table tbody tr:first-child td:last-child span:first-child, #contactPage table tbody tr:nth-child(2) td:last-child span:first-child {
+    position: absolute;
+    width: 200px;
+}
+#contactPage table tbody tr:first-child td:last-child span:first-child {
+    margin-top:-10px;
+}

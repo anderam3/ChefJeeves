@@ -51,7 +51,7 @@ namespace ChefJeeves
                         lblMessage.Text = String.Empty;
                         SmtpClient mailClient = new SmtpClient();
                         mailClient.Host = "smtp.gmail.com";
-                        mailClient.Port = 25;
+                        mailClient.Port = 587;
                         mailClient.Credentials = new System.Net.NetworkCredential("chefjeeves@gmail.com", "chefjeeves2017");
                         mailClient.EnableSsl = true;
                         mailClient.Send(Message);

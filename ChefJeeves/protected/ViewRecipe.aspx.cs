@@ -30,7 +30,8 @@ namespace ChefJeeves
             }
             else
             {
-                imgRecipe.ImageUrl = "../Images/Recipes/" + Session["recipeID"] + ".jpg";
+                /*imgRecipe.ImageUrl = "../Images/Recipes/" + Session["recipeID"] + ".jpg";*/
+                panel.Attributes.Add("Style", "background:url( ../Images/Recipes/" + Session["recipeID"] + ".jpg) no-repeat center; background-size:cover;min-height: 400px;");
                 foreach (GridViewRow row in grd.Rows)
                 {                   
                     row.Cells[0].Controls.Add(new Image {

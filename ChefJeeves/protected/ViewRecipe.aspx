@@ -8,7 +8,15 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="content" runat="server">
     <div style="clear:both;">
         <div id="recipeLeft">
-            <asp:Image ID="imgRecipe" runat="server" ImageUrl="../Images/Recipes/" />
+            <div class="hex1">
+                <div class="hex2">
+                    <div class="hex3">
+                        <asp:Panel ID="panel" runat="server" />
+                        <!--<asp:Image ID="imgRecipe" runat="server" ImageUrl="../Images/Recipes/" />-->
+                    </div>
+                </div>
+            </div>
+            
         </div>
         <div id="recipeRight">
             <div>
