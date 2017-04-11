@@ -144,15 +144,7 @@ namespace ChefJeeves
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            fileUpload = new FileUpload();
-            txtUserName.Text = String.Empty;
-            txtEmail.Text = String.Empty;
-            txtName.Text = String.Empty;
-            txtSecurityQuestion.Text = String.Empty;
-            txtSecurityAnswer.Text = String.Empty;
-            txtConfirmSecurityAnswer.Text = String.Empty;
-            txtPassword.Text = String.Empty;
-            txtConfirmPassword.Text = String.Empty;
+            Response.Redirect(Request.RawUrl);
         }
     }
 }

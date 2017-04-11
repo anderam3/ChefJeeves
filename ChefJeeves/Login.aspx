@@ -16,6 +16,16 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <div class="navbar-form navbar-left">
                             <a href="#" ><img id="imgLogo" src="../Images/ChefJeevesLogo.png" /></a>
+                        </div>
+                        <div class="navbar-form navbar-right">
+                            <form runat="server">
+                                <asp:Button ID="btnCreateAccount" runat="server" Text="Create Account" OnClick="btnCreateAccount_Click" CssClass="btn btn-info"/>
+                                <asp:Button ID="btnForgotPassword" runat="server" Text="Forgot Password" OnClick="btnForgotPassword_Click" CssClass="btn btn-info"/>
+                                <asp:Login ID="lgn" runat="server" DisplayRememberMe="False" OnAuthenticate="lgn_Authenticate" OnLoggedIn="lgn_LoggedIn" FailureText="Your credentials incorrect or your account does not exist" UserNameLabelText="Username:" LoginButtonText="Sign-in" TitleText="Please enter your username and password">
+                                    <TitleTextStyle Font-Bold="True" />
+                                </asp:Login>
+                                <asp:Label ID="lblError" runat="server" EnableViewState="False" ForeColor="DarkRed"></asp:Label>
+                            </form>
                         </div>                        
                     </div>
                 </div>
@@ -24,14 +34,6 @@
         <div class="jumbotron">
             <div id="nameText">Chef Jeeves</div> 
         </div>
-        <form runat="server">
-            <asp:Login ID="lgn" runat="server" DisplayRememberMe="False" OnAuthenticate="lgn_Authenticate" OnLoggedIn="lgn_LoggedIn" FailureText="Your credentials incorrect or your account does not exist" UserNameLabelText="Username:" LoginButtonText="Sign-in" TitleText="Please enter your username and password">
-                <TitleTextStyle Font-Bold="True" />
-            </asp:Login>
-            <asp:Label ID="lblError" runat="server" EnableViewState="False" ForeColor="DarkRed"></asp:Label>
-            <asp:Button ID="btnCreateAccount" runat="server" Text="Create Account" OnClick="btnCreateAccount_Click" CssClass="btn btn-default"/>
-            <asp:Button ID="btnForgotPassword" runat="server" Text="Forgot Password" OnClick="btnForgotPassword_Click" CssClass="btn btn-default"/>
-        </form>
         <div class="row">
             <div class="col-md-4">
                 <h2>Manage Ingredient Inventory</h2>
@@ -46,7 +48,6 @@
                 <p>Our database is expanding with new recipes being continously added!</p>
             </div>
         </div>
-        <hr />
         <footer id="footer">
             By using this site you agree that the administrator(s) may save your IP address, cookies, and any other personal data transmitted through your browser. All account data is property of the administrator(s) of this site and can do what he/she wishes with it. This privacy policy may change at any time.
             <br />

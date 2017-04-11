@@ -34,53 +34,52 @@ namespace ChefJeeves
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            MailMessage Message = new MailMessage();
-            //Sender e-mail address.
-            Message.From = new MailAddress(txtEmail.Text);
-            //Recipient e-mail address.
-            Message.To.Add("chefjeeves@gmail.com");
-            Message.Subject = "Auto: Chef Jeeves Contact";
-            Message.Body = txtEmail.Text + " said:  " + txtBody.Text;
-            Message.IsBodyHtml = true;
-            try
+            if (Page.IsValid)
             {
-                if (this.CodeNumberTextBox.Text == this.Session["CaptchaImageText"].ToString())
+                MailMessage Message = new MailMessage();
+                //Sender e-mail address.
+                Message.From = new MailAddress(txtEmail.Text);
+                //Recipient e-mail address.
+                Message.To.Add("chefjeeves@gmail.com");
+                Message.Subject = "Auto: Chef Jeeves Contact";
+                Message.Body = txtEmail.Text + " said:  " + txtBody.Text;
+                Message.IsBodyHtml = true;
+                try
                 {
-                    this.MessageLabel.Text = "";
-                    SmtpClient mailClient = new SmtpClient();
-                    mailClient.Host = "smtp.gmail.com";
-                    mailClient.Port = 25;
-                    mailClient.Credentials = new System.Net.NetworkCredential("chefjeeves@gmail.com", "chefjeeves2017");
-                    mailClient.EnableSsl = true;
-                    mailClient.Send(Message);
-                    lblFeedbackOK.Visible = true;
+                    if (this.txtCodeNumber.Text == this.Session["CaptchaImageText"].ToString())
+                    {
+                        lblMessage.Text = String.Empty;
+                        SmtpClient mailClient = new SmtpClient();
+                        mailClient.Host = "smtp.gmail.com";
+                        mailClient.Port = 25;
+                        mailClient.Credentials = new System.Net.NetworkCredential("chefjeeves@gmail.com", "chefjeeves2017");
+                        mailClient.EnableSsl = true;
+                        mailClient.Send(Message);
+                        txtEmail.Text = String.Empty;
+                        txtBody.Text = String.Empty;
+                        txtCodeNumber.Text = String.Empty;
+                        lblFeedbackOK.Visible = true;
+
+                    }
+                    else
+                    {
+                        lblMessage.Text = "Incorrect. Please try again.";
+                        txtCodeNumber.Text = String.Empty;
+                        lblFeedbackOK.Visible = false;
+                        this.Session["CaptchaImageText"] = GenerateRandomCode();
+                    }
 
                 }
-                else
+                catch (Exception ex)
                 {
-                    this.MessageLabel.Text = "ERROR: Incorrect, try again.";
-                    this.CodeNumberTextBox.Text = "";
-                    lblFeedbackOK.Visible = false;
-                    this.Session["CaptchaImageText"] = GenerateRandomCode();
+                    lblFeedbackKO.Visible = true;
                 }
-
-            }
-            catch (Exception ex)
-            {
-                lblFeedbackKO.Visible = true;
             }
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            if (Session["username"] == null || Session["isSuccessful"] == null)
-            {
-                Response.Redirect("~/Login.aspx");
-            }
-            else
-            {
-                Response.Redirect("~/protected/SuggestedRecipes.aspx");
-            }
+            Response.Redirect(Request.RawUrl);
         }
     }
 }

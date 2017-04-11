@@ -302,9 +302,9 @@ CREATE PROCEDURE `UpdatePassword`(
 )
 BEGIN
 	DECLARE Saltt FLOAT;
-    SET Saltt = RAND();
+    SET Saltt = (SELECT SALT FROM account WHERE Username = user);
     SET Pass = SHA2(CONCAT(Pass, Saltt),512);
-    UPDATE `Account` SET PASSCODE = Pass,SALT = Saltt 
+    UPDATE `Account` SET PASSCODE = Pass
 	WHERE Username = User;
 END$$
 

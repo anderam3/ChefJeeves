@@ -21,7 +21,7 @@ namespace ChefJeeves
             {
                 Response.Redirect("~/Login.aspx");
             }
-            lblSecurityQuestion.Text = "Security Question: " + Session["question"].ToString();
+            lblSecurityQuestion.Text = Session["question"].ToString();
             String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
             con = new MySqlConnection(con_string);
         }
@@ -54,7 +54,7 @@ namespace ChefJeeves
                     }
                     else
                     {
-                        lblError.Text = "Your answer is incorrect or your account is deactivated";
+                        lblError.Text = "Your answer is incorrect";
                         con.Close();
                     }
                 }
@@ -63,12 +63,6 @@ namespace ChefJeeves
                     lblError.Text = ex.Message;
                 }
             }
-        }
-
-        protected void btnReset_Click(object sender, EventArgs e)
-        {
-            txtSecurityAnswer.Text = String.Empty;
-            txtConfirmSecurityAnswer.Text = String.Empty;
         }
     }
 }

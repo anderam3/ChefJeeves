@@ -12,6 +12,18 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 </head>
 <body>
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <div class="navbar-form navbar-left">
+                        <a href="/Login.aspx" ><img id="imgLogo" src="../Images/ChefJeevesLogo.png" /></a>
+                    </div>
+                    <div id="navHeading">Create Account</div>                     
+                </div>
+            </div>
+        </nav>
+    </header>  
     <form id="form1" runat="server">
     <table id="createAccount">
         <tr>
@@ -145,15 +157,14 @@
         </tr>
         <tr>
             <td>
-                <asp:Button ID="btnCreate" runat="server" Text="Create" OnClick="btnCreate_Click" CssClass="btn btn-default"/>
+                <asp:Button ID="btnCreate" runat="server" Text="Create" OnClick="btnCreate_Click" CssClass="btn btn-info"/>
             </td>
             <td>
-                <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click" CssClass="btn btn-default"/>
+                <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click" CssClass="btn btn-info"/>
             </td>
         </tr>        
     </table>
     </form>
-    <hr />
     <footer id="footer">
         By using this site you agree that the administrator(s) may save your IP address, cookies, and any other personal data transmitted through your browser. All account data is property of the administrator(s) of this site and can do what he/she wishes with it. This privacy policy may change at any time.
         <br />

@@ -17,6 +17,7 @@ namespace ChefJeeves
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            RegularExpressionValidator3.ValidationExpression = @"^(?=.*[a-zA-Z])(?=.*\d)(?=.*(_|[^\w])).{7,12}$";
             if (Session["username"] == null)
             {
                 Response.Redirect("~/Login.aspx");
@@ -51,12 +52,6 @@ namespace ChefJeeves
                     lblError.Text = ex.Message;
                 }
             }
-        }
-
-        protected void btnReset_Click(object sender, EventArgs e)
-        {
-            txtNewPassword.Text = String.Empty;
-            txtConfirmNewPassword.Text = String.Empty;
         }
     }
 }

@@ -31,7 +31,6 @@ namespace ChefJeeves
             else
             {
                 imgRecipe.ImageUrl = "../Images/Recipes/" + Session["recipeID"] + ".jpg";
-                Image1.ImageUrl = "../Images/Recipes/" + Session["recipeID"] + ".jpg";
                 foreach (GridViewRow row in grd.Rows)
                 {                   
                     row.Cells[0].Controls.Add(new Image {

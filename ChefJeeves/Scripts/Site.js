@@ -1,4 +1,5 @@
 ﻿$(function () {
+    $("[name$=LoginButton]").addClass("btn btn-info");
     $("[id$=txtAddIngredient]").autocomplete({
         source: function (request, response) {
             $.ajax({
