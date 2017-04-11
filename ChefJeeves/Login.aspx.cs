@@ -102,7 +102,7 @@ namespace ChefJeeves
                         Session["username"] = cmd.Parameters["User"].Value.ToString();
                         Session["question"] = cmd.Parameters["Question"].Value.ToString();
                         con.Close();
-                        Response.Redirect("~/SecurityQuestion.aspx");
+                        Response.Redirect("~/protected/SecurityQuestion.aspx");
                     }
                     else
                     {

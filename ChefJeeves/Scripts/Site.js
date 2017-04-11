@@ -14,17 +14,12 @@
                             val: item.split('-')[1]
                         }
                     }))
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                },
-                failure: function (response) {
-                    alert(response.responseText);
                 }
             });
         },
         select: function (e, i) {
             $("[id$=hfIngredientID]").val(i.item.val);
+            $("[id$=imgAddIngredient]").attr("src", "../Images/Ingredients/" + i.item.val + ".jpg")
         },
         minLength: 1
     });

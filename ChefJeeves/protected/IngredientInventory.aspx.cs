@@ -108,7 +108,8 @@ namespace ChefJeeves
 
         protected void lnkAdd_Click(object sender, EventArgs e)
         {
-            lblError.Visible = false;
+            imgAddIngredient.ImageUrl = String.Empty;
+            txtAddIngredient.Text = String.Empty;
             if (imgAddIngredient.Visible == false)
             {
                 imgAddIngredient.Visible = true;
@@ -130,44 +131,48 @@ namespace ChefJeeves
         {
             string ingredientId = Request.Form[hfIngredientID.UniqueID];
             int parsedID = 0;
-            Int32.TryParse(ingredientId, out parsedID);
-            String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
-            MySqlConnection con = new MySqlConnection(con_string);
-            MySqlCommand cmd = new MySqlCommand();
-            cmd = new MySqlCommand();
-            cmd.Connection = con;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "AddIngredient";
-            cmd.Parameters.Clear();
-            cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
-            cmd.Parameters["User"].Value = Session["username"];
-            cmd.Parameters["User"].Direction = ParameterDirection.Input;
-            cmd.Parameters.Add("ID", MySqlDbType.Int64, 11);
-            cmd.Parameters["ID"].Value = parsedID;
-            cmd.Parameters["ID"].Direction = ParameterDirection.Input;
-            cmd.Parameters.Add("isSuccessful", MySqlDbType.Int64, 1);
-            cmd.Parameters["isSuccessful"].Direction = ParameterDirection.Output;
-            using (con)
+            if (Int32.TryParse(ingredientId, out parsedID))
             {
-                try
+                String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
+                MySqlConnection con = new MySqlConnection(con_string);
+                MySqlCommand cmd = new MySqlCommand();
+                cmd = new MySqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "AddIngredient";
+                cmd.Parameters.Clear();
+                cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
+                cmd.Parameters["User"].Value = Session["username"];
+                cmd.Parameters["User"].Direction = ParameterDirection.Input;
+                cmd.Parameters.Add("ID", MySqlDbType.Int64, 11);
+                cmd.Parameters["ID"].Value = parsedID;
+                cmd.Parameters["ID"].Direction = ParameterDirection.Input;
+                cmd.Parameters.Add("isSuccessful", MySqlDbType.Int64, 1);
+                cmd.Parameters["isSuccessful"].Direction = ParameterDirection.Output;
+                using (con)
                 {
-                    con.Open();
-                    cmd.ExecuteScalar();
-                    if (Int64.Parse(cmd.Parameters["isSuccessful"].Value.ToString()) == 1)
+                    try
                     {
-                        lblError.Visible = false;
-                        Response.Redirect(Request.RawUrl);
+                        con.Open();
+                        cmd.ExecuteScalar();
+                        if (Int64.Parse(cmd.Parameters["isSuccessful"].Value.ToString()) == 1)
+                        {
+                            lblError.Visible = false;
+                            Response.Redirect(Request.RawUrl);
+                        }
+                        else
+                        {
+                            lblError.Visible = true;
+                            con.Close();
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        lblError.Visible = true;
-                        con.Close();
                     }
                 }
-                catch (Exception ex)
-                {
-                    con.Close();
-                }
+            }
+            else{
+                lblError.Visible = true;
             }
         }
 
