@@ -1,10 +1,13 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EditAccount.aspx.cs" Inherits="ChefJeeves.EditAccount" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">Edit Account</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="heading" runat="server">
-     <asp:Image ID="imgProfile" CssClass="round" runat="server" ImageUrl="../Images/Profiles/" />
+<asp:Content ID="Content2" ContentPlaceHolderID="heading" runat="server">     
      <asp:Label ID="lblUserName" runat="server" Text="Edit Account:"></asp:Label>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="content" runat="server">
+    <div id="editAccLeft">
+        <asp:Image ID="imgProfile" CssClass="roundEditAcc" runat="server" ImageUrl="../Images/Profiles/" />
+    </div>
+    <div id="editAccRight">
     <form id="form1" runat="server">
         <table id="editAccount">
             <tr>
@@ -143,4 +146,5 @@
             </tr>   
         </table>
     </form>
+    </div>
 </asp:Content>
