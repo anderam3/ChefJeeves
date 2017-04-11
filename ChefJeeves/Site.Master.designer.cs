@@ -58,15 +58,6 @@ namespace ChefJeeves {
         protected global::System.Web.UI.WebControls.HyperLink lnkAddNewIngredients;
         
         /// <summary>
-        /// lnkAddNewRecipe control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkAddNewRecipe;
-        
-        /// <summary>
         /// lnkLogout control.
         /// </summary>
         /// <remarks>

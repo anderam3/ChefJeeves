@@ -49,49 +49,58 @@ namespace ChefJeeves {
         protected global::System.Web.UI.WebControls.LinkButton lnkAdd;
         
         /// <summary>
-        /// imgAddIng control.
+        /// lblError control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgAddIng;
+        protected global::System.Web.UI.WebControls.Label lblError;
         
         /// <summary>
-        /// txtAddIng control.
+        /// lnkAddNewIngredient control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAddIng;
+        protected global::System.Web.UI.WebControls.HyperLink lnkAddNewIngredient;
         
         /// <summary>
-        /// lnkSave control.
+        /// imgAddIngredient control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkSave;
+        protected global::System.Web.UI.WebControls.Image imgAddIngredient;
         
         /// <summary>
-        /// lnkCancel control.
+        /// txtAddIngredient control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkCancel;
+        protected global::System.Web.UI.WebControls.TextBox txtAddIngredient;
         
         /// <summary>
-        /// hfingredientId control.
+        /// lnkSaveIngredient control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfingredientId;
+        protected global::System.Web.UI.WebControls.LinkButton lnkSaveIngredient;
+        
+        /// <summary>
+        /// hfIngredientID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIngredientID;
         
         /// <summary>
         /// grd control.
