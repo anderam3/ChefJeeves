@@ -2,15 +2,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-<<<<<<< HEAD
-    <title>Chef Jeeves</title>
-    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
-=======
     <title>Contact Chef Jeeves</title>
     <link rel="icon" href="~/Images/favicon.ico" />
     <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
     <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css"/>
->>>>>>> b47b9c954cffd58f9f3879877d1206a0cd0f0890
     <link rel="stylesheet" href="~/Content/Site.css" />
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css' />
 </head>
@@ -27,16 +22,10 @@
         </nav>
     </header>    
     <form id="formContactUs" runat="server">
-<<<<<<< HEAD
-    <div id="contactPage">
-        
+    <div id="contactPage">        
         <div>
             <table>                
-=======
-    <div style="padding: 5px 0px 10px 150px">
-            <table>
-              
->>>>>>> b47b9c954cffd58f9f3879877d1206a0cd0f0890
+
                 <tr>
                     <td>
                         <asp:Label runat="server" ID="lblEmail" AssociatedControlID="txtEmail" Text="Email:" />
@@ -100,37 +89,7 @@
                 </tr>
             </table>
         </div>
-        <div class="form-group">
-            <asp:Label runat="server" ID="lblBody" for="txtBody" Text="Comments:" class="col-sm-2  control-label" />
-            <div class="col-sm-10">
-                <asp:TextBox runat="server" ID="txtBody" Width="100%" TextMode="MultiLine" Rows="8" class="form-control" />
-                <asp:RequiredFieldValidator runat="server" Display="dynamic" ID="valRequireBody" SetFocusOnError="true" ControlToValidate="txtBody" ErrorMessage="The Message is required">*</asp:RequiredFieldValidator>
-            </div>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <img src="CaptchaPage.aspx" alt="Catcha" /><br />
-                <p>
-                    <strong>Enter the code shown above:</strong><br />
-                    <asp:TextBox ID="CodeNumberTextBox" runat="server" class="form-control"></asp:TextBox>
-                </p>
-                <p>
-                    <em class="notice">(Note: If you cannot read the numbers in the above<br/>
-                    image, reload the page to generate a new one.)</em>
-                </p>
-                <p>
-                    <asp:Label ID="MessageLabel" runat="server" ForeColor="#CC0000"></asp:Label></p>    
-                    <asp:Label runat="server" ID="lblFeedbackOK" Text="Your message has been successfully sent." SkinID="FeedbackOK" Visible="false" ForeColor="#006600" Font-Bold="True" />
-                    <asp:Label runat="server" ID="lblFeedbackKO" Text="Sorry, there was a problem sending your message." SkinID="FeedbackKO" Visible="false" ForeColor="#CC0000" />
-            </div>   
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-            <asp:Button runat="server" type="submit" ID="btnSubmit" Text="Submit" onclick="btnSubmit_Click" class="btn btn-default "/>
-            <asp:Button runat="server" type="cancel" ID="btnCancel" Text="Cancel"  onclick="btnCancel_Click" CausesValidation="False" class="btn btn-default "/>
-            <asp:ValidationSummary runat="server" ID="ValidationSummary1" ShowSummary="false" ShowMessageBox="true" />
-            </div>
-        </div> 
     </form>
     <hr />
     <footer id="footer">
