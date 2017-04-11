@@ -10,7 +10,23 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 </head>
 <body>
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <div class="navbar-form navbar-left">
+                        <a href="../Login.aspx" ><img id="imgLogo" src="../Images/ChefJeevesLogo.png" /></a>
+                    </div>                        
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="jumbotron">
+        <div id="nameText">Chef Jeeves</div> 
+    </div>
+    
     <form id="form1" runat="server">
+    <div id="createAccountPage">
     <table id="createAccount">
         <tr>
             <td>
@@ -150,6 +166,7 @@
             </td>
         </tr>        
     </table>
+    </div>
     </form>
     <footer id="footer">
         By using this site you agree that the administrator(s) may save your IP address, cookies, and any other personal data transmitted through your browser. All account data is property of the administrator(s) of this site and can do what he/she wishes with it. This privacy policy may change at any time.

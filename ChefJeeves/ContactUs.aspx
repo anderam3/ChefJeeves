@@ -4,34 +4,47 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Chef Jeeves</title>
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/Site.css" />
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css' />
 </head>
 <body>
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <div class="navbar-form navbar-left">
+                        <a href="/Login.aspx" ><img id="imgLogo" src="../Images/ChefJeevesLogo.png" /></a>
+                    </div>                        
+                </div>
+            </div>
+        </nav>
+    </header>    
     <form id="formContactUs" runat="server">
-    <div style="padding: 5px 0px 10px 150px">
+    <div id="contactPage">
         
         <div>
-            <table>
-              
+            <table>                
                 <tr>
-                    <td >
-                       <asp:Label runat="server" ID="lblEmail" AssociatedControlID="txtEmail" Text="Email:" />
+                    <td>
+                        <asp:Label runat="server" ID="lblEmail" AssociatedControlID="txtEmail" Text="Email:" />
                     </td>
                     <td>
-                          <asp:TextBox runat="server" ID="txtEmail" Width="100%" />
+                        <asp:TextBox runat="server" ID="txtEmail" Width="100%" />
                     </td>
                     <td>
-                      <asp:RequiredFieldValidator runat="server" Display="dynamic" ID="RequiredFieldValidator1"
+                        <asp:RequiredFieldValidator runat="server" Display="dynamic" ID="RequiredFieldValidator1"
                             SetFocusOnError="true" ControlToValidate="txtEmail" ErrorMessage="Your Email is required">*</asp:RequiredFieldValidator>
-                       
-                <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" 
-                    ControlToValidate="txtEmail" ErrorMessage="Must be valid email address" 
-                    ForeColor="DarkRed"></asp:RegularExpressionValidator>
+                        <!--<asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" 
+                            ControlToValidate="txtEmail" ErrorMessage="Must be valid email address" 
+                            ForeColor="DarkRed"></asp:RegularExpressionValidator>-->
+
                     </td>
                 </tr>
              
                 <tr>
-                    <td >
+                    <td>
                         <asp:Label runat="server" ID="lblBody" AssociatedControlID="txtBody" Text="Comments:" />
                     </td>
                     <td>

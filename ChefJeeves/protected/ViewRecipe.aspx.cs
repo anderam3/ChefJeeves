@@ -29,13 +29,13 @@ namespace ChefJeeves
                 Response.Redirect("~/protected/SuggestedRecipes.aspx");
             }
             else
-            {
-                imgRecipe.ImageUrl = "../Images/Recipes/" + Session["recipeID"] + ".jpg";
+            {                
                 Image1.ImageUrl = "../Images/Recipes/" + Session["recipeID"] + ".jpg";
+                panel.Attributes.Add("Style", "background:url( ../Images/Recipes/" + Session["recipeID"] + ".jpg) no-repeat center; background-size:cover; min-height:400px;");
                 foreach (GridViewRow row in grd.Rows)
                 {                   
                     row.Cells[0].Controls.Add(new Image {
-                            ImageUrl = "../Images/Ingredients/" + row.Cells[0].Text + ".jpg",
+                            ImageUrl = "../Images/Ingredients/" + row.Cells[0].Text + ".jpg",                         
                             CssClass = "roundViewRecipe"
                         }
                     );

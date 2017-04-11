@@ -3,13 +3,20 @@
     <asp:Literal runat="server" ID="ltlTitle"></asp:Literal>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="heading" runat="server">
-    <asp:Image ID="imgRecipe" CssClass="round" runat="server" ImageUrl="../Images/Recipes/" />
     <asp:Label runat="server" ID="lblHeading"></asp:Label>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="content" runat="server">
     <div style="clear:both;">
         <div id="recipeLeft">
-            <asp:Image ID="Image1" runat="server" ImageUrl="../Images/Recipes/" />
+            <div class="hex1">
+                <div class="hex2">
+                    <div class="hex3">
+                        <asp:Panel ID="panel" runat="server" />
+                        <!--<asp:Image ID="Image1" runat="server" ImageUrl="../Images/Recipes/" />-->
+                    </div>
+                </div>
+            </div>
+            
         </div>
         <div id="recipeRight">
             <div>

@@ -3,7 +3,9 @@
 }
 
 header{
-    padding-bottom: 25px;
+    padding-bottom: 10px;
+    background-color:#29c1c1;
+    margin-bottom: 15px;
 }
 
 #imgLogo {
@@ -21,13 +23,23 @@ header{
 .roundViewRecipe, .roundIngInv {
     border-radius: 50%;
     border: 2px solid black;
-    height: 50px;
-    width: 50px;
+    height: 70px;
+    width: 70px;
     margin:5px;
 }
 
+.roundEditAcc {
+    border-radius: 50%;
+    border: 3px solid black;
+    height: 50%;
+    width: 50%;
+}
+
 table, tr, td{
-    border:none;
+    border-style: none;
+    border-color: inherit;
+    border-width: medium;
+    margin-right: 16px;
 }
 
 
@@ -149,6 +161,7 @@ a.logo
     width:60%;    
     max-width:800px;
     float:left;
+    padding-top: 50px;
 }
 #recipeLeft img{
     width:98%;
@@ -158,6 +171,7 @@ a.logo
     width:40%;
     max-width:580px;
     float:left;
+    margin-bottom: 100px;
 }
 #recipeTable tr td:first-child{
     font-weight:bold;
@@ -240,3 +254,101 @@ table#editAccount tbody tr td:first-child, table#createAccount tbody tr td:first
     padding-left: 5px;
     padding-right: 3px;
 }
+
+.hex1 {
+  transform: rotate(120deg);
+}
+.hex2 {
+  transform: rotate(-60deg);
+}
+.hex3 {
+  transform: rotate(-60deg);
+}
+.hex1, .hex1 div {
+    margin: 0 auto;
+    transform-origin: 50% 50%;
+    overflow: hidden;
+}
+.hex1 {
+    text-align: center;
+    width:575px;
+    max-width:100%;
+    height: 100%;
+}
+.hex1 div {
+  width: 100%;
+  height: 100%;
+}
+.hex1 img{
+    width:100%;
+    margin-top: -5px;
+}
+/*
+.imgTest {
+    position: relative;
+    float: left;
+    width:  100px;
+    height: 100px;
+    background-position: 50% 50%;
+    background-repeat:   no-repeat;
+    background-size:     cover;
+}*/
+
+form#loginCredForm{
+    position:absolute;
+    top:10px;
+    right: 10px;
+}
+
+form#loginCredForm table tr td:nth-child(2) input {
+    width:95%;
+}
+
+#editAccLeft{
+    width:50%;
+    text-align:center;
+    float:left;
+}
+
+#editAccRight{
+    width:50%;
+    text-align:left;
+    float: left;
+}
+
+#contactPage table{
+    text-align:center;
+    margin:0 auto;
+}
+#contactPage table tbody tr:first-child td:first-child, #contactPage table tbody tr:nth-child(2) td:first-child{
+    width:20px;
+
+   text-align:right;
+}
+#contactPage table tbody tr:first-child td:last-child , #contactPage table tbody tr:nth-child(2) td:last-child{
+    text-align:left;
+}
+
+#contactPage table tbody tr:first-child td:last-child span:first-child{
+    width:20px;
+    float:left;
+}
+
+#contactPage table tbody tr:first-child td:last-child span:last-child{
+    position:absolute;
+    width:200px;
+    float:left;
+    margin-top:-10px;
+}
+
+#contactPage table tbody tr:first-child td:first-child, #contactPage table tbody tr:first-child td:last-child {
+    width:100px;
+}
+#contactPage table tbody tr:first-child td:nth-child(2) {
+    width:300px;
+}
+
+.suggestedRecipeTable table tbody tr:hover{
+    background-color: #29c1c1;
+}
+

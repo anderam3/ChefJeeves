@@ -6,9 +6,14 @@
         <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
         <link rel="stylesheet" href="~/Content/Site.css" />
         <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css' />
+        <style type="text/css">
+            .auto-style1 {
+                width: 361px
+            }
+        </style>
     </head>
     <body>
-        <header>
+        <header style="background-color:white">
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -23,8 +28,52 @@
         <div class="jumbotron">
             <div id="nameText">Chef Jeeves</div> 
         </div>
-        <form runat="server">
+        <form runat="server" id="loginCredForm" defaultbutton="lgn$btnLoginButton">
+            
             <asp:Login ID="lgn" runat="server" DisplayRememberMe="False" OnAuthenticate="lgn_Authenticate" OnLoggedIn="lgn_LoggedIn" FailureText="Your credentials incorrect or your account does not exist" UserNameLabelText="Username:" LoginButtonText="Sign-in" TitleText="Please enter your username and password">
+                <LayoutTemplate>
+                    <table cellpadding="1" cellspacing="0" style="border-collapse:collapse;">
+                        <tr>
+                            <td>
+                                <table cellpadding="0">
+                                    <tr>
+                                        <td align="center" colspan="2" style="font-weight:bold;">Please enter your username and password</td>
+                                    </tr>
+                                    <tr >
+                                        <td align="right">
+                                            <asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName">Username:</asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="UserName" runat="server"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName" ErrorMessage="User Name is required." ToolTip="User Name is required." ValidationGroup="lgn">*</asp:RequiredFieldValidator>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">
+                                            <asp:Label ID="PasswordLabel" runat="server" AssociatedControlID="Password">Password:</asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="Password" runat="server" TextMode="Password"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="PasswordRequired" runat="server" ControlToValidate="Password" ErrorMessage="Password is required." ToolTip="Password is required." ValidationGroup="lgn">*</asp:RequiredFieldValidator>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" colspan="2" style="color:Red;">
+                                            <asp:Literal ID="FailureText" runat="server" EnableViewState="False"></asp:Literal>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right" colspan="2">
+                                            <asp:Button ID="btnCreateAccount" runat="server" CssClass="btn btn-default" OnClick="btnCreateAccount_Click" Text="Create Account" />
+                                            <asp:Button ID="btnForgotPassword" runat="server" CssClass="btn btn-default" OnClick="btnForgotPassword_Click" Text="Forgot Password" />
+                                            <asp:Button ID="btnLoginButton" runat="server" CssClass="btn btn-default" CommandName="Login" Text="Sign-in" ValidationGroup="lgn" style="margin-right:12px;" DefaultButton="btnLoginButton"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </LayoutTemplate>
                 <TitleTextStyle Font-Bold="True" />
             </asp:Login>
             <asp:Label
@@ -33,8 +82,6 @@
                 EnableViewState="False"
                 ForeColor="DarkRed"></asp:Label>
         
-            <asp:Button ID="btnCreateAccount" runat="server" Text="Create Account" OnClick="btnCreateAccount_Click" CssClass="btn btn-default"/>
-            <asp:Button ID="btnForgotPassword" runat="server" Text="Forgot Password" OnClick="btnForgotPassword_Click" CssClass="btn btn-default"/>
         </form>
         <div class="row">
             <div class="col-md-4">
