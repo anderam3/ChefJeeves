@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 
 namespace ChefJeeves
 {
-	public partial class Allergies : System.Web.UI.Page
+	public partial class DietRestrictions : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -25,7 +25,7 @@ namespace ChefJeeves
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "GetAccountAllergens";
+            cmd.CommandText = "GetAccountDietRestrictions";
             cmd.Parameters.Clear();
             cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
             cmd.Parameters["User"].Value = Session["username"];
@@ -52,7 +52,7 @@ namespace ChefJeeves
                         trash = new LinkButton();
                         trash.ID = row.Cells[2].Text;
                         trash.CssClass = "glyphicon glyphicon-trash";
-                        trash.Command += DeleteAllergen;
+                        trash.Command += DeleteDietRestriction;
                         row.Cells[2].Controls.Add(trash);
                     }
                     con.Close();
@@ -63,7 +63,7 @@ namespace ChefJeeves
             }
         }
 
-        protected void DeleteAllergen(object sender, CommandEventArgs e)
+        protected void DeleteDietRestriction(object sender, CommandEventArgs e)
         {
             String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
             MySqlConnection con = new MySqlConnection(con_string);
@@ -71,7 +71,7 @@ namespace ChefJeeves
             cmd = new MySqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "DeleteAllergen";
+            cmd.CommandText = "DeleteDietRestriction";
             cmd.Parameters.Clear();
             cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
             cmd.Parameters["User"].Value = Session["username"];
@@ -107,20 +107,20 @@ namespace ChefJeeves
 
         protected void lnkAdd_Click(object sender, EventArgs e)
         {
-            imgAddAllergen.ImageUrl = String.Empty;
-            txtAddAllergen.Text = String.Empty;
-            if (imgAddAllergen.Visible == false)
+            imgAddDietRestriction.ImageUrl = String.Empty;
+            txtAddDietRestriction.Text = String.Empty;
+            if (imgAddDietRestriction.Visible == false)
             {
-                imgAddAllergen.Visible = true;
-                txtAddAllergen.Visible = true;
-                lnkSaveAllergen.Visible = true;
+                imgAddDietRestriction.Visible = true;
+                txtAddDietRestriction.Visible = true;
+                lnkSaveDietRestriction.Visible = true;
                 lnkAdd.CssClass = "glyphicon glyphicon-minus-sign";
             }
             else
             {
-                imgAddAllergen.Visible = false;
-                txtAddAllergen.Visible = false;
-                lnkSaveAllergen.Visible = false;
+                imgAddDietRestriction.Visible = false;
+                txtAddDietRestriction.Visible = false;
+                lnkSaveDietRestriction.Visible = false;
                 lnkAdd.CssClass = "glyphicon glyphicon-plus-sign";
             }
             
@@ -128,7 +128,7 @@ namespace ChefJeeves
 
         protected void lnkSave_Click(object sender, EventArgs e)
         {
-            string ingredientId = Request.Form[hfAllergenID.UniqueID];
+            string ingredientId = Request.Form[hfDietRestrictionID.UniqueID];
             int parsedID = 0;
             if (Int32.TryParse(ingredientId, out parsedID))
             {
@@ -138,7 +138,7 @@ namespace ChefJeeves
                 cmd = new MySqlCommand();
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "AddAllergen";
+                cmd.CommandText = "AddDietRestriction";
                 cmd.Parameters.Clear();
                 cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
                 cmd.Parameters["User"].Value = Session["username"];
@@ -176,21 +176,21 @@ namespace ChefJeeves
         }
 
         [WebMethod]
-        public static string[] GetAllergens(string allergen)
+        public static string[] GetDietRestrictions(string dietrestriction)
         {
-            List<string> allergens = new List<string>();
+            List<string> dietrestrictions = new List<string>();
             String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
             MySqlConnection con = new MySqlConnection(con_string);
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "GetNonAccountAllergens";
+            cmd.CommandText = "GetNonAccountDietRestrictions";
             cmd.Parameters.Clear();
             cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
             cmd.Parameters["User"].Value = HttpContext.Current.Session["username"];
             cmd.Parameters["User"].Direction = ParameterDirection.Input;
             cmd.Parameters.Add("Ingredient", MySqlDbType.VarChar, 64);
-            cmd.Parameters["Ingredient"].Value = allergen;
+            cmd.Parameters["Ingredient"].Value = dietrestriction;
             cmd.Parameters["Ingredient"].Direction = ParameterDirection.Input;
             using (con)
             {
@@ -200,7 +200,7 @@ namespace ChefJeeves
                     MySqlDataReader rd = cmd.ExecuteReader();
                     while (rd.Read())
                     {
-                        allergens.Add(string.Format("{0}-{1}", rd["Name"], rd["ID"]));
+                        dietrestrictions.Add(string.Format("{0}-{1}", rd["Name"], rd["ID"]));
                     }
                     con.Close();
                 }
@@ -209,7 +209,7 @@ namespace ChefJeeves
                 }
               
             }
-            return allergens.ToArray();
+            return dietrestrictions.ToArray();
         }
     }
 }

@@ -244,12 +244,12 @@
     <Compile Include="protected\EditAccount.aspx.designer.cs">
       <DependentUpon>EditAccount.aspx</DependentUpon>
     </Compile>
-    <Compile Include="protected\Allergies.aspx.cs">
-      <DependentUpon>Allergies.aspx</DependentUpon>
+    <Compile Include="protected\DietRestrictions.aspx.cs">
+      <DependentUpon>DietRestrictions.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="protected\Allergies.aspx.designer.cs">
-      <DependentUpon>Allergies.aspx</DependentUpon>
+    <Compile Include="protected\DietRestrictions.aspx.designer.cs">
+      <DependentUpon>DietRestrictions.aspx</DependentUpon>
     </Compile>
     <Compile Include="protected\IngredientInventory.aspx.cs">
       <DependentUpon>IngredientInventory.aspx</DependentUpon>
@@ -364,7 +364,7 @@
     <Content Include="protected\AddNewIngredient.aspx" />
     <Content Include="protected\ChangePassword.aspx" />
     <Content Include="protected\EditAccount.aspx" />
-    <Content Include="protected\Allergies.aspx" />
+    <Content Include="protected\DietRestrictions.aspx" />
     <Content Include="protected\IngredientInventory.aspx" />
     <Content Include="protected\SuggestedRecipes.aspx" />
     <Content Include="protected\ViewRecipe.aspx" />

@@ -10,7 +10,7 @@
 namespace ChefJeeves {
     
     
-    public partial class Allergies {
+    public partial class DietRestrictions {
         
         /// <summary>
         /// txtSearch control.
@@ -49,31 +49,31 @@ namespace ChefJeeves {
         protected global::System.Web.UI.WebControls.LinkButton lnkAdd;
         
         /// <summary>
-        /// imgAddAllergen control.
+        /// imgAddDietRestriction control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgAddAllergen;
+        protected global::System.Web.UI.WebControls.Image imgAddDietRestriction;
         
         /// <summary>
-        /// txtAddAllergen control.
+        /// txtAddDietRestriction control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAddAllergen;
+        protected global::System.Web.UI.WebControls.TextBox txtAddDietRestriction;
         
         /// <summary>
-        /// lnkSaveAllergen control.
+        /// lnkSaveDietRestriction control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkSaveAllergen;
+        protected global::System.Web.UI.WebControls.LinkButton lnkSaveDietRestriction;
         
         /// <summary>
         /// lblError control.
@@ -85,22 +85,22 @@ namespace ChefJeeves {
         protected global::System.Web.UI.WebControls.Label lblError;
         
         /// <summary>
-        /// lnkAddNewAllergen control.
+        /// lnkAddNewDietRestriction control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkAddNewAllergen;
+        protected global::System.Web.UI.WebControls.HyperLink lnkAddNewDietRestriction;
         
         /// <summary>
-        /// hfAllergenID control.
+        /// hfDietRestrictionID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfAllergenID;
+        protected global::System.Web.UI.WebControls.HiddenField hfDietRestrictionID;
         
         /// <summary>
         /// grd control.

@@ -53,7 +53,7 @@
                             <li role="separator" class="divider"></li>
                             <li><asp:HyperLink ID="lnkAddNewIngredient" runat="server" NavigateUrl="~/protected/AddNewIngredient.aspx">Add New Ingredient</asp:HyperLink></li>
                             <li role="separator" class="divider"></li>
-                            <li><asp:HyperLink ID="lnkAllergies" runat="server" NavigateUrl="~/protected/Allergies.aspx">Allergies</asp:HyperLink></li>
+                            <li><asp:HyperLink ID="lnkDietRestrictions" runat="server" NavigateUrl="~/protected/DietRestrictions.aspx">Diet Restrictions</asp:HyperLink></li>
                             <li role="separator" class="divider"></li>
                             <li><asp:HyperLink ID="lnkLogout" runat="server" NavigateUrl="~/Login.aspx">Logout</asp:HyperLink></li>
                             </ul>
