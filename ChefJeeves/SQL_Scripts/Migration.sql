@@ -5,6 +5,7 @@ SET SQL_SAFE_UPDATES = 0;
 DROP TABLE IF EXISTS `AccountRecipe`;
 DROP TABLE IF EXISTS `RecipeIngredient`;
 DROP TABLE IF EXISTS `AccountIngredient`;
+DROP TABLE IF EXISTS `AccountAllergens`;
 DROP TABLE IF EXISTS `Recipe`;
 DROP TABLE IF EXISTS `tmpRecipe`;
 DROP TABLE IF EXISTS `Measurement`;
@@ -19,6 +20,7 @@ DROP PROCEDURE IF EXISTS `EmailExists`;
 DROP PROCEDURE IF EXISTS `GetAccount`;
 DROP PROCEDURE IF EXISTS `GetAccountIngredients`;
 DROP PROCEDURE IF EXISTS `GetNonAccountIngredients`;
+DROP PROCEDURE IF EXISTS `GetAccountAllergens`;
 DROP PROCEDURE IF EXISTS `GetRecipe`;
 DROP PROCEDURE IF EXISTS `GetRecipeDetails`;
 DROP PROCEDURE IF EXISTS `GetRecipes`;
@@ -102,6 +104,20 @@ BEGIN
     END IF;
 END$$
 
+CREATE PROCEDURE `AddAllergens`(
+    IN User VARCHAR(64),
+	IN ID int(11),
+    OUT isSuccessful tinyint(1)
+)
+BEGIN
+	IF (SELECT ID FROM AccountIngredient WHERE username = user AND ingredient_ID = ID LIMIT 1) is null THEN
+		INSERT INTO `accountallergens` VALUES (User, ID);
+        SET isSuccessful = 1;
+    ELSE
+		SET isSuccessful = 0;
+    END IF;
+END$$
+
 CREATE PROCEDURE `CreateAccount`(
 	User varchar(64),
     Address varchar (64),
@@ -137,6 +153,14 @@ CREATE PROCEDURE `DeleteIngredient`(
 )
 BEGIN
 	DELETE FROM AccountIngredient WHERE Ingredient_ID = ID and username = User;
+END$$
+
+CREATE PROCEDURE `DeleteAllergen`(
+    IN User VARCHAR(64),
+	IN ID int(11)
+)
+BEGIN
+	DELETE FROM AccountAllergens WHERE Ingredient_ID = ID and username = User;
 END$$
 
 CREATE PROCEDURE `EmailExists`(
@@ -187,6 +211,18 @@ BEGIN
   ORDER BY b.Ingredient_Name;
 END$$
 
+
+CREATE PROCEDURE `GetAccountAllergens`(
+  IN User VARCHAR(64),
+  IN Ingredient VARCHAR(64)
+)
+BEGIN
+  SELECT b.Ingredient_Name as NAME, b.Ingredient_ID as ID 
+  FROM AccountAllergens a, Ingredient b
+  WHERE a.Ingredient_ID = b.Ingredient_ID and a.username = User and b.INGREDIENT_NAME LIKE CONCAT(Ingredient,'%')
+  ORDER BY b.Ingredient_Name;
+END$$
+
 CREATE PROCEDURE `GetNonAccountIngredients`(
   IN User VARCHAR(64),
   IN Ingredient VARCHAR(64)
@@ -197,6 +233,22 @@ BEGIN
   WHERE Ingredient_Name LIKE CONCAT(Ingredient,'%') AND Ingredient_ID NOT IN 
   (SELECT b.Ingredient_ID as ID 
   FROM AccountIngredient a, Ingredient b
+  WHERE a.Username = user
+  and a.Ingredient_ID = b.Ingredient_ID
+  and b.INGREDIENT_NAME LIKE CONCAT(Ingredient,'%'))
+  ORDER BY b.Ingredient_Name;
+END$$
+
+CREATE PROCEDURE `GetNonAccountAllergens`(
+  IN User VARCHAR(64),
+  IN Ingredient VARCHAR(64)
+)
+BEGIN
+  SELECT Ingredient_Name as NAME, Ingredient_ID as ID 
+  FROM Ingredient b
+  WHERE Ingredient_Name LIKE CONCAT(Ingredient,'%') AND Ingredient_ID NOT IN 
+  (SELECT b.Ingredient_ID as ID 
+  FROM AccountAllergens a, Ingredient b
   WHERE a.Username = user
   and a.Ingredient_ID = b.Ingredient_ID
   and b.INGREDIENT_NAME LIKE CONCAT(Ingredient,'%'))

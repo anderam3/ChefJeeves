@@ -244,6 +244,13 @@
     <Compile Include="protected\EditAccount.aspx.designer.cs">
       <DependentUpon>EditAccount.aspx</DependentUpon>
     </Compile>
+    <Compile Include="protected\Allergies.aspx.cs">
+      <DependentUpon>Allergies.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="protected\Allergies.aspx.designer.cs">
+      <DependentUpon>Allergies.aspx</DependentUpon>
+    </Compile>
     <Compile Include="protected\IngredientInventory.aspx.cs">
       <DependentUpon>IngredientInventory.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -326,6 +333,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="CreateAccount.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Site.css" />
@@ -356,6 +364,7 @@
     <Content Include="protected\AddNewIngredient.aspx" />
     <Content Include="protected\ChangePassword.aspx" />
     <Content Include="protected\EditAccount.aspx" />
+    <Content Include="protected\Allergies.aspx" />
     <Content Include="protected\IngredientInventory.aspx" />
     <Content Include="protected\SuggestedRecipes.aspx" />
     <Content Include="protected\ViewRecipe.aspx" />

@@ -53,6 +53,10 @@ namespace ChefJeeves
                 cmd.Parameters["Name"].Direction = ParameterDirection.Output;
                 cmd.Parameters.Add("Prep", MySqlDbType.Text);
                 cmd.Parameters["Prep"].Direction = ParameterDirection.Output;
+                cmd.Parameters.Add("Benefits", MySqlDbType.Text);
+                cmd.Parameters["Benefits"].Direction = ParameterDirection.Output;
+                cmd.Parameters.Add("Calo", MySqlDbType.Int64, 11);
+                cmd.Parameters["Calo"].Direction = ParameterDirection.Output;
                 using (con)
                 {
                     try
@@ -62,6 +66,8 @@ namespace ChefJeeves
                         ltlTitle.Text = cmd.Parameters["Name"].Value.ToString();
                         lblHeading.Text = cmd.Parameters["Name"].Value.ToString();
                         ltlDirections.Text = cmd.Parameters["Prep"].Value.ToString();
+                        lblBenefits.Text = cmd.Parameters["Benefits"].Value.ToString();
+                        lblCalories.Text = cmd.Parameters["Calo"].Value.ToString() + " calories";
                         con.Close();
                     }
                     catch (Exception ex)

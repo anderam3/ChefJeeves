@@ -13,22 +13,13 @@ namespace ChefJeeves {
     public partial class Login {
         
         /// <summary>
-        /// btnCreateAccount control.
+        /// loginCredForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCreateAccount;
-        
-        /// <summary>
-        /// btnForgotPassword control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnForgotPassword;
+        protected global::System.Web.UI.HtmlControls.HtmlForm loginCredForm;
         
         /// <summary>
         /// lgn control.

@@ -160,6 +160,12 @@ a.logo
 	left:50%;
 	transform: translate(-50%,-50%);	
 } 
+#recipeTopLeft{
+    width:60%;    
+    max-width:800px;
+    text-align:center;
+    float:left;
+}
 
 #recipeLeft{
     width:60%;    
@@ -171,6 +177,22 @@ a.logo
     width:98%;
     float:left;
 }
+#recipeTopRight {
+    width: 40%;
+    max-width: 580px;
+    float: left;
+    display: table;
+    height: 66px;
+}
+#recipeTopRight span{
+    text-transform: capitalize;
+    font-size:20px;
+}
+#recipeTopRight div{
+    display: table-cell;
+    vertical-align: middle;
+}
+
 #recipeRight{
     width:40%;
     max-width:580px;
@@ -352,4 +374,16 @@ form#loginCredForm table tr td:nth-child(2) input {
 }
 #contactPage table tbody tr:first-child td:last-child span:first-child {
     margin-top:-10px;
+}
+#healthText i {
+position:absolute;
+}
+#healthText span, #healthText i{
+    padding:10px;
+    font-size:40px;
+    z-index:99;
+}
+
+#healthText span:hover, #healthText i:hover{
+    color: red;
 }
