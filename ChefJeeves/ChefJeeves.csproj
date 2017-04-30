@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.Net.Compilers.2.0.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.0.1\build\Microsoft.Net.Compilers.props')" />
-  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.4\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.4\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -90,8 +90,9 @@
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.4\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
@@ -330,6 +331,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\ChefJeevesLogo.png" />
+    <Content Include="Images\DietRequirements\1.jpg" />
+    <Content Include="Images\DietRequirements\2.jpg" />
+    <Content Include="Images\DietRequirements\3.jpg" />
     <Content Include="Images\favicon.ico" />
     <Content Include="Images\Ingredients\1.jpg" />
     <Content Include="Images\Ingredients\10.jpg" />
@@ -340,18 +344,74 @@
     <Content Include="Images\Ingredients\15.jpg" />
     <Content Include="Images\Ingredients\16.jpg" />
     <Content Include="Images\Ingredients\17.jpg" />
+    <Content Include="Images\Ingredients\18.jpg" />
+    <Content Include="Images\Ingredients\19.jpg" />
     <Content Include="Images\Ingredients\2.jpg" />
+    <Content Include="Images\Ingredients\20.jpg" />
+    <Content Include="Images\Ingredients\21.jpg" />
+    <Content Include="Images\Ingredients\22.jpg" />
+    <Content Include="Images\Ingredients\23.jpg" />
+    <Content Include="Images\Ingredients\24.jpg" />
+    <Content Include="Images\Ingredients\25.jpg" />
+    <Content Include="Images\Ingredients\26.jpg" />
+    <Content Include="Images\Ingredients\27.jpg" />
+    <Content Include="Images\Ingredients\28.jpg" />
+    <Content Include="Images\Ingredients\29.jpg" />
     <Content Include="Images\Ingredients\3.jpg" />
+    <Content Include="Images\Ingredients\30.jpg" />
+    <Content Include="Images\Ingredients\31.jpg" />
+    <Content Include="Images\Ingredients\32.jpg" />
+    <Content Include="Images\Ingredients\33.jpg" />
+    <Content Include="Images\Ingredients\34.jpg" />
+    <Content Include="Images\Ingredients\35.jpg" />
+    <Content Include="Images\Ingredients\36.jpg" />
+    <Content Include="Images\Ingredients\37.jpg" />
+    <Content Include="Images\Ingredients\38.jpg" />
+    <Content Include="Images\Ingredients\39.jpg" />
     <Content Include="Images\Ingredients\4.jpg" />
+    <Content Include="Images\Ingredients\40.jpg" />
+    <Content Include="Images\Ingredients\41.jpg" />
+    <Content Include="Images\Ingredients\42.jpg" />
+    <Content Include="Images\Ingredients\43.jpg" />
+    <Content Include="Images\Ingredients\44.jpg" />
+    <Content Include="Images\Ingredients\45.jpg" />
+    <Content Include="Images\Ingredients\46.jpg" />
+    <Content Include="Images\Ingredients\47.jpg" />
+    <Content Include="Images\Ingredients\48.jpg" />
+    <Content Include="Images\Ingredients\49.jpg" />
     <Content Include="Images\Ingredients\5.jpg" />
+    <Content Include="Images\Ingredients\50.jpg" />
+    <Content Include="Images\Ingredients\51.jpg" />
+    <Content Include="Images\Ingredients\52.jpg" />
+    <Content Include="Images\Ingredients\53.jpg" />
+    <Content Include="Images\Ingredients\54.jpg" />
+    <Content Include="Images\Ingredients\55.jpg" />
+    <Content Include="Images\Ingredients\56.jpg" />
+    <Content Include="Images\Ingredients\57.jpg" />
     <Content Include="Images\Ingredients\6.jpg" />
     <Content Include="Images\Ingredients\7.jpg" />
     <Content Include="Images\Ingredients\8.jpg" />
     <Content Include="Images\Ingredients\9.jpg" />
     <Content Include="Images\Profiles\jsmith.jpg" />
     <Content Include="Images\Recipes\1.jpg" />
+    <Content Include="Images\Recipes\10.jpg" />
+    <Content Include="Images\Recipes\11.jpg" />
+    <Content Include="Images\Recipes\12.jpg" />
+    <Content Include="Images\Recipes\13.jpg" />
+    <Content Include="Images\Recipes\14.jpg" />
+    <Content Include="Images\Recipes\15.jpg" />
+    <Content Include="Images\Recipes\16.jpg" />
+    <Content Include="Images\Recipes\17.jpg" />
+    <Content Include="Images\Recipes\18.jpg" />
+    <Content Include="Images\Recipes\19.jpg" />
     <Content Include="Images\Recipes\2.jpg" />
     <Content Include="Images\Recipes\3.jpg" />
+    <Content Include="Images\Recipes\4.jpg" />
+    <Content Include="Images\Recipes\5.jpg" />
+    <Content Include="Images\Recipes\6.jpg" />
+    <Content Include="Images\Recipes\7.jpg" />
+    <Content Include="Images\Recipes\8.jpg" />
+    <Content Include="Images\Recipes\9.jpg" />
     <Content Include="Login.aspx" />
     <Content Include="protected\AddNewIngredient.aspx" />
     <Content Include="protected\ChangePassword.aspx" />
@@ -441,8 +501,8 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.0.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.0.1\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.4\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.4\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

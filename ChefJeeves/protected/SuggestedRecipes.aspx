@@ -6,7 +6,7 @@
         <asp:TextBox ID="txtSearch" runat="server" CausesValidation="false"></asp:TextBox>
         <asp:LinkButton ID="lnkClear" runat="server"  CssClass="glyphicon glyphicon-remove" OnClick="lnkClear_Click" />
         <asp:LinkButton ID="lnkSearch" runat="server"  CssClass="glyphicon glyphicon-search" OnClick="lnkSearch_Click" />
-        <asp:GridView ID="grd" runat="server" OnRowDataBound="OnRowDataBound" OnSelectedIndexChanged="OnSelectedIndexChanged">
+        <asp:GridView ID="grd" runat="server" OnSelectedIndexChanged="OnSelectedIndexChanged">
             <Columns>  
                 <asp:TemplateField HeaderText="IMAGE" ShowHeader="false">
                     <ItemTemplate>
@@ -16,6 +16,5 @@
             </Columns>  
             <EmptyDataTemplate>You cannot make any Recipes based off your current Ingredient Inventory</EmptyDataTemplate> 
         </asp:GridView>
-        <asp:SqlDataSource ID="SqlDataSource" runat="server"></asp:SqlDataSource>
     </form>
  </asp:Content>

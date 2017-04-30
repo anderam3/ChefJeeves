@@ -45,8 +45,19 @@ namespace ChefJeeves
                     grd.Columns.Add(colDelete);
                     Image img = new Image();
                     LinkButton trash = new LinkButton();
+                    LinkButton searchable = new LinkButton();
                     foreach (GridViewRow row in grd.Rows)
                     {
+                        row.Attributes["style"] = "cursor:pointer;";
+                        if ((row.Cells[3].Controls[0] as CheckBox).Checked == false)
+                        {
+                            row.CssClass = "searchableOff";
+                            row.ToolTip = "Click to exclude this ingredient in suggested recipes.";
+                        }
+                        else
+                        {
+                            row.ToolTip = "Click to include this ingredient in suggested recipes.";
+                        }
                         img = (Image)row.Cells[0].Controls[1];
                         img.ImageUrl = "../Images/Ingredients/" + row.Cells[2].Text + ".jpg";
                         trash = new LinkButton();
@@ -59,6 +70,54 @@ namespace ChefJeeves
                 }
                 catch (Exception ex)
                 {
+                }
+            }
+        }
+
+        
+        protected void OnRowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(grd, "Select$" + e.Row.RowIndex);
+            }
+        }
+
+        protected void OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+           foreach (GridViewRow row in grd.Rows)
+            {
+                if (row.RowIndex == grd.SelectedIndex)
+                {
+                    String con_string = WebConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
+                    MySqlConnection con = new MySqlConnection(con_string);
+                    MySqlCommand cmd = new MySqlCommand();
+                    cmd.Connection = con;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "UpdateIngredientSearchability";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
+                    cmd.Parameters["User"].Value = Session["username"];
+                    cmd.Parameters["User"].Direction = ParameterDirection.Input;
+                    cmd.Parameters.Add("ID", MySqlDbType.Int64, 11);
+                    cmd.Parameters["ID"].Value = row.Cells[2].Text;
+                    cmd.Parameters["ID"].Direction = ParameterDirection.Input;
+                    cmd.Parameters.Add("Toggle", MySqlDbType.Int64, 1);
+                    cmd.Parameters["Toggle"].Value = ((row.Cells[3].Controls[0] as CheckBox).Checked == true ? 0 : 1);
+                    cmd.Parameters["Toggle"].Direction = ParameterDirection.Input;
+                    using (con)
+                    {
+                        try
+                        {
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                            con.Close();
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                    }
+                    Response.Redirect(Request.RawUrl);
                 }
             }
         }

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="IngredientInventory.aspx.cs" Inherits="ChefJeeves.IngredientInventory" %>
+﻿<%@ Page Title="" EnableEventValidation="False" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="IngredientInventory.aspx.cs" Inherits="ChefJeeves.IngredientInventory" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">Ingredient Inventory</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="heading" runat="server">Ingredient Inventory</asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="content" runat="server">
@@ -15,7 +15,7 @@
                <asp:HyperLink id="lnkAddNewIngredient"  NavigateUrl="AddNewIngredient.aspx" Text="here" runat="server"/>
         </asp:Label>
         <asp:HiddenField ID="hfIngredientID" runat="server" />
-        <asp:GridView ID="grd" runat="server">
+        <asp:GridView ID="grd" runat="server" OnRowDataBound="OnRowDataBound" OnSelectedIndexChanged="OnSelectedIndexChanged">
             <Columns>  
                 <asp:TemplateField HeaderText="IMAGE" ShowHeader="false">
                     <ItemTemplate>
@@ -25,6 +25,5 @@
             </Columns>  
             <EmptyDataTemplate>No Ingredients in Inventory</EmptyDataTemplate> 
         </asp:GridView>
-        <asp:SqlDataSource ID="SqlDataSource" runat="server"></asp:SqlDataSource>
     </form>
  </asp:Content>
