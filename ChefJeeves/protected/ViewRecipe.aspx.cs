@@ -1,11 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
 using System.Web.Configuration;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace ChefJeeves
@@ -30,7 +26,6 @@ namespace ChefJeeves
             }
             else
             {
-                /*imgRecipe.ImageUrl = "../Images/Recipes/" + Session["recipeID"] + ".jpg";*/
                 panel.Attributes.Add("Style", "background:url( ../Images/Recipes/" + Session["recipeID"] + ".jpg) no-repeat center; background-size:cover;min-height: 400px;");
                 foreach (GridViewRow row in grd.Rows)
                 {                   
@@ -53,15 +48,21 @@ namespace ChefJeeves
                 cmd.Parameters["Name"].Direction = ParameterDirection.Output;
                 cmd.Parameters.Add("Prep", MySqlDbType.Text);
                 cmd.Parameters["Prep"].Direction = ParameterDirection.Output;
+                cmd.Parameters.Add("Benefit", MySqlDbType.Text);
+                cmd.Parameters["Benefit"].Direction = ParameterDirection.Output;
+                cmd.Parameters.Add("Calo", MySqlDbType.Int64, 11);
+                cmd.Parameters["Calo"].Direction = ParameterDirection.Output;
                 using (con)
                 {
                     try
                     {
                         con.Open();
-                        cmd.ExecuteScalar();
+                        cmd.ExecuteReader();
                         ltlTitle.Text = cmd.Parameters["Name"].Value.ToString();
                         lblHeading.Text = cmd.Parameters["Name"].Value.ToString();
                         ltlDirections.Text = cmd.Parameters["Prep"].Value.ToString();
+                        lblBenefits.Text = cmd.Parameters["Benefit"].Value.ToString();
+                        lblCalories.Text = cmd.Parameters["Calo"].Value.ToString() + " calories";
                         con.Close();
                     }
                     catch (Exception ex)

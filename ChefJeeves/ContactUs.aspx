@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
     <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css"/>
     <link rel="stylesheet" href="~/Content/Site.css" />
+	<link rel="stylesheet" href="~/Content/font-awesome.min.css" />
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css' />
 </head>
 <body>

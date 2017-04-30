@@ -6,8 +6,13 @@
     <link rel="icon" href="~/Images/favicon.ico" />
     <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
     <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="~/Content/Site.css" />
-    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" ></script>
+    <script src="../Scripts/jquery-ui-1.12.1.min.js" ></script>
+    <script src="../Scripts/bootstrap.min.js" ></script>
+    <script src="../Scripts/Site.js" ></script>
 </head>
 <body>
     <header>
@@ -26,6 +31,8 @@
                             <a href="#" class="dropdown-toggle glyphicon glyphicon-menu-hamburger" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="font-size:30px;"></a>
                             <ul class="dropdown-menu">
                             <li><asp:HyperLink ID="lnkEditAccount" runat="server" NavigateUrl="~/protected/EditAccount.aspx">Edit Account</asp:HyperLink></li>
+                            <li role="separator" class="divider"></li>
+                            <li><asp:HyperLink ID="lnkEditDietRestrictions" runat="server" NavigateUrl="~/protected/EditDietRestrictions.aspx">Edit Diet Restrictions</asp:HyperLink></li>
                             <li role="separator" class="divider"></li>
                             <li><asp:HyperLink ID="lnkIngredientInventory" runat="server" NavigateUrl="~/protected/IngredientInventory.aspx">Ingredient Inventory</asp:HyperLink></li>
                             <li role="separator" class="divider"></li>
@@ -48,9 +55,5 @@
         <br />
         <asp:HyperLink id="lnkContactUs"  NavigateUrl="ContactUs.aspx" Text="Contact Us" runat="server"/>
     </footer>
-    <script src="../Scripts/jquery-3.1.1.min.js" ></script>
-    <script src="../Scripts/jquery-ui-1.12.1.min.js" ></script>
-    <script src="../Scripts/bootstrap.min.js" ></script>
-    <script src="../Scripts/Site.js" ></script>
 </body>
 </html>

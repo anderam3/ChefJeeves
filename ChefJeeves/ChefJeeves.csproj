@@ -245,6 +245,13 @@
     <Compile Include="protected\EditAccount.aspx.designer.cs">
       <DependentUpon>EditAccount.aspx</DependentUpon>
     </Compile>
+    <Compile Include="protected\EditDietRestrictions.aspx.cs">
+      <DependentUpon>EditDietRestrictions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="protected\EditDietRestrictions.aspx.designer.cs">
+      <DependentUpon>EditDietRestrictions.aspx</DependentUpon>
+    </Compile>
     <Compile Include="protected\IngredientInventory.aspx.cs">
       <DependentUpon>IngredientInventory.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -286,6 +293,7 @@
     <Content Include="ContactUs.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -334,6 +342,7 @@
     <Content Include="Images\DietRequirements\1.jpg" />
     <Content Include="Images\DietRequirements\2.jpg" />
     <Content Include="Images\DietRequirements\3.jpg" />
+    <Content Include="Images\DietRequirements\4.jpg" />
     <Content Include="Images\favicon.ico" />
     <Content Include="Images\Ingredients\1.jpg" />
     <Content Include="Images\Ingredients\10.jpg" />
@@ -416,6 +425,7 @@
     <Content Include="protected\AddNewIngredient.aspx" />
     <Content Include="protected\ChangePassword.aspx" />
     <Content Include="protected\EditAccount.aspx" />
+    <Content Include="protected\EditDietRestrictions.aspx" />
     <Content Include="protected\IngredientInventory.aspx" />
     <Content Include="protected\SuggestedRecipes.aspx" />
     <Content Include="protected\ViewRecipe.aspx" />

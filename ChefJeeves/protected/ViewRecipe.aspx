@@ -1,19 +1,32 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ViewRecipe.aspx.cs" Inherits="ChefJeeves.ViewRecipe" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">
     <asp:Literal runat="server" ID="ltlTitle"></asp:Literal>
+     
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="heading" runat="server">
     <asp:Label runat="server" ID="lblHeading"></asp:Label>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="content" runat="server">
-    <div style="clear:both;">
+    
+    <div style="clear:both;">        
+        <div id="recipeTopLeft">
+            <div id="healthText">
+                <span class="glyphicon glyphicon-cutlery health"></span>
+                <i class="fa fa-heartbeat calo" aria-hidden="true"></i>
+            </div>
+        </div>
+        <div id="recipeTopRight">
+            <div>
+                <asp:Label runat="server" ID="lblBenefits" CssClass="benefitText"></asp:Label>       
+                <asp:Label runat="server" ID="lblCalories" CssClass="caloText"></asp:Label>
+             </div>
+        </div>
         <div id="recipeLeft">
             <div class="hex1">
                 <div class="hex2">
                     <div class="hex3">
                         <asp:Panel ID="panel" runat="server" />
-                        <!--<asp:Image ID="imgRecipe" runat="server" ImageUrl="../Images/Recipes/" />-->
-                    </div>
+					</div>
                 </div>
             </div>
             

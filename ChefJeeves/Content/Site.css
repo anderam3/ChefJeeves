@@ -24,7 +24,7 @@ header{
     width: 100px;
 }
 
-.roundViewRecipe, .roundIngInv {
+.roundViewRecipe, .roundIngInv, .roundDietRestriction {
     border-radius: 50%;
     border: 2px solid black;
     height: 70px;
@@ -137,12 +137,9 @@ a.logo
 	src: url(../fonts/techno_hideo_bold.ttf)
 }
 
-
-
 @keyframes type{ 
   from { width: 0; } 
 }
-
 
 .modal-backdrop {
     position: unset;
@@ -160,6 +157,12 @@ a.logo
 	transform: translate(-50%,-50%);	
 } 
 
+#recipeTopLeft{
+    width:60%;    
+    max-width:800px;
+    text-align:center;
+    float:left;
+}
 #recipeLeft{
     width:60%;    
     max-width:800px;
@@ -169,6 +172,21 @@ a.logo
 #recipeLeft img{
     width:98%;
     float:left;
+}
+#recipeTopRight {
+    width: 40%;
+    max-width: 580px;
+    float: left;
+    display: table;
+    height: 66px;
+}
+#recipeTopRight span{
+    text-transform: capitalize;
+    font-size:20px;
+}
+#recipeTopRight div{
+    display: table-cell;
+    vertical-align: middle;
 }
 #recipeRight{
     width:40%;
@@ -228,28 +246,28 @@ table#editAccount tbody tr td:first-child, table#createAccount tbody tr td:first
 }
 
 
-.viewRecipeTable div table tbody tr:first-child, .suggestedRecipeTable div table tbody tr:first-child, .ingInvTable div table tbody tr:first-child{
+.viewRecipeTable div table tbody tr:first-child, .suggestedRecipeTable div table tbody tr:first-child, .dietTable div table tbody tr:first-child, .ingInvTable div table tbody tr:first-child{
     display:none;
 }
 
-.suggestedRecipeTable div table tbody tr td img, .ingInvTable div table tbody tr td img{
+.suggestedRecipeTable div table tbody tr td img, .dietTable div table tbody tr td img, .ingInvTable div table tbody tr td img{
     margin:5px;
 }
 
-.ingInvTable div table tbody tr {
+.dietTable div table tbody tr, .ingInvTable div table tbody tr {
     float:left;
     width:250px;
 }
 
-.ingInvTable div table tbody tr td:nth-child(2){
+.dietTable div table tbody tr td:nth-child(2), .ingInvTable div table tbody tr td:nth-child(2){
     width:100%;
 }
 
-.ingInvTable div table tbody tr td:last-child{
+.dietTable div table tbody tr td:last-child, .ingInvTable div table tbody tr td:last-child{
     width:100%;
     text-align:right;
 }
-.ingInvTable div table tbody tr td:last-child a{
+.dietTable div table tbody tr td:last-child a, .ingInvTable div table tbody tr td:last-child a{
     margin-right: 20px;
 }
 
@@ -341,7 +359,7 @@ form#loginCredForm table tr td:nth-child(2) input {
     width:300px;
 }
 
-.ingInvTable table tbody tr:hover, .suggestedRecipeTable table tbody tr:hover{
+.dietTable table tbody tr:hover, .ingInvTable table tbody tr:hover, .suggestedRecipeTable table tbody tr:hover{
     background-color: #5bc0de;
 }
 
@@ -352,11 +370,26 @@ form#loginCredForm table tr td:nth-child(2) input {
 #contactPage table tbody tr:first-child td:last-child span:first-child {
     margin-top:-10px;
 }
+#healthText i {
+position:absolute;
+}
+#healthText span, #healthText i{
+    padding:10px;
+    font-size:40px;
+    z-index:99;
+}
 
+#healthText span:hover, #healthText i:hover{
+    color: red;
+}
 .searchableOff {
     background-color:grey;
 }
 
 input[type="checkbox"]{
     display:none;
+}
+
+.ingInvTable div table{
+    margin-bottom:150px;
 }
