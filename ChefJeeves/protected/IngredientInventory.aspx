@@ -11,7 +11,7 @@
         <asp:Image ID="imgAddIngredient" CssClass="round" runat="server" visible="false"/>
         <asp:TextBox ID="txtAddIngredient" runat="server" CausesValidation="false" visible="false"></asp:TextBox>
         <asp:LinkButton ID="lnkSaveIngredient" runat="server"  CssClass="glyphicon glyphicon-floppy-disk" OnClick="lnkSave_Click" visible="false"/>
-        <asp:Label ID="lblError" Visible="false" runat="server" ForeColor="Red" Text="That ingredient doesn't exist. Expand our ingredient database by clicking ">
+        <asp:Label ID="lblError" Visible="false" runat="server" ForeColor="Red" Text="That ingredient is not selected, is within your diet restriction category, or does not exist. You can expand our ingredient database by clicking ">
                <asp:HyperLink id="lnkAddNewIngredient"  NavigateUrl="AddNewIngredient.aspx" Text="here" runat="server"/>
         </asp:Label>
         <asp:HiddenField ID="hfIngredientID" runat="server" />

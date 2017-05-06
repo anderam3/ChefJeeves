@@ -130,7 +130,7 @@ namespace ChefJeeves
             cmd = new MySqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "DeleteIngredient";
+            cmd.CommandText = "DeleteAccountIngredient";
             cmd.Parameters.Clear();
             cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
             cmd.Parameters["User"].Value = Session["username"];
@@ -197,7 +197,7 @@ namespace ChefJeeves
                 cmd = new MySqlCommand();
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "AddIngredient";
+                cmd.CommandText = "AddAccountIngredient";
                 cmd.Parameters.Clear();
                 cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
                 cmd.Parameters["User"].Value = Session["username"];

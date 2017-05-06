@@ -22,7 +22,7 @@ namespace ChefJeeves
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "GetDietRestrictions";
+            cmd.CommandText = "GetAccountDietRestrictions";
             cmd.Parameters.Clear();
             cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
             cmd.Parameters["User"].Value = Session["username"];
@@ -69,7 +69,7 @@ namespace ChefJeeves
             cmd = new MySqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "DeleteDietRestriction";
+            cmd.CommandText = "DeleteAccountDietRestriction";
             cmd.Parameters.Clear();
             cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
             cmd.Parameters["User"].Value = Session["username"];
@@ -136,7 +136,7 @@ namespace ChefJeeves
                 cmd = new MySqlCommand();
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "AddDietRestriction";
+                cmd.CommandText = "AddAccountDietRestriction";
                 cmd.Parameters.Clear();
                 cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
                 cmd.Parameters["User"].Value = Session["username"];
@@ -183,7 +183,7 @@ namespace ChefJeeves
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "GetNonDietRestrictions";
+            cmd.CommandText = "GetNonAccountDietRestrictions";
             cmd.Parameters.Clear();
             cmd.Parameters.Add("User", MySqlDbType.VarChar, 64);
             cmd.Parameters["User"].Value = HttpContext.Current.Session["username"];

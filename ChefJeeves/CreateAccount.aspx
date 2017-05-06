@@ -163,6 +163,11 @@
             <td>
                 <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click" CssClass="btn btn-info"/>
             </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                After your account is created, you can add diet restrictions by selecting "Edit Diet Restrictions" in the menu dropdown.
+            </td>
         </tr>        
     </table>
     </form>

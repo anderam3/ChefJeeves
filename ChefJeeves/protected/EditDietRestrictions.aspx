@@ -11,7 +11,7 @@
         <asp:Image ID="imgAddDietRestriction" CssClass="round" runat="server" visible="false"/>
         <asp:TextBox ID="txtAddDietRestriction" runat="server" CausesValidation="false" visible="false"></asp:TextBox>
         <asp:LinkButton ID="lnkSaveDietRestriction" runat="server"  CssClass="glyphicon glyphicon-floppy-disk" OnClick="lnkSave_Click" visible="false"/>
-        <asp:Label ID="lblError" Visible="false" runat="server" ForeColor="Red" Text="That diet restriction doesn't exist."></asp:Label>
+        <asp:Label ID="lblError" Visible="false" runat="server" ForeColor="Red" Text="That diet restriction is not selected or does not exist."></asp:Label>
         <asp:HiddenField ID="hfDietRestrictionID" runat="server" />
         <asp:GridView ID="grd" runat="server">
             <Columns>  

@@ -339,10 +339,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\ChefJeevesLogo.png" />
-    <Content Include="Images\DietRequirements\1.jpg" />
-    <Content Include="Images\DietRequirements\2.jpg" />
-    <Content Include="Images\DietRequirements\3.jpg" />
-    <Content Include="Images\DietRequirements\4.jpg" />
+    <Content Include="Images\DietRestrictions\1.jpg" />
+    <Content Include="Images\DietRestrictions\2.jpg" />
+    <Content Include="Images\DietRestrictions\3.jpg" />
+    <Content Include="Images\DietRestrictions\4.jpg" />
     <Content Include="Images\favicon.ico" />
     <Content Include="Images\Ingredients\1.jpg" />
     <Content Include="Images\Ingredients\10.jpg" />
@@ -397,7 +397,10 @@
     <Content Include="Images\Ingredients\55.jpg" />
     <Content Include="Images\Ingredients\56.jpg" />
     <Content Include="Images\Ingredients\57.jpg" />
+    <Content Include="Images\Ingredients\58.jpg" />
+    <Content Include="Images\Ingredients\59.jpg" />
     <Content Include="Images\Ingredients\6.jpg" />
+    <Content Include="Images\Ingredients\60.jpg" />
     <Content Include="Images\Ingredients\7.jpg" />
     <Content Include="Images\Ingredients\8.jpg" />
     <Content Include="Images\Ingredients\9.jpg" />

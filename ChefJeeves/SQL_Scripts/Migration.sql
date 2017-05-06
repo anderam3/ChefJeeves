@@ -10,16 +10,16 @@ DROP TABLE IF EXISTS `Recipe`;
 DROP TABLE IF EXISTS `tmpRecipe`;
 DROP TABLE IF EXISTS `Measurement`;
 DROP TABLE IF EXISTS `Account`;
-DROP TABLE IF EXISTS `Ingredient`;
+DROP TABLE IF EXISTS `DietRestrictionIngredient`;
 DROP TABLE IF EXISTS `DietRestriction`;
-DROP TABLE IF EXISTS `DietRestrictionIngredients`;
+DROP TABLE IF EXISTS `Ingredient`;
 
-DROP PROCEDURE IF EXISTS `AddIngredient`;
-DROP PROCEDURE IF EXISTS `AddDietRestriction`;
+DROP PROCEDURE IF EXISTS `AddAccountIngredient`;
+DROP PROCEDURE IF EXISTS `AddAccountDietRestriction`;
 DROP PROCEDURE IF EXISTS `CreateAccount`;
 DROP PROCEDURE IF EXISTS `CreateIngredient`;
-DROP PROCEDURE IF EXISTS `DeleteIngredient`;
-DROP PROCEDURE IF EXISTS `DeleteDietRestriction`;
+DROP PROCEDURE IF EXISTS `DeleteAccountIngredient`;
+DROP PROCEDURE IF EXISTS `DeleteAccountDietRestriction`;
 DROP PROCEDURE IF EXISTS `EmailExists`;
 DROP PROCEDURE IF EXISTS `GetAccount`;
 DROP PROCEDURE IF EXISTS `GetAccountIngredients`;
@@ -103,10 +103,12 @@ CREATE TABLE `DietRestriction` (
   PRIMARY KEY (`DIET_RESTRICTION_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `DietRestrictionIngredients` (
+CREATE TABLE `DietRestrictionIngredient` (
 	`DIET_RESTRICTION_ID` int(11) NOT NULL,
 	`INGREDIENT_ID` int(11) NOT NULL,
-  PRIMARY KEY (`DIET_RESTRICTION_ID`,`INGREDIENT_ID`)
+  PRIMARY KEY (`DIET_RESTRICTION_ID`,`INGREDIENT_ID`),
+  CONSTRAINT `DietRestrictionIngredient_DIET_RESTRICTION_ID` FOREIGN KEY (`DIET_RESTRICTION_ID`) REFERENCES `DietRestriction` (`DIET_RESTRICTION_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `DietRestrictionIngredient_INGREDIENT_ID` FOREIGN KEY (`INGREDIENT_ID`) REFERENCES `Ingredient` (`INGREDIENT_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `AccountDietRestriction` (
@@ -119,7 +121,7 @@ CREATE TABLE `AccountDietRestriction` (
 
 DELIMITER $$
 
-CREATE PROCEDURE `AddIngredient`(
+CREATE PROCEDURE `AddAccountIngredient`(
     IN User VARCHAR(64),
 	IN ID int(11),
     OUT isSuccessful tinyint(1)
@@ -133,13 +135,13 @@ BEGIN
     END IF;
 END$$
 
-CREATE PROCEDURE `AddDietRestriction`(
+CREATE PROCEDURE `AddAccountDietRestriction`(
     IN User VARCHAR(64),
 	IN ID int(11),
     OUT isSuccessful tinyint(1)
 )
 BEGIN
-	IF (SELECT ID FROM AccountIngredient WHERE username = user AND diet_restriction_ID = ID LIMIT 1) is null THEN
+	IF (SELECT ID FROM AccountDietRestriction WHERE username = user AND diet_restriction_ID = ID LIMIT 1) is null THEN
 		INSERT INTO `accountdietrestriction` VALUES (User, ID);
         SET isSuccessful = 1;
     ELSE
@@ -176,7 +178,7 @@ BEGIN
     END IF;
 END$$
 
-CREATE PROCEDURE `DeleteIngredient`(
+CREATE PROCEDURE `DeleteAccountIngredient`(
     IN User VARCHAR(64),
 	IN ID int(11)
 )
@@ -184,7 +186,7 @@ BEGIN
 	DELETE FROM AccountIngredient WHERE Ingredient_ID = ID and username = User;
 END$$
 
-CREATE PROCEDURE `DeleteDietRestriction`(
+CREATE PROCEDURE `DeleteAccountDietRestriction`(
     IN User VARCHAR(64),
 	IN ID int(11)
 )
@@ -247,8 +249,8 @@ CREATE PROCEDURE `GetAccountDietRestrictions`(
 BEGIN
   SELECT b.Diet_Restriction_Name as NAME, b.Diet_Restriction_ID as ID 
   FROM AccountDietRestriction a, DietRestriction b
-  WHERE a.Diet_Restriction_ID = b.Diet_Restriction_ID and a.username = User and b.Diet_Restriction_Name LIKE CONCAT(Ingredient,'%')
-  ORDER BY b.Ingredient_Name;
+  WHERE a.Diet_Restriction_ID = b.Diet_Restriction_ID and a.username = User and b.Diet_Restriction_Name LIKE CONCAT(Restriction,'%')
+  ORDER BY b.Diet_Restriction_Name;
 END$$
 
 CREATE PROCEDURE `GetNonAccountIngredients`(
@@ -263,7 +265,12 @@ BEGIN
   FROM AccountIngredient a, Ingredient b
   WHERE a.Username = user
   and a.Ingredient_ID = b.Ingredient_ID
-  and b.INGREDIENT_NAME LIKE CONCAT(Ingredient,'%'))
+  and b.Ingredient_Name LIKE CONCAT(Ingredient,'%')) AND Ingredient_ID NOT IN
+  (SELECT c.Ingredient_ID
+  FROM AccountDietRestriction a, DietRestriction b, DietRestrictionIngredient c
+  WHERE a.Username = User 
+  and a.Diet_Restriction_ID = b.Diet_Restriction_ID
+  and b.Diet_Restriction_ID = c.Diet_Restriction_ID)
   ORDER BY b.Ingredient_Name;
 END$$
 
@@ -272,10 +279,10 @@ CREATE PROCEDURE `GetNonAccountDietRestrictions`(
   IN Restriction VARCHAR(64)
 )
 BEGIN
-  SELECT Diet_Restriction_Name as NAME, DIET_RESTRICTION_ID as ID 
+  SELECT Diet_Restriction_Name as NAME, Diet_Restriction_ID as ID 
   FROM DietRestriction b
-  WHERE Diet_Restriction_Name LIKE CONCAT(Restriction,'%') AND DIET_RESTRICTION_ID NOT IN 
-  (SELECT b.DIET_RESTRICTION_ID as ID 
+  WHERE Diet_Restriction_Name LIKE CONCAT(Restriction,'%') AND Diet_Restriction_ID NOT IN 
+  (SELECT b.Diet_Restriction_ID as ID 
   FROM AccountDietRestriction a, DietRestriction b
   WHERE a.Username = user
   and a.Diet_Restriction_ID = b.Diet_Restriction_ID
@@ -512,6 +519,9 @@ INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (54,'spaghett
 INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (55,'parmesan cheese');
 INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (56,'chicken broth');
 INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (57,'broccoli');
+INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (58,'lobster');
+INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (59,'crab');
+INSERT INTO `ingredient`(`INGREDIENT_ID`,`INGREDIENT_NAME`) VALUES (60,'clam');
 
 INSERT INTO `dietrestriction`(`DIET_RESTRICTION_ID`,`DIET_RESTRICTION_NAME`) VALUES (1,'nut allergy');
 INSERT INTO `dietrestriction`(`DIET_RESTRICTION_ID`,`DIET_RESTRICTION_NAME`) VALUES (2,'lactose intolerant');
@@ -520,23 +530,24 @@ INSERT INTO `dietrestriction`(`DIET_RESTRICTION_ID`,`DIET_RESTRICTION_NAME`) VAL
 
 INSERT INTO `accountdietrestriction`(`USERNAME`,`DIET_RESTRICTION_ID`) VALUES ('jsmith',4);
 
-INSERT INTO `DietRestrictionIngredients`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (1,19);
-INSERT INTO `DietRestrictionIngredients`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (1,30);
-INSERT INTO `DietRestrictionIngredients`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (1,47);
-INSERT INTO `DietRestrictionIngredients`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (1,51);
-INSERT INTO `DietRestrictionIngredients`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (2,3);
-INSERT INTO `DietRestrictionIngredients`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (2,7);
-INSERT INTO `DietRestrictionIngredients`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (2,17);
-INSERT INTO `DietRestrictionIngredients`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (2,44);
-INSERT INTO `DietRestrictionIngredients`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (2,55);
-INSERT INTO `DietRestrictionIngredients`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (3,5);
-INSERT INTO `DietRestrictionIngredients`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (3,16);
-INSERT INTO `DietRestrictionIngredients`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (3,28);
-INSERT INTO `DietRestrictionIngredients`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (3,37);
-INSERT INTO `DietRestrictionIngredients`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (3,53);
-INSERT INTO `DietRestrictionIngredients`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (3,54);
-INSERT INTO `DietRestrictionIngredients`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (4,35);
-INSERT INTO `DietRestrictionIngredients`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (4,58);
+INSERT INTO `DietRestrictionIngredient`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (1,19);
+INSERT INTO `DietRestrictionIngredient`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (1,30);
+INSERT INTO `DietRestrictionIngredient`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (1,47);
+INSERT INTO `DietRestrictionIngredient`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (1,51);
+INSERT INTO `DietRestrictionIngredient`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (2,3);
+INSERT INTO `DietRestrictionIngredient`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (2,7);
+INSERT INTO `DietRestrictionIngredient`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (2,17);
+INSERT INTO `DietRestrictionIngredient`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (2,44);
+INSERT INTO `DietRestrictionIngredient`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (2,55);
+INSERT INTO `DietRestrictionIngredient`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (3,5);
+INSERT INTO `DietRestrictionIngredient`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (3,16);
+INSERT INTO `DietRestrictionIngredient`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (3,28);
+INSERT INTO `DietRestrictionIngredient`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (3,37);
+INSERT INTO `DietRestrictionIngredient`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (3,53);
+INSERT INTO `DietRestrictionIngredient`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (3,54);
+INSERT INTO `DietRestrictionIngredient`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (4,58);
+INSERT INTO `DietRestrictionIngredient`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (4,59);
+INSERT INTO `DietRestrictionIngredient`(DIET_RESTRICTION_ID,INGREDIENT_ID) VALUES (4,60);
 
 INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('', 'itself');
 INSERT INTO MEASUREMENT(UNIT_ABBREVIATION, UNIT_NAME) VALUES ('tsp', 'teaspoon');
